@@ -11,6 +11,13 @@ def validate_email(email):
     return (re.search(pattern, email))
 
 
+def email_exist(email):
+    for user in User.query.all():
+        if user.email == email: return True
+
+    return False
+
+
 def validate_password(password):
     lowers = '[+a-z]'
     uppers = '[+A-Z]'
@@ -28,6 +35,19 @@ def hassu():
 
 def verifiy_signup(data):
     print(data)
+    u=User()
+
+    if not validate_email(data['email']) or email_exist(data['email']):
+        return 1
+
+    if not validate_password(data['password1']):
+        return 2
+
+    if not u.compare_passwords(data['password1'],data['password2']):
+        return 3
+
+    if not data['agreed']:
+        return 4
     #print(date.today())
     # print(db.__sizeof__()) <- useful for check the database size
 
@@ -39,16 +59,16 @@ def verifiy_signup(data):
     #return False
     #else
 
-    '''u = User()
+    '''u = User()'''
     u.username = data['username']
     u.set_password(str(data['password1']))
     u.is_superuser = False
     u.email = data['email']
     u.joined = date.today()
-    db.session.add(u)
+    '''db.session.add(u)
     db.session.commit()'''
 
-    return True
+    return 0
 
 
 def verify_login(data):

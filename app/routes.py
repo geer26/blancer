@@ -26,7 +26,7 @@ def logout():
 @socket.on('newmessage')
 def newmessage(data):
 
-    print(data)
+    #print(data)
 
     sid = request.sid
 
@@ -56,15 +56,51 @@ def newmessage(data):
 
     # incoming signup request
     if data['event'] == 211:
-        # signup request
-        data['sid'] = sid
-        if verifiy_signup(data):
+        #"i want to signup with theese data"
+
+        r = verifiy_signup(data)
+
+        if r == 0:
+            #ok, data are great, i added you to the database, log in
             mess = {}
             mess['event'] = 111
             mess['htm'] = render_template('infomessage.html', message='You can login now!')
             socket.emit('newmessage', mess, room=sid)
 
+        elif r == 1:
+            #invalid email address
+            socket.emit('newmessage', {'event': 119}, room=sid)
+            mess = {}
+            mess['event'] = 191
+            mess['htm'] = render_template('errormessage.html', message='Invalid email or email is already registered!')
+            socket.emit('newmessage', mess, room=sid)
+
+        elif r == 2:
+            # invalid  password
+            socket.emit('newmessage', {'event': 119}, room=sid)
+            mess = {}
+            mess['event'] = 191
+            mess['htm'] = render_template('errormessage.html', message='Passord must have UPPER and lowercase chars, numbers, and must be at least 8 chars length!')
+            socket.emit('newmessage', mess, room=sid)
+
+        elif r == 3:
+            # passwords do not match
+            socket.emit('newmessage', {'event': 119}, room=sid)
+            mess = {}
+            mess['event'] = 191
+            mess['htm'] = render_template('errormessage.html', message='Passwords do not match')
+            socket.emit('newmessage', mess, room=sid)
+
+        elif r == 4:
+            # did not agree
+            socket.emit('newmessage', {'event': 119}, room=sid)
+            mess = {}
+            mess['event'] = 191
+            mess['htm'] = render_template('errormessage.html', message='Please read and accept the terms')
+            socket.emit('newmessage', mess, room=sid)
+
         else:
+            # no, noo, something isn't ok
             socket.emit('newmessage', {'event': 119}, room=sid)
             mess = {}
             mess['event'] = 191
@@ -73,48 +109,5 @@ def newmessage(data):
 
         return True
 
-
-    """sid = request.sid
-
-    #incoming signup request
-    if data['event'] == 211:
-        #signup request
-        data['sid'] = sid
-        if verifiy_signup(data):
-            mess = {}
-            mess['event'] = 111
-            mess['htm'] = render_template('infomessage.html', message='You can login now!')
-            socket.emit('newmessage', mess, room=sid)
-
-        else:
-            socket.emit('newmessage', {'event': 119}, room=sid)
-            mess = {}
-            mess['event'] = 191
-            mess['htm'] = render_template('errormessage.html', message='SIGNUP NOT SUCCESS!')
-            socket.emit('newmessage', mess, room=sid)
-
-        return True
-
-    #incoming login request
-    if data['event'] == 221:
-        if verify_login(data):
-            mess = {}
-            mess['event'] = 121
-            mess['status'] = 1
-            socket.emit('newmessage', mess, room=sid)
-        else:
-            socket.emit('newmessage', {'event' : 129}, room=sid)
-            mess={}
-            mess['event'] = 191
-            mess['htm'] = render_template('errormessage.html', message='LOGIN NOT SUCCESS!')
-            socket.emit('newmessage', mess, room=sid)
-
-        return True
-
-    if data['event'] == 291:
-        mess = {}
-        mess['event'] = 191
-        mess['htm'] = render_template('errormessage.html', message=data['message'])
-        socket.emit('newmessage', mess, room=sid)"""
 
     return True
