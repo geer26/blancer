@@ -29,7 +29,7 @@ $('#signupbutton').click(function(){
 });
 
 
-$('#loginbutton').click(function(){
+/*$('#loginbutton').click(function(){
     if ( $('#login_username').val() && $('#login_password').val() ){
         var data = {
         event: 221,
@@ -42,7 +42,7 @@ $('#loginbutton').click(function(){
         var data ={event: 291, message:'Fill all the inputs!'};
         send_message('newmessage', data);
     };
-});
+}); */
 
 
 //event dispatcher
@@ -65,20 +65,22 @@ socket.on('newmessage', function(data){
             break;
 
         //login validated, send loginform!
-        case 121:
+        /*case 121:
             if (data['status']){
-                var data = {username:$('#login_username').val(), password:$('#login_password').val(), remember_me:$('#input_remember').prop('checked')}
-                $.post( '/' , data )
-                window.location.reload();
+                //var data = {username:$('#login_username').val(), password:$('#login_password').val(), remember_me:$('#input_remember').prop('checked')}
+                //$.post( '/' , data )
+                //window.location.reload();
+                $('#loginform').submit();
             }
             break;
 
         //user logged in, refresh page!
         case 122:
             //refresh pagecontent
-            window.location.reload();
+            //window.location.reload();
             console.log('logged in!');
             break;
+        */
 
         //here is an error message, show it to user! - READY
         case 191:
