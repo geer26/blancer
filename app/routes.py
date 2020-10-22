@@ -5,12 +5,13 @@ from app.forms import LoginForm
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
-    form = LoginForm
+
+    form = LoginForm()
 
     if request.method == 'POST':
         print('what now?')
-        if form.validate_on_submit():
-            return redirect('/')
+        '''if form.validate_on_submit():
+            return redirect('/')'''
 
     user = {'username': 'geer26'}
-    return render_template('index.html', title='Home', user=user)
+    return render_template('index.html', title='Home', user=user, form=form)

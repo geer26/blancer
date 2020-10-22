@@ -12,6 +12,12 @@ class Config:
     STATIC_FOLDER = 'static'
     TEMPLATES_FOLDER = 'templates'
 
+    #try
+
+    FLASK_ENV = 'development'
+    DEBUG = True
+    TESTING = True
+
 
 class ProdConfig(Config):
     """Production config."""
