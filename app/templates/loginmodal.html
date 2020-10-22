@@ -4,7 +4,7 @@
     <div class="modal-content">
 
         <h4>login</h4>
-        <form action="/login" method="post" novalidate id="loginform">
+        <form method="post" novalidate>
             {{ loginform.hidden_tag() }}
 
         <ul>
@@ -39,7 +39,7 @@
 
             <li class="center-align">
                 <a class="waves-effect waves-light btn btn-small" style="border-radius: 2px;" id="loginbutton">
-                    {{loginform.submit(type="button")}}
+                    {{loginform.submit()}}
                     <i class="material-icons left">check_circle</i>
                 </a>
             </li>

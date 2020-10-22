@@ -1,70 +1,85 @@
+from datetime import date
+
 from flask import render_template, redirect, request
-from flask_login import current_user, login_user, logout_user
-from app import app, socket
+from flask_login import current_user, login_user, logout_user, login_required
+from app import app, socket, db
 from app.forms import LoginForm, SignupForm
 from app.models import User
-from workers import verify_login, verifiy_signup
+from workers import verify_login, verifiy_signup, hassu
 
 
-@app.route('/')
-@app.route('/index')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 def index():
 
     loginform = LoginForm()
     signupform = SignupForm()
 
+    if request.method == 'POST' and not current_user.is_authenticated:
+        if loginform.validate_on_submit():
+            user = User.query.filter_by(username=loginform.username.data).first()
+            if user is None or not user.check_password(loginform.password.data):
+                #SHOW ERROR!
+                return redirect('/')
+
+            login_user(user, remember=loginform.remember_me.data)
+            return redirect('/')
+
     return render_template('index.html', title='Index', loginform=loginform, signupform=signupform)
 
 
-@app.route('/login', methods=['POST'])
-def login():
-
-    print(request.form)
-
-    if current_user.is_authenticated:
-        return redirect('/')
-
-    user = User.query.filter_by(username=request.form['username']).first()
-
-    if not user:
-        mess = {}
-        mess['event'] = 191
-        mess['htm'] = render_template('errormessage.html', message='No such user!')
-        socket.emit('newmessage', mess)
-        return redirect('/')
-
-    if not user.check_password(request.form['password']):
-        mess = {}
-        mess['event'] = 191
-        mess['htm'] = render_template('errormessage.html', message='Wrong password!')
-        socket.emit('newmessage', mess)
-        return redirect('/')
-
-    if request.form['rem'] == 'true': rem = True
-    else: rem = False
-
-    login_user(user, remember=rem)
-
-    return redirect('/')
-
-    '''user = User.query.filter_by(username=request.form['username']).first()
-    if user == None:
-        pass
-    if user.check_password(request.form['password']):
-        if request.form['remember_me']:
-            login_user(user, remember=request.form['remember_me'])
-        else:
-            login_user(user)
-        # socket.emit('newmessage', {'event': 122})
-        return redirect('/')
-    else:
-        pass'''
-
-
 @app.route('/logout')
+@login_required
 def logout():
     logout_user()
     return redirect('/')
+
+
+@app.route('/addsu/<suname>/<password>')
+def addsu(suname, password):
+    #eg. https://example.com/examplesuname/example1Password!2
+    if not hassu():
+        user = User()
+        user.username = suname
+        user.email = 'none@none.no'
+        user.set_password(password)
+        user.is_superuser = True
+        user.joined = date.today()
+        user.avatar = '/static/img/avatars/adminavatar.png'
+        db.session.add(user)
+        db.session.commit()
+    return redirect('/')
+
+
+'''
+@app.route('/bfrb')
+@login_required
+def bfrb():  #swipe database!
+    if current_user.is_superuser:
+        #del all users
+        users = User.query.all()
+        for user in users:
+            if not user.is_superuser:
+                db.session.delete(user)
+                db.session.commit()
+        #del all messages
+        messages = Message.query.all()
+        for message in messages:
+            db.session.delete(message)
+            db.session.commit()
+
+
+@app.route('/clear_messages')
+@login_required
+def clear_messages():  #swipe messages!
+    if current_user.is_superuser:
+        #del all messages
+        messages = Message.query.all()
+        for message in messages:
+            db.session.delete(message)
+            db.session.commit()
+    return redirect('/')
+'''
 
 
 @socket.on('newmessage')
@@ -155,3 +170,5 @@ def newmessage(data):
 
 
     return True
+
+
