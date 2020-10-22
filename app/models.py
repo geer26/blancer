@@ -19,7 +19,7 @@ class User(UserMixin,db.Model):
     password_hash = db.Column(db.String(256))
     is_superuser = db.Column(db.Boolean, default=False)
     joined = db.Column(db.Date)
-    avatar = db.Column(db.String(128))
+    avatar = db.Column(db.String(128), default=)
 
     def __repr__(self):
         return self.username
