@@ -68,13 +68,15 @@ socket.on('newmessage', function(data){
         case 121:
             if (data['status']){
                 var data = {username:$('#login_username').val(), password:$('#login_password').val(), remember_me:$('#input_remember').prop('checked')}
-                $.post( '/login' , data )
+                $.post( '/' , data )
+                window.location.reload();
             }
             break;
 
         //user logged in, refresh page!
         case 122:
             //refresh pagecontent
+            window.location.reload();
             console.log('logged in!');
             break;
 

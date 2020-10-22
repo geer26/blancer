@@ -2,6 +2,7 @@ from flask import render_template, redirect, request
 from flask_login import current_user, login_user, logout_user
 from app import app, socket
 from app.forms import LoginForm, SignupForm
+from app.models import User
 from workers import verify_login, verifiy_signup
 
 
@@ -13,7 +14,13 @@ def index():
     signupform = SignupForm()
 
     if request.method == 'POST':
-        print('what now?')
+        #print('what now?')
+        #print(request.form)
+        user = User.query.filter_by(username=request.form['username']).first()
+        if user.check_password(request.form['password']):
+            login_user(user, remember=request.form['remember_me'])
+            socket.emit('newmessage', {'event': 122})
+        return redirect('/')
 
     return render_template('index.html', title='Index', loginform=loginform, signupform=signupform)
 
