@@ -1,24 +1,24 @@
 {% if not current_user.is_authenticated %}
 
-<a class="waves-effect waves-light btn btn-small modal-trigger" href="#loginmodal" style="border-radius: 2px;">
-    <i class="material-icons left">login</i>
-    login
-</a>
+    <a class="waves-effect waves-light btn btn-small modal-trigger" href="#loginmodal" style="border-radius: 2px;">
+        <i class="material-icons left">login</i>
+        login
+    </a>
 
-{% include 'loginmodal.html' %}
+    {% include 'loginmodal.html' %}
 
-<span style="margin-left: 10px; margin-right: 10px;">
-    or
-    <a href="#signupmodal" class="modal-trigger">sign up!</a>
-</span>
+    <span style="margin-left: 10px; margin-right: 10px;">
+        or
+        <a href="#signupmodal" class="modal-trigger">sign up!</a>
+    </span>
 
-{% include 'signupmodal.html' %}
+    {% include 'signupmodal.html' %}
 
 {% else %}
 
-<a class="waves-effect waves-light btn btn-small red" style="border-radius: 2px;">
-    <i class="material-icons left rotate180">login</i>
-    logout
-</a>
+    <a class="waves-effect waves-light btn btn-small red" style="border-radius: 2px;">
+        <i class="material-icons left rotate180">login</i>
+        logout
+    </a>
 
 {% endif %}

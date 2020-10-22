@@ -7,12 +7,12 @@ from app.forms import LoginForm
 @app.route('/index', methods=['GET', 'POST'])
 def index():
 
-    form = LoginForm()
+    loginform = LoginForm()
 
     if request.method == 'POST':
         print('what now?')
 
-    return render_template('index.html', title='Index', form=form)
+    return render_template('index.html', title='Index', loginform=loginform)
 
 @app.route('/logout')
 def logout():

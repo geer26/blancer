@@ -5,7 +5,7 @@
 
         <h4>login</h4>
         <form action="" method="post" novalidate>
-            {{ form.hidden_tag() }}
+            {{ loginform.hidden_tag() }}
 
         <ul>
 
@@ -13,7 +13,7 @@
                 <div class="input-field center-align">
                     <i class="material-icons prefix">account_circle</i>
                     <!-- <input id="login_username" type="text" class="validate"> -->
-                    {{form.username( id='login_username', class='validate')}}
+                    {{loginform.username( id='login_username', class='validate')}}
                     <label for="login_username">username</label>
                 </div>
             </li>
@@ -21,7 +21,8 @@
             <li>
                 <div class="input-field center-align">
                     <i class="material-icons prefix">pending</i>
-                    <input id="login_password" type="password" class="validate">
+                    <!-- <input id="login_password" type="password" class="validate"> -->
+                    {{loginform.password(id='login_password', class='validate)}}
                     <label for="login_password">password</label>
                 </div>
             </li>
@@ -29,7 +30,8 @@
             <li>
                 <p class="center-align">
                 <label>
-                    <input type="checkbox" id="input_remember"/>
+                    <!-- <input type="checkbox" id="input_remember"/> -->
+                    {{ loginform.remember_me(id='input_remember', type='checkbox') }}
                     <span>remember me!</span>
                 </label>
                 </p>
