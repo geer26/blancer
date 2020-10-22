@@ -18,9 +18,35 @@ def index():
 
 @app.route('/login', methods=['POST'])
 def login():
+
+    print(request.form)
+
     if current_user.is_authenticated:
         return redirect('/')
-    print(request.form.data)
+
+    user = User.query.filter_by(username=request.form['username']).first()
+
+    if not user:
+        mess = {}
+        mess['event'] = 191
+        mess['htm'] = render_template('errormessage.html', message='No such user!')
+        socket.emit('newmessage', mess)
+        return redirect('/')
+
+    if not user.check_password(request.form['password']):
+        mess = {}
+        mess['event'] = 191
+        mess['htm'] = render_template('errormessage.html', message='Wrong password!')
+        socket.emit('newmessage', mess)
+        return redirect('/')
+
+    if request.form['rem'] == 'true': rem = True
+    else: rem = False
+
+    login_user(user, remember=rem)
+
+    return redirect('/')
+
     '''user = User.query.filter_by(username=request.form['username']).first()
     if user == None:
         pass
@@ -49,7 +75,7 @@ def newmessage(data):
     sid = request.sid
 
     # incoming login request
-    '''if data['event'] == 221:
+    if data['event'] == 221:
         if verify_login(data):
             mess = {}
             mess['event'] = 121
@@ -62,7 +88,7 @@ def newmessage(data):
             mess['htm'] = render_template('errormessage.html', message='LOGIN NOT SUCCESS!')
             socket.emit('newmessage', mess, room=sid)
 
-        return True'''
+        return True
 
     #incoming request for error message with message
     if data['event'] == 291:
