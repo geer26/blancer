@@ -52,6 +52,7 @@ def verifiy_signup(data):
     u.is_superuser = False
     u.email = data['email']
     u.joined = date.today()
+    u.last_activity = datetime.now()
     db.session.add(u)
     db.session.commit()
 

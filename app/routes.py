@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 
 from flask import render_template, redirect, request
 from flask_login import current_user, login_user, logout_user, login_required
@@ -23,14 +23,25 @@ def index():
                 return redirect('/')
 
             login_user(user, remember=loginform.remember_me.data)
+            user.last_activity = datetime.now()
+            db.session.commit()
             return redirect('/')
 
-    return render_template('index.html', title='Index', loginform=loginform, signupform=signupform)
+    if current_user.is_authenticated and current_user.is_superuser:
+        users = User.query.all()
+        return render_template('index.html', title='SU index', loginform=loginform, signupform=signupform, users=users)
+    elif current_user.is_authenticated and not current_user.is_superuser:
+        return render_template('index.html', title='Index', loginform=loginform, signupform=signupform)
+    else:
+        return render_template('index.html', title='Index', loginform=loginform, signupform=signupform)
 
 
 @app.route('/logout')
 @login_required
 def logout():
+    user = current_user
+    user.last_activity = datetime.now()
+    db.session.commit()
     logout_user()
     return redirect('/')
 
