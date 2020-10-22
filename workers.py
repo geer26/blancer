@@ -27,7 +27,7 @@ def hassu():
 
 
 def verifiy_signup(data):
-    #print(data)
+    print(data)
     #print(date.today())
     # print(db.__sizeof__()) <- useful for check the database size
 
@@ -39,14 +39,14 @@ def verifiy_signup(data):
     #return False
     #else
 
-    u = User()
+    '''u = User()
     u.username = data['username']
     u.set_password(str(data['password1']))
     u.is_superuser = False
     u.email = data['email']
     u.joined = date.today()
     db.session.add(u)
-    db.session.commit()
+    db.session.commit()'''
 
     return True
 
