@@ -31,5 +31,5 @@ class User(UserMixin,db.Model):
         return check_password_hash(self.password_hash, password)
 
     def compare_passwords(self, password1, password2):
-        print( generate_password_hash(password1) == generate_password_hash(password2) )
+        #print( generate_password_hash(password1) == generate_password_hash(password2) )
         return generate_password_hash(password1) == generate_password_hash(password2)

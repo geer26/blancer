@@ -63,8 +63,6 @@ def verify_login(data):
     uname = str(data['username'])
     user = User.query.filter_by(username=uname).first()
     if user and user.check_password(data['password']):
-        #login_user(user, remember=data['remember'])
-        #print('logged_in')
         return True
     else:
         return False
