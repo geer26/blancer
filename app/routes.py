@@ -18,15 +18,21 @@ def index():
 
 @app.route('/login', methods=['POST'])
 def login():
-    print(request.form)
-    user = User.query.filter_by(username=request.form['username']).first()
+    if current_user.is_authenticated:
+        return redirect('/')
+    print(request.form.data)
+    '''user = User.query.filter_by(username=request.form['username']).first()
+    if user == None:
+        pass
     if user.check_password(request.form['password']):
         if request.form['remember_me']:
-            login_user(user, remember=True)
+            login_user(user, remember=request.form['remember_me'])
         else:
             login_user(user)
         # socket.emit('newmessage', {'event': 122})
-    return redirect('/')
+        return redirect('/')
+    else:
+        pass'''
 
 
 @app.route('/logout')
