@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from app import login
 
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -34,3 +36,24 @@ class User(UserMixin,db.Model):
     def compare_passwords(self, password1, password2):
         #print( generate_password_hash(password1) == generate_password_hash(password2) )
         return generate_password_hash(password1) == generate_password_hash(password2)
+
+
+class Pocket(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    balance = db.Column(db.Integer, default=0)
+    last_change = db.Column(db.DateTime, index=True, default=datetime.now)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def __repr__(self):
+        return self.balance
+
+
+class Transfer(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    t_type = db.Column(db.Integer, default=1)
+    amount = db.Column(db.Integer, default=0)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.now)
+    pocket = db.Column(db.Integer, db.ForeignKey('pocket.id'))
+
+    def __repr__(self):
+        return self.t_type*self.amount
