@@ -34,8 +34,6 @@ def hassu():
 
 
 def verifiy_signup(data):
-    print(data)
-    u=User()
 
     if not validate_email(data['email']) or email_exist(data['email']):
         return 1
@@ -43,30 +41,20 @@ def verifiy_signup(data):
     if not validate_password(data['password1']):
         return 2
 
-    if not u.compare_passwords(data['password1'],data['password2']):
+    if data['password1'] != data['password2']:
         return 3
 
     if not data['agreed']:
         return 4
-    #print(date.today())
-    # print(db.__sizeof__()) <- useful for check the database size
 
-    #first check values
-    #if error:
-    # message = {}
-    #message['event'] = 191
-    #socket.emit('newmessage', message,  room=data['sid'])
-    #return False
-    #else
-
-    '''u = User()'''
+    u = User()
     u.username = data['username']
     u.set_password(str(data['password1']))
     u.is_superuser = False
     u.email = data['email']
     u.joined = date.today()
-    '''db.session.add(u)
-    db.session.commit()'''
+    db.session.add(u)
+    db.session.commit()
 
     return 0
 
