@@ -25,6 +25,9 @@ def logout():
 def newmessage(data):
 
     print(data)
+
+    sid = request.sid
+
     """sid = request.sid
 
     #incoming signup request
