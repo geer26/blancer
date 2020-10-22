@@ -1,6 +1,6 @@
 from flask import render_template, redirect, request
 from flask_login import current_user, login_user, logout_user
-from app import app
+from app import app, socket
 from app.forms import LoginForm
 
 @app.route('/', methods=['GET', 'POST'])
@@ -12,8 +12,7 @@ def index():
     if request.method == 'POST':
         print('what now?')
 
-    user = current_user
-    return render_template('index.html', title='Home', form=form)
+    return render_template('index.html', title='Index', form=form)
 
 @app.route('/logout')
 def logout():
