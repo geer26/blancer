@@ -1,18 +1,19 @@
 from flask import render_template, redirect, request
 from flask_login import current_user, login_user, logout_user
 from app import app, socket
-from app.forms import LoginForm
+from app.forms import LoginForm, SignupForm
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
 
     loginform = LoginForm()
+    signupform = SignupForm()
 
     if request.method == 'POST':
         print('what now?')
 
-    return render_template('index.html', title='Index', loginform=loginform)
+    return render_template('index.html', title='Index', loginform=loginform, signupform=signupform)
 
 @app.route('/logout')
 def logout():
