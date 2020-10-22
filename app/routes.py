@@ -10,8 +10,6 @@ def index():
 
     if request.method == 'POST':
         print('what now?')
-        '''if form.validate_on_submit():
-            return redirect('/')'''
 
     user = {'username': 'geer26'}
     return render_template('index.html', title='Home', user=user, form=form)

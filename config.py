@@ -8,15 +8,9 @@ load_dotenv(path.join(basedir, '.env'))
 class Config:
     """Base config."""
     SECRET_KEY = environ.get('SECRET_KEY') or '!Turorudi1!'
-    SESSION_COOKIE_NAME = environ.get('SESSION_COOKIE_NAME')
+    SESSION_COOKIE_NAME = environ.get('SESSION_COOKIE_NAME') or '!Geer26!'
     STATIC_FOLDER = 'static'
     TEMPLATES_FOLDER = 'templates'
-
-    #try
-
-    FLASK_ENV = 'development'
-    DEBUG = True
-    TESTING = True
 
 
 class ProdConfig(Config):
