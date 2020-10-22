@@ -19,7 +19,7 @@ class User(UserMixin,db.Model):
     password_hash = db.Column(db.String(256))
     is_superuser = db.Column(db.Boolean, default=False)
     joined = db.Column(db.Date)
-    last_activity = db.Column(db.Date)
+    last_activity = db.Column(db.DateTime)
     avatar = db.Column(db.String(128), default='/static/img/avatars/a_unknown.png')
 
     def __repr__(self):
