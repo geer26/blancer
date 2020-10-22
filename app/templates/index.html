@@ -34,14 +34,11 @@
 
             <div id="pagecontent" class="">
             {% if current_user.is_authenticated and current_user.is_superuser %}
-                SUPERUSER LOGGED IN!
-                {{current_user.username}}
+                {%include 'adminindex.html' %}
             {% elif current_user.is_authenticated and not current_user.is_superuser %}
-                BASE USER LOGGED IN
-                {{current_user.username}}
+                {% include 'userindex.html' %}
             {% else %}
-                NONAME
-                {{current_user.is_authenticated}}
+                {% include 'nonauth_index.html' %}
             {% endif %}
             </div>
 
