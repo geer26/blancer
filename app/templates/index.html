@@ -14,10 +14,31 @@
         <title>Welcome to Microblog!</title>
         {% endif %}
 
+        <!-- stíluslapok betöltése -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="/static/css/materialize.min.css" type="text/css" rel="stylesheet">
+        <link href="/static/css/base.css" type="text/css" rel="stylesheet">
+
     </head>
 
     <body>
-        <h1>Hello, {{ current_user }} !</h1>
+
+        <div id="mainpage">
+
+            <div id="menubar" class="menubar valign-wrapper row">
+                <img id="logo" draggable="false" class="logo" src="/static/img/logo.png">
+                {% include 'menu.html' %}
+
+            </div>
+
+            <div id="pagecontent" class="">
+                {% include 'pagecontent.html' %}
+            </div>
+
+        </div>
+
+        <h1>Hello, {{ current_user.username }} !</h1>
+        <h2>{{ current_user.is_authenticated }}</h2>
 
         <form action="" method="post" novalidate>
             {{ form.hidden_tag() }}
@@ -26,4 +47,5 @@
         </form>
 
     </body>
+
 </html>

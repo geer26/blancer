@@ -1,0 +1,91 @@
+
+/* mains */
+body{
+    background-color: #ffffff;
+    letter-spacing: 2px;
+    word-spacing: 2px;
+    color: #000000;
+    font-family: Andale Mono, monospace;
+    font size: 2vh;
+    font-weight: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menubar{
+    width: 100;
+    background-color: #1976d2;
+    position: sticky;
+    top: 0;
+    left: 0;
+    box-shadow: 0px 2px 10px 6px rgba(0,0,0,0.75);
+    margin-bottom: 10px;
+}
+
+.logo{
+    max-width: 15vw;
+    padding: 5px;
+    display: inline-block;
+}
+
+.rotate180 {
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+/* ERROR MESSAGE STYLE */
+.modalback{
+    z-index: 1;
+    display: block; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 9999; /* Sit on top */
+    left: 0;
+    top: 0;
+    text-align: center;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: red; /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal_frame{
+    background-color: white;
+    display: block;
+    position: relative;
+    border: 2px solid red;
+    border-radius: 2px;
+    padding: 5px;
+    max-width: 50vw;
+    margin: 25vh auto;
+    box-shadow: 0px 0px 6px 2px rgba(255, 0, 0, 1);
+}
+
+.message_frame{
+    background-color: white;
+    display: block;
+    position: relative;
+    border: 2px solid rgba(25, 118, 210, 1);
+    border-radius: 2px;
+    padding: 5px;
+    max-width: 50vw;
+    margin: 25vh auto;
+    box-shadow: 0px 0px 6px 2px rgba(25, 118, 210, 1);
+}
+
+.viking{
+    position: absolute;
+    max-width: 80px;
+    bottom: 105%;
+    left: -20px;bottom: 105%;
+    left: -20px;
+    transition: 0.3s;
+}
+
+.viking:hover{
+    max-width: 90px;
+    left: -25px;
+}
