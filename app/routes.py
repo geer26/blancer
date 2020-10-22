@@ -6,21 +6,28 @@ from app.models import User
 from workers import verify_login, verifiy_signup
 
 
-@app.route('/', methods=['GET', 'POST'])
-@app.route('/index', methods=['GET', 'POST'])
+@app.route('/')
+@app.route('/index')
 def index():
 
     loginform = LoginForm()
     signupform = SignupForm()
 
-    if request.method == 'POST':
-        user = User.query.filter_by(username=request.form['username']).first()
-        if user.check_password(request.form['password']):
-            login_user(user, remember=request.form['remember_me'])
-            #socket.emit('newmessage', {'event': 122})
-        return redirect('/')
-
     return render_template('index.html', title='Index', loginform=loginform, signupform=signupform)
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    print(request.form)
+    user = User.query.filter_by(username=request.form['username']).first()
+    if user.check_password(request.form['password']):
+        if request.form['remember_me']:
+            login_user(user, remember=True)
+        else:
+            login_user(user)
+        # socket.emit('newmessage', {'event': 122})
+    return redirect('/')
+
 
 @app.route('/logout')
 def logout():
@@ -36,7 +43,7 @@ def newmessage(data):
     sid = request.sid
 
     # incoming login request
-    if data['event'] == 221:
+    '''if data['event'] == 221:
         if verify_login(data):
             mess = {}
             mess['event'] = 121
@@ -49,7 +56,7 @@ def newmessage(data):
             mess['htm'] = render_template('errormessage.html', message='LOGIN NOT SUCCESS!')
             socket.emit('newmessage', mess, room=sid)
 
-        return True
+        return True'''
 
     #incoming request for error message with message
     if data['event'] == 291:
