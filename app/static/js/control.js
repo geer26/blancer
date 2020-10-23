@@ -57,7 +57,19 @@ socket.on('newmessage', function(data){
             });
             }
             break;
+
+        //del this id row from page
+        case 171:
+            {
+                console.log('delete id: ' + data['username']);
+            }
+            break;
     }
 });
 
 
+function deluser(id, name){
+        var data = {userid: id, username: name, event: 271};
+        console.log('I want to del ' + data);
+        send_message('newmessage', data);
+};
