@@ -12,6 +12,7 @@
 #       132 - logout invalid
 #   19X - send error modal
 #       191 - simple error modal with string
+#   17X - remove row from userlist
 #2XX - client-side events
 #   21X - signup
 #      211 - send signup request
@@ -22,3 +23,5 @@
 #       231 - send logout request
 #   29X - request for error modal
 #      291 - request for error modal with message string
+#   27X - Admin operations
+#      271 - delete user witj given username

@@ -5,7 +5,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from app import app, socket, db
 from app.forms import LoginForm, SignupForm
 from app.models import User
-from workers import verify_login, verifiy_signup, hassu
+from workers import verify_login, verifiy_signup, hassu, deluser
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -18,14 +18,18 @@ def index():
     if request.method == 'POST' and not current_user.is_authenticated:
         if loginform.validate_on_submit():
             user = User.query.filter_by(username=loginform.username.data).first()
-            if user is None or not user.check_password(loginform.password.data):
-                #SHOW ERROR!
-                return redirect('/')
 
-            login_user(user, remember=loginform.remember_me.data)
-            user.last_activity = datetime.now()
-            db.session.commit()
-            return redirect('/')
+            if not user or not user.check_password(loginform.password.data):
+                mess = {}
+                mess['event'] = 191
+                mess['htm'] = render_template('errormessage.html', message='Incorrect password or username')
+                socket.emit('newmessage', mess)
+
+            elif user and user.check_password(loginform.password.data):
+                login_user(user, remember=loginform.remember_me.data)
+                user.last_activity = datetime.now()
+                db.session.commit()
+                return redirect('/')
 
     if current_user.is_authenticated and current_user.is_superuser:
         users = User.query.all()
@@ -178,6 +182,16 @@ def newmessage(data):
             socket.emit('newmessage', mess, room=sid)
 
         return True
+
+
+    #delete username
+    if data['event'] == 271:
+        #"I want to delete this user"
+        if deluser(data):
+            mess = {}
+            mess['event'] = 171
+            mess['to_del'] = data['username']
+            socket.emit('newmessage', mess, room=sid)
 
 
     return True

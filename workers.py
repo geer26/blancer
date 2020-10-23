@@ -70,3 +70,7 @@ def verify_login(data):
 
 def errormessage(data):
     pass
+
+
+def deluser(data):
+    return True
