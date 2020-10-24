@@ -74,3 +74,11 @@ def errormessage(data):
 
 def deluser(data):
     return True
+
+
+def getid(username):
+    users = User.query.all()
+    for user in users:
+        if user.username == username:
+            return user.id
+    return False

@@ -5,7 +5,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from app import app, socket, db
 from app.forms import LoginForm, SignupForm
 from app.models import User
-from workers import verify_login, verifiy_signup, hassu, deluser
+from workers import verify_login, verifiy_signup, hassu, deluser, getid
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -16,6 +16,7 @@ def index():
     signupform = SignupForm()
 
     if request.method == 'POST' and not current_user.is_authenticated:
+
         if loginform.validate_on_submit():
             user = User.query.filter_by(username=loginform.username.data).first()
 
@@ -66,7 +67,6 @@ def addsu(suname, password):
     return redirect('/')
 
 
-'''
 @app.route('/bfrb')
 @login_required
 def bfrb():  #swipe database!
@@ -74,16 +74,14 @@ def bfrb():  #swipe database!
         #del all users
         users = User.query.all()
         for user in users:
+
             if not user.is_superuser:
                 db.session.delete(user)
                 db.session.commit()
-        #del all messages
-        messages = Message.query.all()
-        for message in messages:
-            db.session.delete(message)
-            db.session.commit()
 
+        return redirect('/')
 
+'''
 @app.route('/clear_messages')
 @login_required
 def clear_messages():  #swipe messages!
