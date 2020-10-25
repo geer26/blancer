@@ -40,6 +40,7 @@ class User(UserMixin,db.Model):
 
 class Pocket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(40))
     balance = db.Column(db.Integer, default=0)
     last_change = db.Column(db.DateTime, index=True, default=datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -54,6 +55,16 @@ class Transfer(db.Model):
     amount = db.Column(db.Integer, default=0)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.now)
     pocket = db.Column(db.Integer, db.ForeignKey('pocket.id'))
+    category = db.Column(db.Integer, db.ForeignKey('category.id'))
 
     def __repr__(self):
         return self.t_type*self.amount
+
+
+class Category(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(40))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def __repr__(self):
+        return self.name
