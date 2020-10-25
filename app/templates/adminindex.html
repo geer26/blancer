@@ -1,40 +1,25 @@
-
 <div class="container">
-    SUPERUSER INDAHOUSE!
 
-    <a class="waves-effect waves-light btn btn-small red" href="/bfrb" style="border-radius: 2px;">
-        <i class="material-icons left">delete_sweep</i>
-        BFRB
-    </a>
-
-    <table class="responsive-table highlight">
-        <thead>
-          <tr>
-              <th>Username</th>
-              <th>Joined</th>
-              <th>Last active</th>
-          </tr>
-        </thead>
-
-        <tbody>
-        {% for user in users %}
-          <tr id={{user.username}}>
-            <td>
-                <!-- <i class="medium material-icons left"><img src={{user.avatar}} style="max-width: 2vw;"></i> -->
-                <a class="btn-floating btn-small white"><img src={{user.avatar}} style="max-width: 100%;"></a>
-                {{user.username}}
-                {%if not user.is_superuser%}
-                <a class="btn-floating btn-small waves-effect waves-light red" id="{{user.id}}" name="{{user.id}}" onclick="deluser(this)">
-                    <i class="small material-icons">delete</i>
-                </a
-                {%endif%}
-            </td>
-            <td>{{user.joined}}</td>
-            <td>{{user.last_activity}}</td>
-          </tr>
-        {% endfor %}
-        </tbody>
-
-      </table>
+    <div class="carousel carousel-slider center" style="min-height: 85vh; ">
+    <!-- <div class="carousel-fixed-item center">
+      <a class="btn waves-effect white grey-text darken-text-2">button</a>
+    </div> -->
+    <div class="carousel-item red lighten-2" href="#one!">
+        <h2> Users </h2>
+        <p>{% include 'admin_users.html' %}</p>
+    </div>
+    <div class="carousel-item amber white-text" href="#two!">
+        <h2>Pockets</h2>
+        <p>{% include 'admin_pockets.html' %}</p>
+    </div>
+    <div class="carousel-item green white-text" href="#three!">
+        <h2>Third Panel</h2>
+        <p class="white-text">This is your third panel</p>
+    </div>
+    <div class="carousel-item blue white-text" href="#four!">
+        <h2>Fourth Panel</h2>
+        <p class="white-text">This is your fourth panel</p>
+    </div>
+  </div>
 
 </div>

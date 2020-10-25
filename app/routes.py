@@ -4,7 +4,7 @@ from flask import render_template, redirect, request
 from flask_login import current_user, login_user, logout_user, login_required
 from app import app, socket, db
 from app.forms import LoginForm, SignupForm
-from app.models import User
+from app.models import User, Pocket
 from workers import verify_login, verifiy_signup, hassu, deluser, getid
 
 
@@ -34,9 +34,12 @@ def index():
 
     if current_user.is_authenticated and current_user.is_superuser:
         users = User.query.all()
-        return render_template('index.html', title='SU index', loginform=loginform, signupform=signupform, users=users)
+        pockets = Pocket.query.all()
+        return render_template('index.html', title='SU index', loginform=loginform, signupform=signupform, users=users, pockets=pockets)
+
     elif current_user.is_authenticated and not current_user.is_superuser:
         return render_template('index.html', title='Index', loginform=loginform, signupform=signupform)
+
     else:
         return render_template('index.html', title='Index', loginform=loginform, signupform=signupform)
 
@@ -67,9 +70,9 @@ def addsu(suname, password):
     return redirect('/')
 
 
-@app.route('/bfrb')
+@app.route('/del_users')
 @login_required
-def bfrb():  #swipe database!
+def del_users():  #swipe database!
     if current_user.is_superuser:
         #del all users
         users = User.query.all()
@@ -79,6 +82,17 @@ def bfrb():  #swipe database!
                 db.session.delete(user)
                 db.session.commit()
 
+        return redirect('/')
+
+@app.route('/del_pockets')
+@login_required
+def del_pockets():  #swipe database!
+    if current_user.is_superuser:
+        #del all users
+        pockets = Pocket.query.all()
+        for pocket in pockets:
+            db.session.delete(pocket)
+            db.session.commit()
         return redirect('/')
 
 '''

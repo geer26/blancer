@@ -41,9 +41,11 @@ class User(UserMixin,db.Model):
 class Pocket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40))
+    description = db.Column(db.String(120), default='')
     balance = db.Column(db.Integer, default=0)
     last_change = db.Column(db.DateTime, index=True, default=datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', backref=db.backref('posts', lazy=True))
 
     def __repr__(self):
         return self.balance

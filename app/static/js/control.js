@@ -11,6 +11,12 @@ $('.modal').modal({
 });
 
 
+$('.carousel.carousel-slider').carousel({
+    fullWidth: true,
+    indicators: true
+  });
+
+
 $('#signupbutton').click(function(){
     if ( $('#signup_username').val() && $('#signup_email').val() && $('#signup_password').val() && $('#signup_password2').val() && $('#signup_agree').prop('checked') ){
         var data = {

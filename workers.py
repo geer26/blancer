@@ -1,7 +1,7 @@
 import re
 
 from app import app,socket,db
-from app.models import User
+from app.models import User, Pocket
 from datetime import datetime, date, timedelta
 
 
@@ -54,6 +54,9 @@ def verifiy_signup(data):
     u.joined = date.today()
     u.last_activity = datetime.now()
     db.session.add(u)
+    p = Pocket(name='default', user=u)
+    db.session.add(p)
+
     db.session.commit()
 
     return 0

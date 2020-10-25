@@ -1,0 +1,35 @@
+    <a class="waves-effect waves-light btn btn-small red" href="/del_pockets" style="border-radius: 2px;">
+        <i class="material-icons left">delete_sweep</i>
+        delete all
+    </a>
+
+    <table class="responsive-table highlight">
+        <thead>
+          <tr>
+              <th>ID</th>
+              <th>Pocket name</th>
+              <th>Balance</th>
+              <th>Last changed</th>
+              <th>User ID</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        {% for pocket in pockets %}
+          <tr id={{pocket.id}}>
+              <td>{{pocket.id}}</td>
+              <td>
+                {{pocket.name}}
+                <a class="btn-floating btn-small waves-effect waves-light red">
+                    <i class="small material-icons">delete</i>
+                </a>
+            </td>
+              <td>{{pocket.balance}}</td>
+              <td>{{pocket.last_change}}</td>
+              <td>{{pocket.user_id}}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+
+
+    </table>
