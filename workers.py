@@ -73,7 +73,13 @@ def errormessage(data):
 
 
 def deluser(data):
-    return True
+    #print(data['userid'])
+    u = User.query.get(int(data['userid']))
+    if not u : return False
+    if not u.is_superuser:
+        db.session.delete(u)
+        db.session.commit()
+        return u.username
 
 
 def getid(username):

@@ -184,15 +184,11 @@ def newmessage(data):
 
     #delete username
     if data['event'] == 271:
-        #"I want to delete this user"
-        print('someone want to del '+ str(data))
-        if deluser(data):
+        if current_user.is_superuser:
             mess = {}
             mess['event'] = 171
-            mess['to_del'] = data['username']
+            mess['to_del'] = deluser(data)
             socket.emit('newmessage', mess, room=sid)
-            print('Delete performed, message sent back!')
-
         return True
 
 
