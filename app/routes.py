@@ -5,7 +5,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from app import app, socket, db
 from app.forms import LoginForm, SignupForm
 from app.models import User, Pocket
-from workers import verify_login, verifiy_signup, hassu, deluser, getid, addpocket
+from workers import verify_login, verifiy_signup, hassu, deluser, getid, addpocket, delpocket
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -211,6 +211,14 @@ def newmessage(data):
         socket.emit('newmessage', mess, room=sid)
 
 
+    #user want to del a pocket
+    if data['event'] == 242 and current_user.is_authenticated:
+        mess = {}
+        mess['event'] = 142
+        mess['htm'] = render_template('delpocket_confirm.html', p_id=data['p_id'])
+        socket.emit('newmessage', mess, room=sid)
+
+
     #user send a new pocket data
     if data['event'] == 243 and current_user.is_authenticated:
         if addpocket(data,current_user):
@@ -221,6 +229,18 @@ def newmessage(data):
             mess['event'] = 148
             mess['status'] = 1
             mess['htm'] = render_template('usercarousel.html', pockets=pockets)
+            socket.emit('newmessage', mess, room=sid)
+        return True
+
+
+    #user confirms to delete a pocket
+    if data['event'] == 244 and current_user.is_authenticated:
+
+        if delpocket(data):
+            mess = {}
+            mess['event'] = 149
+            mess['status'] = 1
+            mess['pid'] = 'uc_'+str(data['p_id'])
             socket.emit('newmessage', mess, room=sid)
         return True
 

@@ -40,6 +40,7 @@
 #       241 - user want to add a pocket
 #       242 - user want to del a pocket
 #       243 - user send pocket data
+#       244 - user confirms delete pocket
 
 #   25X - transfer events
 

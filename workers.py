@@ -110,3 +110,11 @@ def addpocket(data,u):
     db.session.add(p)
     db.session.commit()
     return True
+
+
+def delpocket(data):
+    p = Pocket.query.get(int(data['p_id']))
+    if not p: return False
+    db.session.delete(p)
+    db.session.commit()
+    return True

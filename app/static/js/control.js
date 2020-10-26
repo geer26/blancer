@@ -21,9 +21,6 @@ $(document).ready(function(){
   });
 
 
-
-
-
 $('#signupbutton').click(function(){
     if ( $('#signup_username').val() && $('#signup_email').val() && $('#signup_password').val() && $('#signup_password2').val() && $('#signup_agree').prop('checked') ){
         var data = {
@@ -45,9 +42,9 @@ $('#signupbutton').click(function(){
 //event dispatcher
 socket.on('newmessage', function(data){
     switch (data['event']){
+
         //signed up, user created! - READY
-        case 111:
-            {
+        case 111:{
             $('#signup_username').val('');
             $('#signup_email').val('');
             $('#signup_password').val('');
@@ -62,8 +59,7 @@ socket.on('newmessage', function(data){
             break;
 
         //here is an error message, show it to user! - READY
-        case 191:
-            {
+        case 191:{
             $('#pagecontent').append(data['htm']);
             $('#error_modal').click(function(){
                 $('#error_modal').remove();
@@ -71,9 +67,8 @@ socket.on('newmessage', function(data){
             }
             break;
 
-        //here is an addpocket modal, use it wisely!
-        case 141:
-            {
+        //here is an addpocket modal, use it wisely! - READY
+        case 141:{
             $('#pagecontent').append(data['htm']);
             $('#close_modal').click(function(){
                 $('#addpocket_modal').remove();
@@ -100,7 +95,25 @@ socket.on('newmessage', function(data){
             break;
 
 
-        //pocket created successfully, close modal!
+       //user must confirm deletion of pocket - READY
+       case 142:{
+            $('#pagecontent').append(data['htm']);
+            $('#cancelbutton').click(function(){
+                $('#delpocket_confirm').remove();
+            });
+            $('#delbutton').click(function(){
+                var data = {
+                    event: 244,
+                    p_id: $('#p_id').text()
+                };
+                send_message('newmessage', data);
+                $('#delpocket_confirm').remove();
+            });
+            }
+            break;
+
+
+        //pocket created successfully, close modal! - READY
         case 148:{
             $('#addpocket_modal').remove();
             $('#usercarousel').remove();
@@ -110,9 +123,16 @@ socket.on('newmessage', function(data){
             break;
 
 
+        //pocket deleted successfully, refresh page! - READY
+        case 149:{
+            $('#'+data['pid']).remove();
+            location.reload();
+            }
+            break;
+
+
         //del this id row from page
-        case 171:
-            {
+        case 171:{
                 $('#'+data['to_del']).remove();
             }
             break;
@@ -128,5 +148,11 @@ function deluser(e){
 
 function addpocket(){
     var data ={event: 241};
+    send_message('newmessage', data);
+};
+
+
+function delpocket(pocket_id){
+    var data = {event: 242, p_id: pocket_id};
     send_message('newmessage', data);
 };
