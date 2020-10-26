@@ -5,7 +5,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from app import app, socket, db
 from app.forms import LoginForm, SignupForm
 from app.models import User, Pocket
-from workers import verify_login, verifiy_signup, hassu, deluser, getid
+from workers import verify_login, verifiy_signup, hassu, deluser, getid, addpocket
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -200,7 +200,27 @@ def newmessage(data):
             for pocket in pockets:
                 mess['to_del'] = pocket.id
                 socket.emit('newmessage', mess, room=sid)
-
         return True
 
+
+    #user want to add a pocket
+    if data['event'] == 241 and current_user.is_authenticated:
+        mess = {}
+        mess['event'] = 141
+        mess['htm'] = render_template('addpocket_modal.html')
+        socket.emit('newmessage', mess, room=sid)
+
+
+    #user send a new pocket data
+    if data['event'] == 243 and current_user.is_authenticated:
+        if addpocket(data,current_user):
+
+            pockets = Pocket.query.filter_by(user_id=current_user.id).all()
+
+            mess = {}
+            mess['event'] = 148
+            mess['status'] = 1
+            mess['htm'] = render_template('usercarousel.html', pockets=pockets)
+            socket.emit('newmessage', mess, room=sid)
+        return True
 

@@ -3,7 +3,16 @@
     {% for pocket in pockets %}
 
     <div class="carousel-item" style="border:2px solid green;" href="#one!">
-      <h2 style=" margin-top: 10px; ">{{pocket.name}}</h2>
+
+        <div class="fixed-action-btn delpocket" id="delpocket_{{pocket.id}}">
+
+            <a class="btn-floating btn red">
+                <i class="large material-icons">delete</i>
+            </a>
+
+        </div>
+
+      <h2 style=" margin-top: 10px; margin-left: 10px;" class="left-align">{{pocket.name}}</h2>
       <h1
       {% if pocket.balance >= 0%}
           class = "green-text darken-2"

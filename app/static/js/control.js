@@ -6,19 +6,22 @@ function send_message(e_name,message){
 };
 
 
-$('.modal').modal({
-
-});
-
 $(document).ready(function(){
-    $('.fixed-action-btn').floatingActionButton();
-  });
+    $('.fixed-action-btn').floatingActionButton({
+    });
 
-
-$('.carousel.carousel-slider').carousel({
+    $('.carousel.carousel-slider').carousel({
     fullWidth: true,
     indicators: true
+    });
+
+    $('.modal').modal({
+    });
+
   });
+
+
+
 
 
 $('#signupbutton').click(function(){
@@ -68,6 +71,45 @@ socket.on('newmessage', function(data){
             }
             break;
 
+        //here is an addpocket modal, use it wisely!
+        case 141:
+            {
+            $('#pagecontent').append(data['htm']);
+            $('#close_modal').click(function(){
+                $('#addpocket_modal').remove();
+                });
+            $('#add_pocket').click(function(){
+                //include check!
+                if ($('#addp_bal').val()!='' && isNaN($('#addp_bal').val())){
+                    var data ={event: 291, message:'Initial balance must be a nuber or leave it blank!'};
+                    send_message('newmessage', data);
+                    $('#addp_bal').val('');
+                }
+
+                else if (!$('#addp_name').val()){
+                    var data ={event: 291, message:'A name must be set for this pocket!'};
+                    send_message('newmessage', data);
+                }
+
+                else {
+                    var data ={ event: 243, p_name: $('#addp_name').val(), p_desc: $('#addp_desc').val(), p_balance: $('#addp_bal').val() };
+                    send_message('newmessage', data);
+                }
+                });
+            }
+            break;
+
+
+        //pocket created successfully, close modal!
+        case 148:{
+            $('#addpocket_modal').remove();
+            $('#usercarousel').remove();
+            $('#uc').append(data['htm']);
+            location.reload();
+            }
+            break;
+
+
         //del this id row from page
         case 171:
             {
@@ -81,4 +123,10 @@ socket.on('newmessage', function(data){
 function deluser(e){
         var data = {userid: e.id, event: 271};
         send_message('newmessage', data);
+};
+
+
+function addpocket(){
+    var data ={event: 241};
+    send_message('newmessage', data);
 };

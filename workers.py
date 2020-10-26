@@ -84,10 +84,29 @@ def deluser(data):
         return u.username
 
 
-
 def getid(username):
     users = User.query.all()
     for user in users:
         if user.username == username:
             return user.id
     return False
+
+
+def addpocket(data,u):
+    p=Pocket(user=u)
+
+    p.name = data['p_name']
+
+    if data['p_desc'] and data['p_desc'] != '':
+        p.description = data['p_desc']
+    else:
+        p.description = 'none'
+
+    if data['p_balance'] and data['p_balance'] != '':
+        p.balance = int(data['p_balance'])
+    else:
+        p.balance = 0
+
+    db.session.add(p)
+    db.session.commit()
+    return True

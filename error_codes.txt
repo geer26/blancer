@@ -14,6 +14,12 @@
 #       131 - logout ok
 #       132 - logout invalid
 
+#   14X - pocket events
+#       141 - send addpocket modal
+#       142 - send delform modal
+#       148 - pocket added succesfully
+#       149 - pocket deleted successfully
+
 #   19X - send error modal
 #       191 - simple error modal with string
 
@@ -33,6 +39,7 @@
 #   24X - pocket events
 #       241 - user want to add a pocket
 #       242 - user want to del a pocket
+#       243 - user send pocket data
 
 #   25X - transfer events
 
