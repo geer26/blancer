@@ -2,9 +2,13 @@
 
     {% for pocket in pockets %}
 
-    <div class="carousel-item" style="border:2px solid green;" href="#one!" id="uc_{{pocket.id}}">
+    <div class="carousel-item" style="border:2px solid green;" href="#one!" id="uc_{{pocket.id}}" name="{{pocket.id}}">
 
         <div class="fixed-action-btn delpocket">
+
+            <a class="btn-floating btn amber" onclick="random_transfers()">
+                <i class="large material-icons">help</i>
+            </a>
 
             <a class="btn-floating btn red" onclick="delpocket({{pocket.id}})">
                 <i class="large material-icons">delete</i>

@@ -4,8 +4,8 @@ from flask import render_template, redirect, request
 from flask_login import current_user, login_user, logout_user, login_required
 from app import app, socket, db
 from app.forms import LoginForm, SignupForm
-from app.models import User, Pocket
-from workers import verify_login, verifiy_signup, hassu, deluser, getid, addpocket, delpocket
+from app.models import User, Pocket, Transfer
+from workers import verify_login, verifiy_signup, hassu, deluser, getid, addpocket, delpocket, generate
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -242,5 +242,13 @@ def newmessage(data):
             mess['status'] = 1
             mess['pid'] = 'uc_'+str(data['p_id'])
             socket.emit('newmessage', mess, room=sid)
+        return True
+
+
+    #DEV section
+    # user asks for random transfers to generate
+    if data['event'] == 410 and current_user.is_authenticated:
+        p_id = data['pid'].split('_')[-1]
+        generate(100,[1000,15000], p_id)
         return True
 

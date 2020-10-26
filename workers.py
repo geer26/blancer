@@ -1,8 +1,11 @@
 import re
 
 from app import app,socket,db
-from app.models import User, Pocket
+from app.models import User, Pocket, Transfer
 from datetime import datetime, date, timedelta
+
+import random
+from random import randrange
 
 
 def validate_email(email):
@@ -117,4 +120,49 @@ def delpocket(data):
     if not p: return False
     db.session.delete(p)
     db.session.commit()
+    return True
+
+
+def random_date(start, end):
+    """
+    This function will return a random datetime between two datetime
+    objects.
+    """
+    start = datetime(start[0], start[1], start[2], 0, 0, 0)
+    end = datetime(end[0], end[1], end[2], 23, 59, 59)
+
+    delta = end - start
+    int_delta = (delta.days * 24 * 60 * 60) + delta.seconds
+    random_second = randrange(int_delta)
+    return (start + timedelta(seconds=random_second))
+
+
+def generate(iters=100, amount=[1000, 15000], poc=1):
+
+    p = Pocket.query.get(int(poc))
+    actual_balance = p.balance
+
+    for i in range(iters):
+        tr = Transfer()
+
+        r = {}
+        types = [-1, 1]
+        r['type'] = random.choice(types)
+        r['amount'] = randrange(amount[0], amount[1] + 1)
+        r['timestamp'] = random_date([2018, 2, 3], [2020, 10, 24])
+        r['pocket'] = int(poc)
+
+        actual_balance = r['type']*r['amount']
+
+        tr.pocket = int(poc)
+        tr.amount = r['amount']
+        tr.t_type = r['type']
+        tr.timestamp = r['timestamp']
+        tr.cba = actual_balance
+
+        db.session.add(tr)
+
+    p.balance =actual_balance
+    db.session.commit()
+
     return True

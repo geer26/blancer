@@ -1,6 +1,5 @@
 import csv
 import random
-from random import randint
 from random import randrange
 from datetime import timedelta, datetime
 
@@ -12,7 +11,7 @@ def random_date(start, end):
     objects.
     """
     start = datetime(start[0], start[1], start[2], 0, 0, 0)
-    end = datetime(end[0], end[1], end[2], 0, 0, 0 )
+    end = datetime(end[0], end[1], end[2], 23, 59, 59 )
     
     delta = end - start
     int_delta = (delta.days * 24 * 60 * 60) + delta.seconds

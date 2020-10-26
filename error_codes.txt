@@ -24,7 +24,7 @@
 #       191 - simple error modal with string
 
 #   17X - remove row from userlist
-
+<------------------------------------------------------------>
 #2XX - client-side events
 #   21X - signup
 #      211 - send signup request
@@ -49,3 +49,6 @@
 
 #   27X - Admin operations
 #      271 - delete user witj given username
+<------------------------------------------------------------>
+#   4XX - Dev operations
+#       410 - Ask for random transfers

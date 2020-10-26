@@ -56,9 +56,10 @@ class Transfer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     t_type = db.Column(db.Integer, default=1)
     amount = db.Column(db.Integer, default=0)
+    #current balance after
+    cba = db.Column(db.Integer)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.now)
     pocket = db.Column(db.Integer, db.ForeignKey('pocket.id'))
-    category = db.Column(db.Integer, db.ForeignKey('category.id'))
 
     def __repr__(self):
         return self.t_type*self.amount
