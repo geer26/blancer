@@ -199,10 +199,19 @@ def newmessage(data):
     #delete username
     if data['event'] == 271:
         if current_user.is_superuser:
+
             mess = {}
             mess['event'] = 171
             mess['to_del'] = deluser(data)
             socket.emit('newmessage', mess, room=sid)
+
+            pockets = Pocket.query.filter_by(user_id=int(data['userid'])).all()
+            mess = {}
+            mess['event'] = 171
+            for pocket in pockets:
+                mess['to_del'] = pocket.id
+                socket.emit('newmessage', mess, room=sid)
+
         return True
 
 

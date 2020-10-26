@@ -23,6 +23,7 @@ class User(UserMixin,db.Model):
     joined = db.Column(db.Date)
     last_activity = db.Column(db.DateTime)
     avatar = db.Column(db.String(128), default='/static/img/avatars/a_unknown.png')
+    pockets = db.relationship('Pocket', backref='user', cascade = 'all,delete')
 
     def __repr__(self):
         return self.username
@@ -45,7 +46,7 @@ class Pocket(db.Model):
     balance = db.Column(db.Integer, default=0)
     last_change = db.Column(db.DateTime, index=True, default=datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    user = db.relationship('User', backref=db.backref('posts', lazy=True))
+    transfers = db.relationship('Transfer', backref='pocket_')
 
     def __repr__(self):
         return self.balance
