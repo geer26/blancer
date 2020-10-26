@@ -38,7 +38,8 @@ def index():
         return render_template('index.html', title='SU index', loginform=loginform, signupform=signupform, users=users, pockets=pockets)
 
     elif current_user.is_authenticated and not current_user.is_superuser:
-        return render_template('index.html', title='Index', loginform=loginform, signupform=signupform)
+        pockets = Pocket.query.filter_by( user_id = current_user.id ).all()
+        return render_template('index.html', title='Index', loginform=loginform, signupform=signupform, pockets=pockets)
 
     else:
         return render_template('index.html', title='Index', loginform=loginform, signupform=signupform)
@@ -84,6 +85,7 @@ def del_users():  #swipe database!
 
         return redirect('/')
 
+
 @app.route('/del_pockets')
 @login_required
 def del_pockets():  #swipe database!
@@ -94,19 +96,6 @@ def del_pockets():  #swipe database!
             db.session.delete(pocket)
             db.session.commit()
         return redirect('/')
-
-'''
-@app.route('/clear_messages')
-@login_required
-def clear_messages():  #swipe messages!
-    if current_user.is_superuser:
-        #del all messages
-        messages = Message.query.all()
-        for message in messages:
-            db.session.delete(message)
-            db.session.commit()
-    return redirect('/')
-'''
 
 
 @socket.on('newmessage')

@@ -1,27 +1,43 @@
 #event codes
+
 #1XX - server-side events
 #   11X - send signup status
 #       111 - signup ok
 #       119 - signup invalid
+
 #   12X - send login status
 #       121 - login ok - send loginform
 #       122 - logged in
 #       129 - login invalid
+
 #   13X - send logout status
 #       131 - logout ok
 #       132 - logout invalid
+
 #   19X - send error modal
 #       191 - simple error modal with string
+
 #   17X - remove row from userlist
+
 #2XX - client-side events
 #   21X - signup
 #      211 - send signup request
+
 #   22X - login
 #       221 - send login request
 #       223 - sending loginform
+
 #   23X - logout
 #       231 - send logout request
+
+#   24X - pocket events
+#       241 - user want to add a pocket
+#       242 - user want to del a pocket
+
+#   25X - transfer events
+
 #   29X - request for error modal
 #      291 - request for error modal with message string
+
 #   27X - Admin operations
 #      271 - delete user witj given username
