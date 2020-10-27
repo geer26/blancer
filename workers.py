@@ -5,6 +5,7 @@ from pygal.style import DarkSolarizedStyle, CleanStyle
 from app import app,socket,db
 from app.models import User, Pocket, Transfer
 from datetime import datetime, date, timedelta
+from dateutil.relativedelta import *
 
 import random
 from random import randrange
@@ -34,6 +35,25 @@ def tranfers_by_dates(startdate, days, tf):
     return transfers
 
 
+def transfers_for_year(tf):
+    begindate = datetime.now() - timedelta(days=365)
+    enddate = datetime.now()
+    transfers = {}
+    dates = []
+
+    while enddate > begindate:
+        beg_end = []
+        beg_end.append(begindate)
+        beg_end.append(begindate + relativedelta(months=+1))
+        dates.append(beg_end)
+        begindate += relativedelta(months=+1)
+
+    print(len(dates))
+    for b_e in dates:
+        print(b_e)
+    return
+
+
 def pygaltest(u):
     charts = {}
     id = u.id
@@ -47,7 +67,7 @@ def pygaltest(u):
     for p in pockets:
 
         # get transfers related to pocket
-        trfs = Transfer.query.filter_by(pocket=p.id).all()
+        trfs = Transfer.query.order_by(Transfer.timestamp).filter_by(pocket=p.id).all()
 
         # iter over the transfers
         for tr in trfs:
@@ -63,6 +83,8 @@ def pygaltest(u):
 
         #get transfers by days back
         #tranfers_by_dates(datetime.now(), 213, transferlist)
+
+        transfers_for_year(transferlist)
 
         one_year = tranfers_by_dates(datetime.now(), 365, transferlist)
         yearly_in = []
@@ -89,7 +111,7 @@ def pygaltest(u):
         )
 
         transfers_yearly.title = 'yearly sum of ' + str(p.name)
-        transfers_yearly.x_labels = map(str, range(12, 0))
+        transfers_yearly.x_labels = map(str, range(0, 12))
         transfers_yearly.add('Income', yearly_in)
         transfers_yearly.add('Expense', yearly_exp)
         #transfers_yearly.add('Balance', yearly_balance)
