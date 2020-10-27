@@ -10,6 +10,7 @@ function send_message(e_name,message){
 
 $(document).ready(function(){
     $('.fixed-action-btn').floatingActionButton({
+
     });
 
 
@@ -19,12 +20,13 @@ $(document).ready(function(){
     onCycleTo: function(data) {
       current_slide = data.id;
       //when user changes page, current slid id will be stored in current_slide as "uc_XXX", where XXX is the id of the pocket
-      console.log(current_slide);
+      //console.log(current_slide);
     }
     });
 
 
     $('.modal').modal({
+
     });
 
   });
@@ -165,6 +167,7 @@ function delpocket(pocket_id){
     var data = {event: 242, p_id: pocket_id};
     send_message('newmessage', data);
 };
+
 
 function random_transfers(){
     var data = {event: 410, pid: current_slide};

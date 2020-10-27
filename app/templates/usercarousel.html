@@ -2,7 +2,7 @@
 
     {% for pocket in pockets %}
 
-    <div class="carousel-item" style="border:2px solid green;" href="#one!" id="uc_{{pocket.id}}" name="{{pocket.id}}">
+    <div class="carousel-item" style="border:2px solid green; overflow: auto;" href="#one!" id="uc_{{pocket.id}}" name="{{pocket.id}}">
 
         <div class="fixed-action-btn delpocket">
 
@@ -16,14 +16,19 @@
 
         </div>
 
-      <h2 style=" margin-top: 10px; margin-left: 10px;" class="left-align">{{pocket.name}}</h2>
-      <h1
-      {% if pocket.balance >= 0%}
+        <h2 style=" margin-top: 10px; margin-left: 10px;" class="left-align">{{pocket.name}}</h2>
+        <h1
+        {% if pocket.balance >= 0%}
           class = "green-text darken-2"
-      {% else %}
+         {% else %}
           class = "red-text darken-2"
-      {% endif %}
-      >{{pocket.balance}}</h1>
+        {% endif %}
+        >{{pocket.balance}}</h1>
+
+        <div id="charts">
+            <embed type="image/svg+xml" src= {{charts[pocket.id|string+'_year'].render_data_uri()|safe}} />
+        </div>
+
     </div>
 
     {% endfor %}

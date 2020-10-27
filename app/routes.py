@@ -5,7 +5,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from app import app, socket, db
 from app.forms import LoginForm, SignupForm
 from app.models import User, Pocket, Transfer
-from workers import verify_login, verifiy_signup, hassu, deluser, getid, addpocket, delpocket, generate
+from workers import verify_login, verifiy_signup, hassu, deluser, getid, addpocket, delpocket, generate, pygaltest
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -35,13 +35,22 @@ def index():
     if current_user.is_authenticated and current_user.is_superuser:
         users = User.query.all()
         pockets = Pocket.query.all()
-        return render_template('index.html', title='SU index', loginform=loginform, signupform=signupform, users=users, pockets=pockets)
+        transfers = Transfer.query.order_by(Transfer.timestamp).all()
+
+        return render_template('index.html', title='SU index', loginform=loginform, signupform=signupform,\
+                               users=users, pockets=pockets, transfers=transfers)
 
     elif current_user.is_authenticated and not current_user.is_superuser:
         pockets = Pocket.query.filter_by( user_id = current_user.id ).all()
-        return render_template('index.html', title='Index', loginform=loginform, signupform=signupform, pockets=pockets)
+
+        u=current_user
+
+        charts = pygaltest(u)
+
+        return render_template('index.html', title='Index', loginform=loginform, signupform=signupform, pockets=pockets, charts=charts)
 
     else:
+
         return render_template('index.html', title='Index', loginform=loginform, signupform=signupform)
 
 
@@ -95,6 +104,14 @@ def del_pockets():  #swipe database!
         for pocket in pockets:
             db.session.delete(pocket)
             db.session.commit()
+        return redirect('/')
+
+
+@app.route('/del_pockets')
+@login_required
+def del_transfers():  #swipe database!
+    if current_user.is_superuser:
+
         return redirect('/')
 
 

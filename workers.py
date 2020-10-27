@@ -1,11 +1,103 @@
 import re
 
+from pygal.style import DarkSolarizedStyle, CleanStyle
+
 from app import app,socket,db
 from app.models import User, Pocket, Transfer
 from datetime import datetime, date, timedelta
 
 import random
 from random import randrange
+
+import pygal
+
+
+def tranfers_by_dates(startdate, days, tf):
+    transfers = {}
+    min = []
+    plu = []
+
+    d = startdate - timedelta(days)
+
+    for t in tf:
+        if t['timestamp'] >= d:
+            if t['value'] <= 0:
+                min.append(t)
+            else:
+                plu.append(t)
+
+    transfers['minus'] = min
+    transfers['plus'] = plu
+
+    #print(transfers)
+
+    return transfers
+
+
+def pygaltest(u):
+    charts = {}
+    id = u.id
+    transferlist = []
+    transfers = {}
+
+    # get pockets related to current user
+    pockets = Pocket.query.filter_by(user_id=id).all()
+
+    # iter over the pockets
+    for p in pockets:
+
+        # get transfers related to pocket
+        trfs = Transfer.query.filter_by(pocket=p.id).all()
+
+        # iter over the transfers
+        for tr in trfs:
+            transfer = {}
+            # create dict from transfer
+            transfer['timestamp'] = tr.timestamp
+            transfer['current_balance'] = tr.cba
+            transfer['id'] = tr.id
+            transfer['value'] = tr.t_type*tr.amount
+
+            # add current transfer dict to transferlist
+            transferlist.append(transfer)
+
+        #get transfers by days back
+        #tranfers_by_dates(datetime.now(), 213, transferlist)
+
+        one_year = tranfers_by_dates(datetime.now(), 365, transferlist)
+        yearly_in = []
+        yearly_exp = []
+        yearly_balance = []
+        for income in one_year['plus']:
+            yearly_in.append(income['value'])
+            yearly_balance.append(income['current_balance'])
+        for expense in one_year['minus']:
+            yearly_exp.append(expense['value'])
+            yearly_balance.append(expense['current_balance'])
+
+        # add all transfers related to pocket
+        transfers[p.id] = transferlist
+
+        # create yearly chart from transfers
+        transfers_yearly = pygal.Line(
+            height=200,
+            width=600,
+            is_unicode=True,
+            interpolate='cubic',
+            fill = False,
+            style=CleanStyle,
+        )
+
+        transfers_yearly.title = 'yearly sum of ' + str(p.name)
+        transfers_yearly.x_labels = map(str, range(12, 0))
+        transfers_yearly.add('Income', yearly_in)
+        transfers_yearly.add('Expense', yearly_exp)
+        #transfers_yearly.add('Balance', yearly_balance)
+
+        # add all transfers related to pocket
+        charts[str(p.id)+'_year'] = transfers_yearly
+
+    return charts
 
 
 def validate_email(email):

@@ -1,0 +1,28 @@
+    <a class="waves-effect waves-light btn btn-small red" href="/del_transfers" style="border-radius: 2px;">
+        <i class="material-icons left">delete_sweep</i>
+        delete all
+    </a>
+
+    <table class="responsive-table highlight">
+        <thead>
+          <tr>
+              <th>ID</th>
+              <th>Timestamp</th>
+              <th>Amount</th>
+              <th>Pocket ID</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        {% for transfer in transfers %}
+          <tr id={{transfer.id}}>
+              <td>{{transfer.id}}</td>
+              <td>{{transfer.timestamp}}</td>
+              <td>{{transfer.t_type*transfer.amount}}</td>
+              <td>{{transfer.pocket}}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+
+
+    </table>
