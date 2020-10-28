@@ -13,45 +13,40 @@ from random import randrange
 import pygal
 
 
-def tranfers_by_dates(startdate, days, tf):
-    transfers = {}
-    min = []
-    plu = []
 
-    d = startdate - timedelta(days)
+def dates_for_year(tf):
 
-    for t in tf:
-        if t['timestamp'] >= d:
-            if t['value'] <= 0:
-                min.append(t)
-            else:
-                plu.append(t)
+    returnvalue = {}
 
-    transfers['minus'] = min
-    transfers['plus'] = plu
-
-    #print(transfers)
-
-    return transfers
-
-
-def transfers_for_year(tf):
     begindate = datetime.now() - timedelta(days=365)
     enddate = datetime.now()
-    transfers = {}
     dates = []
+    incomes = []
+    expenses = []
+    cb = []
+
+    for transfer in tf:
+        if enddate > transfer['timestamp'] > begindate:
+
+            if transfer['value'] >= 0:
+                incomes.append( (transfer['timestamp'].timestamp(), transfer['value']) )
+            else:
+                expenses.append( (transfer['timestamp'].timestamp(), transfer['value']) )
+
+            cb.append( (transfer['timestamp'].timestamp(), transfer['current_balance']) )
 
     while enddate > begindate:
-        beg_end = []
-        beg_end.append(begindate)
-        beg_end.append(begindate + relativedelta(months=+1))
-        dates.append(beg_end)
+        dates.append(begindate.date())
         begindate += relativedelta(months=+1)
 
-    print(len(dates))
-    for b_e in dates:
-        print(b_e)
-    return
+    dates.append(date.today())
+
+    returnvalue['xaxis'] = dates
+    returnvalue['incomes'] = incomes
+    returnvalue['expenses'] = expenses
+    returnvalue['balance'] = cb
+
+    return returnvalue
 
 
 def pygaltest(u):
@@ -81,40 +76,30 @@ def pygaltest(u):
             # add current transfer dict to transferlist
             transferlist.append(transfer)
 
-        #get transfers by days back
-        #tranfers_by_dates(datetime.now(), 213, transferlist)
-
-        transfers_for_year(transferlist)
-
-        one_year = tranfers_by_dates(datetime.now(), 365, transferlist)
-        yearly_in = []
-        yearly_exp = []
-        yearly_balance = []
-        for income in one_year['plus']:
-            yearly_in.append(income['value'])
-            yearly_balance.append(income['current_balance'])
-        for expense in one_year['minus']:
-            yearly_exp.append(expense['value'])
-            yearly_balance.append(expense['current_balance'])
-
         # add all transfers related to pocket
         transfers[p.id] = transferlist
 
+        yearly_data = dates_for_year(transferlist)
+
         # create yearly chart from transfers
-        transfers_yearly = pygal.Line(
+        transfers_yearly = pygal.DateLine(
             height=200,
             width=600,
             is_unicode=True,
+            x_label_rotation=45,
             interpolate='cubic',
             fill = False,
             style=CleanStyle,
+            show_dots=False
         )
 
+        transfers_yearly.x_labels = yearly_data['xaxis']
+
         transfers_yearly.title = 'yearly sum of ' + str(p.name)
-        transfers_yearly.x_labels = map(str, range(0, 12))
-        transfers_yearly.add('Income', yearly_in)
-        transfers_yearly.add('Expense', yearly_exp)
-        #transfers_yearly.add('Balance', yearly_balance)
+
+        transfers_yearly.add('Income', yearly_data['incomes'])
+        transfers_yearly.add('Expense', yearly_data['expenses'])
+        #transfers_yearly.add('Balance', yearly_data['balance'])
 
         # add all transfers related to pocket
         charts[str(p.id)+'_year'] = transfers_yearly
