@@ -77,29 +77,30 @@ def pygaltest(u):
             transferlist.append(transfer)
 
         # add all transfers related to pocket
-        transfers[p.id] = transferlist
+        #transfers[p.id] = transferlist
 
         yearly_data = dates_for_year(transferlist)
 
         # create yearly chart from transfers
         transfers_yearly = pygal.DateLine(
-            height=200,
-            width=600,
+            #height=200,
+            #width=600,
             is_unicode=True,
             x_label_rotation=45,
-            interpolate='cubic',
-            fill = False,
-            style=CleanStyle,
-            show_dots=False
+            #interpolate='hermite',
+            fill = True,
+            stroke = False,
+            #style=CleanStyle,
+            #show_dots=False
         )
 
         transfers_yearly.x_labels = yearly_data['xaxis']
 
         transfers_yearly.title = 'yearly sum of ' + str(p.name)
 
-        transfers_yearly.add('Income', yearly_data['incomes'])
-        transfers_yearly.add('Expense', yearly_data['expenses'])
-        #transfers_yearly.add('Balance', yearly_data['balance'])
+        transfers_yearly.add('Income', yearly_data['incomes'], show_dots=True)
+        transfers_yearly.add('Expense', yearly_data['expenses'], show_dots=True)
+        transfers_yearly.add('Balance', yearly_data['balance'], stroke = True)
 
         # add all transfers related to pocket
         charts[str(p.id)+'_year'] = transfers_yearly

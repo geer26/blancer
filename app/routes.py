@@ -99,19 +99,21 @@ def del_users():  #swipe database!
 @login_required
 def del_pockets():  #swipe database!
     if current_user.is_superuser:
-        #del all users
         pockets = Pocket.query.all()
         for pocket in pockets:
             db.session.delete(pocket)
-            db.session.commit()
+        db.session.commit()
         return redirect('/')
 
 
-@app.route('/del_pockets')
+@app.route('/del_transfers')
 @login_required
 def del_transfers():  #swipe database!
     if current_user.is_superuser:
-
+        transfers = Transfer.query.all()
+        for transfer in transfers:
+            db.session.delete(transfer)
+        db.session.commit()
         return redirect('/')
 
 
