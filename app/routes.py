@@ -17,6 +17,8 @@ def index():
 
     if request.method == 'POST' and not current_user.is_authenticated:
 
+        print(request.form)
+
         if loginform.validate_on_submit():
             user = User.query.filter_by(username=loginform.username.data).first()
 
@@ -280,6 +282,6 @@ def newmessage(data):
     # user asks for random transfers to generate
     if data['event'] == 410 and current_user.is_authenticated:
         p_id = data['pid'].split('_')[-1]
-        generate(100,[1000,15000], p_id)
+        #generate(100,[1000,15000], p_id)
         return True
 

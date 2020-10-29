@@ -22,8 +22,8 @@ class User(UserMixin,db.Model):
     is_superuser = db.Column(db.Boolean, default=False)
     joined = db.Column(db.Date)
     last_activity = db.Column(db.DateTime)
-    pockets = db.relationship('Pocket', backref='user', cascade = 'all,delete')
-    categories = db.relationship('Category', backref='user', cascade = 'all, delete')
+    pockets = db.relationship('Pocket', backref='_user', cascade = 'all,delete')
+    categories = db.relationship('Category', backref='_user', cascade = 'all, delete')
 
     def __repr__(self):
         return self.username
@@ -45,7 +45,7 @@ class Pocket(db.Model):
     balance = db.Column(db.Integer, default=0)
     last_change = db.Column(db.DateTime, index=True, default=datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    transfers = db.relationship('Transfer', backref = 'pocket', cascade = 'all,delete')
+    transfers = db.relationship('Transfer', backref = '_pocket', cascade = 'all,delete')
 
     def __repr__(self):
         return str(self.id)+'_'+str(self.name)
