@@ -25,9 +25,7 @@
         {% endif %}
         >{{pocket.balance}}</h1>
 
-        <div id="charts">
-            <embed type="image/svg+xml" src= {{charts[pocket.id|string+'_year'].render_data_uri()|safe}} />
-        </div>
+        <!-- here was the chart -->
 
     </div>
 

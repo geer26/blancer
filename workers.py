@@ -1,111 +1,8 @@
 import re
 
-from pygal.style import DarkSolarizedStyle, CleanStyle
-
 from app import app,socket,db
-from app.models import User, Pocket, Transfer
-from datetime import datetime, date, timedelta
-from dateutil.relativedelta import *
-
-import random
-from random import randrange
-
-import pygal
-
-
-
-def dates_for_year(tf):
-
-    returnvalue = {}
-
-    begindate = datetime.now() - timedelta(days=365)
-    enddate = datetime.now()
-    dates = []
-    incomes = []
-    expenses = []
-    cb = []
-
-    for transfer in tf:
-        if enddate > transfer['timestamp'] > begindate:
-
-            if transfer['value'] >= 0:
-                incomes.append( (transfer['timestamp'].timestamp(), transfer['value']) )
-            else:
-                expenses.append( (transfer['timestamp'].timestamp(), transfer['value']) )
-
-            cb.append( (transfer['timestamp'].timestamp(), transfer['current_balance']) )
-
-    while enddate > begindate:
-        dates.append(begindate.date())
-        begindate += relativedelta(months=+1)
-
-    dates.append(date.today())
-
-    returnvalue['xaxis'] = dates
-    returnvalue['incomes'] = incomes
-    returnvalue['expenses'] = expenses
-    returnvalue['balance'] = cb
-
-    return returnvalue
-
-
-def pygaltest(u):
-    charts = {}
-    id = u.id
-    transferlist = []
-    transfers = {}
-
-    # get pockets related to current user
-    pockets = Pocket.query.filter_by(user_id=id).all()
-
-    # iter over the pockets
-    for p in pockets:
-
-        # get transfers related to pocket
-        trfs = Transfer.query.order_by(Transfer.timestamp).filter_by(pocket=p.id).all()
-
-        # iter over the transfers
-        for tr in trfs:
-            transfer = {}
-            # create dict from transfer
-            transfer['timestamp'] = tr.timestamp
-            transfer['current_balance'] = tr.cba
-            transfer['id'] = tr.id
-            transfer['value'] = tr.t_type*tr.amount
-
-            # add current transfer dict to transferlist
-            transferlist.append(transfer)
-
-        # add all transfers related to pocket
-        #transfers[p.id] = transferlist
-
-        yearly_data = dates_for_year(transferlist)
-
-        # create yearly chart from transfers
-        transfers_yearly = pygal.DateLine(
-            #height=200,
-            #width=600,
-            is_unicode=True,
-            x_label_rotation=45,
-            #interpolate='hermite',
-            fill = True,
-            stroke = False,
-            #style=CleanStyle,
-            #show_dots=False
-        )
-
-        transfers_yearly.x_labels = yearly_data['xaxis']
-
-        transfers_yearly.title = 'yearly sum of ' + str(p.name)
-
-        transfers_yearly.add('Income', yearly_data['incomes'], show_dots=True)
-        transfers_yearly.add('Expense', yearly_data['expenses'], show_dots=True)
-        transfers_yearly.add('Balance', yearly_data['balance'], stroke = True)
-
-        # add all transfers related to pocket
-        charts[str(p.id)+'_year'] = transfers_yearly
-
-    return charts
+from app.models import User, Pocket, Transfer, Category
+from datetime import datetime, date
 
 
 def validate_email(email):
@@ -135,6 +32,7 @@ def hassu():
     return False
 
 
+#NEED TEST
 def verifiy_signup(data):
 
     if not validate_email(data['email']) or email_exist(data['email']):
@@ -149,6 +47,7 @@ def verifiy_signup(data):
     if not data['agreed']:
         return 4
 
+    # all data OK, create user and, a default pocket, and two default categories
     u = User()
     u.username = data['username']
     u.set_password(str(data['password1']))
@@ -157,6 +56,12 @@ def verifiy_signup(data):
     u.joined = date.today()
     u.last_activity = datetime.now()
     db.session.add(u)
+
+    d_i = Category(name='default income', user=u)
+    db.session.add(d_i)
+    d_e = Category(name='default expense', user=u)
+    db.session.add(d_e)
+
     p = Pocket(name='default', user=u)
     db.session.add(p)
 
@@ -220,49 +125,4 @@ def delpocket(data):
     if not p: return False
     db.session.delete(p)
     db.session.commit()
-    return True
-
-
-def random_date(start, end):
-    """
-    This function will return a random datetime between two datetime
-    objects.
-    """
-    start = datetime(start[0], start[1], start[2], 0, 0, 0)
-    end = datetime(end[0], end[1], end[2], 23, 59, 59)
-
-    delta = end - start
-    int_delta = (delta.days * 24 * 60 * 60) + delta.seconds
-    random_second = randrange(int_delta)
-    return (start + timedelta(seconds=random_second))
-
-
-def generate(iters=100, amount=[1000, 15000], poc=1):
-
-    p = Pocket.query.get(int(poc))
-    actual_balance = p.balance
-
-    for i in range(iters):
-        tr = Transfer()
-
-        r = {}
-        types = [-1, 1]
-        r['type'] = random.choice(types)
-        r['amount'] = randrange(amount[0], amount[1] + 1)
-        r['timestamp'] = random_date([2018, 2, 3], [2020, 10, 24])
-        r['pocket'] = int(poc)
-
-        actual_balance = r['type']*r['amount']
-
-        tr.pocket = int(poc)
-        tr.amount = r['amount']
-        tr.t_type = r['type']
-        tr.timestamp = r['timestamp']
-        tr.cba = actual_balance
-
-        db.session.add(tr)
-
-    p.balance =actual_balance
-    db.session.commit()
-
     return True

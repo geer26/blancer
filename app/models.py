@@ -22,8 +22,8 @@ class User(UserMixin,db.Model):
     is_superuser = db.Column(db.Boolean, default=False)
     joined = db.Column(db.Date)
     last_activity = db.Column(db.DateTime)
-    avatar = db.Column(db.String(128), default='/static/img/avatars/a_unknown.png')
     pockets = db.relationship('Pocket', backref='user', cascade = 'all,delete')
+    categories = db.relationship('Category', backref='user', cascade = 'all, delete')
 
     def __repr__(self):
         return self.username
@@ -35,7 +35,6 @@ class User(UserMixin,db.Model):
         return check_password_hash(self.password_hash, password)
 
     def compare_passwords(self, password1, password2):
-        #print( generate_password_hash(password1) == generate_password_hash(password2) )
         return generate_password_hash(password1) == generate_password_hash(password2)
 
 
@@ -46,23 +45,22 @@ class Pocket(db.Model):
     balance = db.Column(db.Integer, default=0)
     last_change = db.Column(db.DateTime, index=True, default=datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    transfers = db.relationship('Transfer', backref='pocket_')
+    transfers = db.relationship('Transfer', backref = 'pocket', cascade = 'all,delete')
 
     def __repr__(self):
-        return self.balance
+        return str(self.id)+'_'+str(self.name)
 
 
 class Transfer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    t_type = db.Column(db.Integer, default=1)
     amount = db.Column(db.Integer, default=0)
-    #current balance after
-    cba = db.Column(db.Integer)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.now)
     pocket = db.Column(db.Integer, db.ForeignKey('pocket.id'))
+    category_id = db.Column(db.Integer)
+    category_name = db.Column(db.String(40))
 
     def __repr__(self):
-        return self.t_type*self.amount
+        return str(self.id)+'_'+str(self.amount)
 
 
 class Category(db.Model):

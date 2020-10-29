@@ -169,7 +169,9 @@ function delpocket(pocket_id){
 };
 
 
+/*
 function random_transfers(){
     var data = {event: 410, pid: current_slide};
     send_message('newmessage', data);
 }
+*/

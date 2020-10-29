@@ -5,7 +5,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from app import app, socket, db
 from app.forms import LoginForm, SignupForm
 from app.models import User, Pocket, Transfer
-from workers import verify_login, verifiy_signup, hassu, deluser, getid, addpocket, delpocket, generate, pygaltest
+from workers import verify_login, verifiy_signup, hassu, deluser, getid, addpocket, delpocket
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -43,17 +43,14 @@ def index():
     elif current_user.is_authenticated and not current_user.is_superuser:
         pockets = Pocket.query.filter_by( user_id = current_user.id ).all()
 
-        u=current_user
-
-        charts = pygaltest(u)
-
-        return render_template('index.html', title='Index', loginform=loginform, signupform=signupform, pockets=pockets, charts=charts)
+        return render_template('index.html', title='Index', loginform=loginform, signupform=signupform, pockets=pockets)
 
     else:
 
         return render_template('index.html', title='Index', loginform=loginform, signupform=signupform)
 
 
+#logs out user - DONE
 @app.route('/logout')
 @login_required
 def logout():
@@ -64,6 +61,7 @@ def logout():
     return redirect('/')
 
 
+#add superuser - DONE
 @app.route('/addsu/<suname>/<password>')
 def addsu(suname, password):
     #eg. https://example.com/examplesuname/example1Password!2
@@ -74,12 +72,13 @@ def addsu(suname, password):
         user.set_password(password)
         user.is_superuser = True
         user.joined = date.today()
-        user.avatar = '/static/img/avatars/adminavatar.png'
+        user.last_activity = datetime.now()
         db.session.add(user)
         db.session.commit()
     return redirect('/')
 
 
+#delete all users - DONE
 @app.route('/del_users')
 @login_required
 def del_users():  #swipe database!
@@ -92,9 +91,13 @@ def del_users():  #swipe database!
                 db.session.delete(user)
                 db.session.commit()
 
+        current_user.last_activity = datetime.now()
+        db.session.commit()
+
         return redirect('/')
 
 
+#delete all pockets - DONE
 @app.route('/del_pockets')
 @login_required
 def del_pockets():  #swipe database!
@@ -103,7 +106,11 @@ def del_pockets():  #swipe database!
         for pocket in pockets:
             db.session.delete(pocket)
         db.session.commit()
-        return redirect('/')
+
+    current_user.last_activity = datetime.now()
+    db.session.commit()
+
+    return redirect('/')
 
 
 @app.route('/del_transfers')
@@ -114,7 +121,11 @@ def del_transfers():  #swipe database!
         for transfer in transfers:
             db.session.delete(transfer)
         db.session.commit()
-        return redirect('/')
+
+    current_user.last_activity = datetime.now()
+    db.session.commit()
+
+    return redirect('/')
 
 
 @socket.on('newmessage')
@@ -205,6 +216,7 @@ def newmessage(data):
 
 
     #delete username
+    #admin wants to del an user
     if data['event'] == 271:
         if current_user.is_superuser:
 
