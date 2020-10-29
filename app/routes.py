@@ -4,10 +4,11 @@ from flask import render_template, redirect, request
 from flask_login import current_user, login_user, logout_user, login_required
 from app import app, socket, db
 from app.forms import LoginForm, SignupForm
-from app.models import User, Pocket, Transfer
-from workers import verify_login, verifiy_signup, hassu, deluser, getid, addpocket, delpocket
+from app.models import User, Pocket, Transfer, Category
+from workers import verifiy_signup, hassu, deluser, getid, addpocket, delpocket
 
 
+#logs in user - ERROR!
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
@@ -17,12 +18,12 @@ def index():
 
     if request.method == 'POST' and not current_user.is_authenticated:
 
-        print(request.form)
 
         if loginform.validate_on_submit():
             user = User.query.filter_by(username=loginform.username.data).first()
 
             if not user or not user.check_password(loginform.password.data):
+                #error: if user do not exist, skips and redirets to index! No error message!
                 mess = {}
                 mess['event'] = 191
                 mess['htm'] = render_template('errormessage.html', message='Incorrect password or username')
@@ -35,12 +36,14 @@ def index():
                 return redirect('/')
 
     if current_user.is_authenticated and current_user.is_superuser:
-        users = User.query.all()
-        pockets = Pocket.query.all()
+
+        users = User.query.order_by(User.id).all()
+        pockets = Pocket.query.order_by(Pocket.user_id).all()
         transfers = Transfer.query.order_by(Transfer.timestamp).all()
+        categories = Category.query.order_by(Category.user_id).all()
 
         return render_template('index.html', title='SU index', loginform=loginform, signupform=signupform,\
-                               users=users, pockets=pockets, transfers=transfers)
+                               users=users, pockets=pockets, transfers=transfers, categories=categories)
 
     elif current_user.is_authenticated and not current_user.is_superuser:
         pockets = Pocket.query.filter_by( user_id = current_user.id ).all()
@@ -115,6 +118,7 @@ def del_pockets():  #swipe database!
     return redirect('/')
 
 
+#delete all transfers - DONE
 @app.route('/del_transfers')
 @login_required
 def del_transfers():  #swipe database!
@@ -138,7 +142,7 @@ def newmessage(data):
     sid = request.sid
 
     # incoming login request
-    if data['event'] == 221:
+    '''if data['event'] == 221:
         if verify_login(data):
             mess = {}
             mess['event'] = 121
@@ -151,7 +155,7 @@ def newmessage(data):
             mess['htm'] = render_template('errormessage.html', message='LOGIN NOT SUCCESS!')
             socket.emit('newmessage', mess, room=sid)
 
-        return True
+        return True'''
 
     #incoming request for error message with message
     if data['event'] == 291:
@@ -161,7 +165,7 @@ def newmessage(data):
         socket.emit('newmessage', mess, room=sid)
 
 
-    # incoming signup request
+    # incoming signup request - DONE
     if data['event'] == 211:
         #"i want to signup with theese data"
 

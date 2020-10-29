@@ -1,0 +1,25 @@
+    <a class="waves-effect waves-light btn btn-small red" href="/del_users" style="border-radius: 2px;">
+        <i class="material-icons left">delete_sweep</i>
+        delete all
+    </a>
+
+    <table class="responsive-table highlight">
+        <thead>
+          <tr>
+              <th>ID</th>
+              <th>Category name</th>
+              <th>user_id</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        {% for category in categories %}
+          <tr id={{category.id}}>
+            <td>{{category.id}}</td>
+            <td>{{category.name}}</td>
+            <td>{{category.user_id}}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>

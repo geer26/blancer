@@ -32,7 +32,7 @@ def hassu():
     return False
 
 
-#NEED TEST
+#NEEDs TEST
 def verifiy_signup(data):
 
     if not validate_email(data['email']) or email_exist(data['email']):
@@ -57,12 +57,12 @@ def verifiy_signup(data):
     u.last_activity = datetime.now()
     db.session.add(u)
 
-    d_i = Category(name='default income', user=u)
+    d_i = Category(name='default income', _user=u)
     db.session.add(d_i)
-    d_e = Category(name='default expense', user=u)
+    d_e = Category(name='default expense', _user=u)
     db.session.add(d_e)
 
-    p = Pocket(name='default', user=u)
+    p = Pocket(name='default', _user=u)
     db.session.add(p)
 
     db.session.commit()
@@ -70,13 +70,13 @@ def verifiy_signup(data):
     return 0
 
 
-def verify_login(data):
+'''def verify_login(data):
     uname = str(data['username'])
     user = User.query.filter_by(username=uname).first()
     if user and user.check_password(data['password']):
         return True
     else:
-        return False
+        return False'''
 
 
 def errormessage(data):
