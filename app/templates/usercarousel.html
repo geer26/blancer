@@ -2,12 +2,17 @@
 
     {% for pocket in pockets %}
 
-    <div class="carousel-item" style="border:2px solid green; overflow: auto;" href="#one!" id="uc_{{pocket.id}}" name="{{pocket.id}}">
+    <div class="carousel-item  blue-grey lighten-4" style="overflow: auto;"
+         id="uc_{{pocket.id}}">
 
         <div class="fixed-action-btn delpocket">
 
-            <a class="btn-floating btn amber" onclick="random_transfers()">
+            <!-- <a class="btn-floating btn amber" onclick="random_transfers()">
                 <i class="large material-icons">help</i>
+            </a> -->
+
+            <a class="btn-floating btn teal">
+                <i class="large material-icons">build</i>
             </a>
 
             <a class="btn-floating btn red" onclick="delpocket({{pocket.id}})">
@@ -17,13 +22,15 @@
         </div>
 
         <h2 style=" margin-top: 10px; margin-left: 10px;" class="left-align">{{pocket.name}}</h2>
+
         <h1
         {% if pocket.balance >= 0%}
           class = "green-text darken-2"
          {% else %}
           class = "red-text darken-2"
         {% endif %}
-        >{{pocket.balance}}</h1>
+        >{{pocket.balance}}
+        </h1>
 
         <!-- here was the chart -->
 

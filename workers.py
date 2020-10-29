@@ -70,18 +70,6 @@ def verifiy_signup(data):
     return 0
 
 
-'''def verify_login(data):
-    uname = str(data['username'])
-    user = User.query.filter_by(username=uname).first()
-    if user and user.check_password(data['password']):
-        return True
-    else:
-        return False'''
-
-
-def errormessage(data):
-    pass
-
 
 def deluser(data):
     u = User.query.get(int(data['userid']))
@@ -101,7 +89,7 @@ def getid(username):
 
 
 def addpocket(data,u):
-    p=Pocket(user=u)
+    p=Pocket(_user=u)
 
     p.name = data['p_name']
 
