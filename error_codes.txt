@@ -27,12 +27,14 @@
 #       162 - category deleted
 #       163 - category edited
 #       164 - sending addcategory modal
+#       169- tegory added or modified,sending new category modal witw the new data
 
 #   19X - send error modal
 #       191 - simple error modal with string
 
 #   17X - remove row from userlist
 <------------------------------------------------------------>
+
 #2XX - client-side events
 #   21X - signup
 #      211 - send signup request
@@ -57,6 +59,7 @@
 #       262 - user want to del a category
 #       263 - user want to edit a category
 #       264 - user want to add a category
+#       268 - user adds or modifies category
 
 #   29X - request for error modal
 #      291 - request for error modal with message string
@@ -64,5 +67,7 @@
 #   27X - Admin operations
 #      271 - delete user witj given username
 <------------------------------------------------------------>
+
 #   4XX - Dev operations
 #       410 - Ask for random transfers
+<------------------------------------------------------------>

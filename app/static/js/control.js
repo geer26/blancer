@@ -157,10 +157,37 @@ socket.on('newmessage', function(data){
             break;
 
 
+        //here is a modal frame where you can add or modify category, remove category_modal
+        case 164:{
+            $('#category_modal').remove();
+            $('#pagecontent').append(data['htm']);
+            $('#close_modal').click(function(){
+                $('#addcategory_modal').remove();
+                });
+            $('#add_category').click(function(){
+                $('#addcategory_modal').remove();
+                var n = $('#category_name').val();
+                var data = {
+                    event: 268,
+                    cname: n,
+                    cid: $('#hidden_id').cid
+                    };
+                console.log(data);
+                send_message('newmessage', data);
+            });
+            }
+            break;
+
+
         //category deleted, remove from list
         case 162:{
             $('#'+data['id']).remove();
             }
+            break;
+
+
+        //category added or modified, remove category modal and replace it with this
+        case 169:
             break;
 
 
@@ -199,6 +226,12 @@ function edit_cat(e){
 
 function del_cat(e){
     var data = {event: 262, id: e.id};
+    send_message('newmessage', data);
+};
+
+
+function add_cat(){
+    var data = {event: 264};
     send_message('newmessage', data);
 };
 

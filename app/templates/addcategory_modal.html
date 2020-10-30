@@ -1,0 +1,42 @@
+<div id="addcategory_modal" class="modalback">
+
+    <div class="addm_frame">
+
+        <p id="hidden_id" style="display: none;"
+           cid =
+           {% if c %}
+           {{c.id}}
+           {% else %}
+           "0"
+        {%endif%}>
+
+        </p>
+
+        <img class="close_btn" draggable="false" src="/static/img/icons/close.png" id="close_modal">
+
+        <!-- <h6>add category</h6> -->
+
+        <ul>
+
+        <li>
+          <div class="input-field center-align">
+            <i class="material-icons prefix">description</i>
+            <input id="category_name" type="text" class="validate" data-length="40"
+                   {% if c %}
+                   value={{c.name}}
+                   {%endif%}
+            >
+            <label for="category_name">name</label>
+          </div>
+        </li>
+
+        <li class="center-align">
+          <a class="waves-effect waves-light btn btn-small green darken-2" style="border-radius: 2px;" id="add_category">
+            <i class="material-icons left">add_circle</i>
+            add category
+          </a>
+        </li>
+
+    </div>
+
+</div>

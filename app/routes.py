@@ -177,6 +177,27 @@ def newmessage(data):
     if data['event'] == 263:
         print(data)
         id = data['id'].split('_')[0]
+        #c = Category.query.get(int(id))
+        c = Category.query.filter_by(id = int(id)).first()
+        mess = {}
+        mess['event'] = 164
+        mess['htm'] = render_template('addcategory_modal.html', c=c)
+        socket.emit('newmessage', mess, room=sid)
+        return True
+
+
+    #user wants to add a category
+    if data['event'] == 264:
+        mess = {}
+        mess['event'] = 164
+        mess['htm'] = render_template('addcategory_modal.html')
+        socket.emit('newmessage', mess, room=sid)
+        return True
+
+
+    #user sends a category
+    if data['event'] == 268:
+        print(data)
         return True
 
 
