@@ -14,10 +14,10 @@
             <tr id={{category.id}}>
                 <td style="overflow: auto;">
 
-                    <a class="btn-floating btn-small waves-effect waves-light teal" id="{{category.id}}_edit" onclick="edit_cat(this)">
+                    <a class="btn-floating btn-small waves-effect waves-light teal" id="{{category.id}}_edit" onclick="edit_cat({{category.id}})">
                         <i class="small material-icons">create</i>
                     </a>
-                    <a class="btn-floating btn-small waves-effect waves-light red" id="{{category.id}}_del" onclick="del_cat(this)">
+                    <a class="btn-floating btn-small waves-effect waves-light red" id="{{category.id}}_del" onclick="del_cat({{category.id}})">
                         <i class="small material-icons">delete</i>
                     </a>
                     {{category.name}}

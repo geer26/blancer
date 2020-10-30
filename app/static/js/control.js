@@ -161,16 +161,20 @@ socket.on('newmessage', function(data){
         case 164:{
             $('#category_modal').remove();
             $('#pagecontent').append(data['htm']);
+            console.log(data['htm']);
             $('#close_modal').click(function(){
                 $('#addcategory_modal').remove();
                 });
             $('#add_category').click(function(){
                 $('#addcategory_modal').remove();
-                var n = $('#category_name').val();
+                /*<------------------------------------------------------->*/
+                console.log($('#category_name'));
+                console.log($('#hidden_id'));
+                /*<------------------------------------------------------->*/
                 var data = {
                     event: 268,
-                    cname: n,
-                    cid: $('#hidden_id').cid
+                    cname: $('#category_name').val(),
+                    cid: $('#hidden_id').text()
                     };
                 console.log(data);
                 send_message('newmessage', data);
@@ -219,13 +223,13 @@ function show_cat(){
 
 
 function edit_cat(e){
-    var data = {event: 263, id: e.id};
+    var data = {event: 263, id: e};
     send_message('newmessage', data);
 };
 
 
 function del_cat(e){
-    var data = {event: 262, id: e.id};
+    var data = {event: 262, id: e};
     send_message('newmessage', data);
 };
 

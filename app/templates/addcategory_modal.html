@@ -2,14 +2,10 @@
 
     <div class="addm_frame">
 
-        <p id="hidden_id" style="display: none;"
-           cid =
+        <p id="hidden_id" style="display: none;">
            {% if c %}
            {{c.id}}
-           {% else %}
-           "0"
-        {%endif%}>
-
+           {% endif %}
         </p>
 
         <img class="close_btn" draggable="false" src="/static/img/icons/close.png" id="close_modal">
@@ -23,7 +19,7 @@
             <i class="material-icons prefix">description</i>
             <input id="category_name" type="text" class="validate" data-length="40"
                    {% if c %}
-                   value={{c.name}}
+                   value="{{c.name}}"
                    {%endif%}
             >
             <label for="category_name">name</label>
@@ -33,7 +29,11 @@
         <li class="center-align">
           <a class="waves-effect waves-light btn btn-small green darken-2" style="border-radius: 2px;" id="add_category">
             <i class="material-icons left">add_circle</i>
-            add category
+              {% if c %}
+                modify
+              {% else %}
+                add category
+              {% endif %}
           </a>
         </li>
 

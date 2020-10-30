@@ -163,7 +163,7 @@ def newmessage(data):
     #user want to del a category - DONE
     if data['event'] == 262:
 
-        id = data['id'].split('_')[0]
+        id = data['id']
 
         if delcategory(id):
             mess = {}
@@ -175,10 +175,8 @@ def newmessage(data):
 
     #user want to edit a category
     if data['event'] == 263:
-        print(data)
-        id = data['id'].split('_')[0]
-        #c = Category.query.get(int(id))
-        c = Category.query.filter_by(id = int(id)).first()
+        id = data['id']
+        c = Category.query.get(int(id))
         mess = {}
         mess['event'] = 164
         mess['htm'] = render_template('addcategory_modal.html', c=c)
