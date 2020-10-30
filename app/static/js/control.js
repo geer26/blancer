@@ -14,6 +14,11 @@ $(document).ready(function(){
     });
 
 
+    $(document).ready(function() {
+        $('input#signup_username, input#signup_email').characterCounter();
+    });
+
+
     $('.carousel.carousel-slider').carousel({
     fullWidth: true,
     indicators: true,
@@ -167,6 +172,15 @@ function delpocket(pocket_id){
     var data = {event: 242, p_id: pocket_id};
     send_message('newmessage', data);
 };
+
+
+function uc_next(){
+    $('#usercarousel').carousel('next');
+}
+
+function uc_prev(){
+    $('#usercarousel').carousel('prev');
+}
 
 
 /*
