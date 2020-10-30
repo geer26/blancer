@@ -114,3 +114,10 @@ def delpocket(data):
     db.session.delete(p)
     db.session.commit()
     return True
+
+
+def delcategory(id):
+    c = Category.query.get(id=int(id))
+    db.session.delete(c)
+    #db.commit()
+    return True

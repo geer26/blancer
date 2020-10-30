@@ -5,7 +5,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from app import app, socket, db
 from app.forms import LoginForm, SignupForm
 from app.models import User, Pocket, Transfer, Category
-from workers import verifiy_signup, hassu, deluser, getid, addpocket, delpocket
+from workers import verifiy_signup, hassu, deluser, getid, addpocket, delpocket, delcategory
 
 
 #logs in user - ERROR!
@@ -141,28 +141,43 @@ def newmessage(data):
 
     sid = request.sid
 
-    # incoming login request
-    '''if data['event'] == 221:
-        if verify_login(data):
-            mess = {}
-            mess['event'] = 121
-            mess['status'] = 1
-            socket.emit('newmessage', mess, room=sid)
-        else:
-            socket.emit('newmessage', {'event': 129}, room=sid)
-            mess = {}
-            mess['event'] = 191
-            mess['htm'] = render_template('errormessage.html', message='LOGIN NOT SUCCESS!')
-            socket.emit('newmessage', mess, room=sid)
 
-        return True'''
-
-    #incoming request for error message with message
+    #incoming request for error message with message - DONE
     if data['event'] == 291:
         mess = {}
         mess['event'] = 191
         mess['htm'] = render_template('errormessage.html', message=data['message'])
         socket.emit('newmessage', mess, room=sid)
+
+
+    #user wants to see the categories
+    if data['event'] == 261:
+        categories = Category.query.order_by(Category.name).filter_by( user_id = current_user.id).all()
+        mess = {}
+        mess['event'] = 161
+        mess['htm'] = render_template('category_modal.html', categories=categories)
+        socket.emit('newmessage', mess, room=sid)
+        return True
+
+
+    #user want to del a category - DONE
+    if data['event'] == 262:
+
+        id = data['id'].split('_')[0]
+
+        if delcategory(id):
+            mess = {}
+            mess['event'] = 162
+            mess['id'] = id
+            socket.emit('newmessage', mess, room=sid)
+            return True
+
+
+    #user want to edit a category
+    if data['event'] == 263:
+        print(data)
+        id = data['id'].split('_')[0]
+        return True
 
 
     # incoming signup request - DONE
@@ -222,7 +237,7 @@ def newmessage(data):
 
 
     #delete username
-    #admin wants to del an user
+    #admin wants to del an user - DONE
     if data['event'] == 271:
         if current_user.is_superuser:
 
@@ -240,7 +255,7 @@ def newmessage(data):
         return True
 
 
-    #user want to add a pocket
+    #user want to add a pocket - DONE
     if data['event'] == 241 and current_user.is_authenticated:
         mess = {}
         mess['event'] = 141
@@ -248,7 +263,7 @@ def newmessage(data):
         socket.emit('newmessage', mess, room=sid)
 
 
-    #user want to del a pocket
+    #user want to del a pocket - DONE
     if data['event'] == 242 and current_user.is_authenticated:
         mess = {}
         mess['event'] = 142
@@ -256,7 +271,7 @@ def newmessage(data):
         socket.emit('newmessage', mess, room=sid)
 
 
-    #user send a new pocket data
+    #user send a new pocket data - DONE
     if data['event'] == 243 and current_user.is_authenticated:
         if addpocket(data,current_user):
 
@@ -270,7 +285,7 @@ def newmessage(data):
         return True
 
 
-    #user confirms to delete a pocket
+    #user confirms to delete a pocket - DONE
     if data['event'] == 244 and current_user.is_authenticated:
 
         if delpocket(data):

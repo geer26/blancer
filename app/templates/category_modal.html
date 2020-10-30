@@ -1,0 +1,30 @@
+<div id="category_modal" class="modalback">
+
+    <div class="addm_frame">
+
+        <img class="close_btn" draggable="false" src="/static/img/icons/close.png" id="close_modal">
+
+        <table class="highlight">
+            <tbody>
+            {% for category in categories %}
+            <tr id={{category.id}}>
+                <td style="overflow: auto;">
+
+                    <a class="btn-floating btn-small waves-effect waves-light teal" id="{{category.id}}_edit" onclick="edit_cat(this)">
+                        <i class="small material-icons">create</i>
+                    </a>
+                    <a class="btn-floating btn-small waves-effect waves-light red" id="{{category.id}}_del" onclick="del_cat(this)">
+                        <i class="small material-icons">delete</i>
+                    </a>
+                    {{category.name}}
+
+                </td>
+                <br>
+            </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+</div>

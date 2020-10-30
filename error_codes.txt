@@ -20,6 +20,14 @@
 #       148 - pocket added succesfully
 #       149 - pocket deleted successfully
 
+#   15X - transfer events
+
+#   16X - category events
+#       161 - send category modal
+#       162 - category deleted
+#       163 - category edited
+#       164 - sending addcategory modal
+
 #   19X - send error modal
 #       191 - simple error modal with string
 
@@ -43,6 +51,12 @@
 #       244 - user confirms delete pocket
 
 #   25X - transfer events
+
+#   26X - category events
+#       261 - user asks for category modal
+#       262 - user want to del a category
+#       263 - user want to edit a category
+#       264 - user want to add a category
 
 #   29X - request for error modal
 #      291 - request for error modal with message string

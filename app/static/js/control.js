@@ -24,7 +24,7 @@ $(document).ready(function(){
     indicators: true,
     onCycleTo: function(data) {
       current_slide = data.id;
-      //when user changes page, current slid id will be stored in current_slide as "uc_XXX", where XXX is the id of the pocket
+      //when user changes page, current slide id will be stored in current_slide as "uc_XXX", where XXX is the id of the pocket
       //console.log(current_slide);
     }
     });
@@ -92,7 +92,7 @@ socket.on('newmessage', function(data){
             $('#add_pocket').click(function(){
                 //include check!
                 if ($('#addp_bal').val()!='' && isNaN($('#addp_bal').val())){
-                    var data ={event: 291, message:'Initial balance must be a nuber or leave it blank!'};
+                    var data ={event: 291, message:'Initial balance must be a number or leave it blank!'};
                     send_message('newmessage', data);
                     $('#addp_bal').val('');
                 }
@@ -147,6 +147,23 @@ socket.on('newmessage', function(data){
             break;
 
 
+        //here is a category modal!
+        case 161:{
+            $('#pagecontent').append(data['htm']);
+            $('#close_modal').click(function(){
+                $('#category_modal').remove();
+                });
+            }
+            break;
+
+
+        //category deleted, remove from list
+        case 162:{
+            $('#'+data['id']).remove();
+            }
+            break;
+
+
         //del this id row from page
         case 171:{
                 $('#'+data['to_del']).remove();
@@ -163,7 +180,25 @@ function deluser(e){
 
 
 function addpocket(){
-    var data ={event: 241};
+    var data = {event: 241};
+    send_message('newmessage', data);
+};
+
+
+function show_cat(){
+    var data = {event: 261};
+    send_message('newmessage', data);
+};
+
+
+function edit_cat(e){
+    var data = {event: 263, id: e.id};
+    send_message('newmessage', data);
+};
+
+
+function del_cat(e){
+    var data = {event: 262, id: e.id};
     send_message('newmessage', data);
 };
 
@@ -181,11 +216,3 @@ function uc_next(){
 function uc_prev(){
     $('#usercarousel').carousel('prev');
 }
-
-
-/*
-function random_transfers(){
-    var data = {event: 410, pid: current_slide};
-    send_message('newmessage', data);
-}
-*/
