@@ -121,3 +121,17 @@ body{
 .delpocket{
     top: 0;
 }
+
+.car_nav{
+    max-width: 5vw;
+    height: 20%;
+    position: absolute;
+    top: 40%;
+    background-color: rgba(0, 0, 0, 0.05);
+    transition: 2s;
+}
+
+.car_nav:hover{
+    width: 15vw;
+    background-color: rgba(0,0,0,0.15);
+}

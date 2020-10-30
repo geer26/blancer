@@ -1,22 +1,21 @@
-<div class="carousel carousel-slider center" style="margin: auto; max-width: 90vw; min-height: 90vh;" id="usercarousel">
+<div class="carousel carousel-slider center" style="margin: auto; max-width: 100vw; min-height: 90vh;" id="usercarousel">
 
 
     {% for pocket in pockets %}
 
-    <div id="prevslide" style="border: 1px solid red; max-width: 5vw; height: 100%; position: absolute; left: 0; background-color: rgba(0,0,0,.1);"
-    onclick="uc_prev()" class="valign-wrapper"
-    >
-        <i class="material-icons">skip_previous</i>
-    </div>
-
-    <div id="nextslide" style="border: 1px solid red; max-width: 5vw; height: 100%; position: absolute; right: 0; background-color: rgba(0,0,0,.1);"
-    onclick="uc_next()" class="valign-wrapper"
-    >
-        <i class="material-icons">skip_next</i>
-    </div>
 
     <div class="carousel-item  blue-grey lighten-4" style="overflow: auto;"
          id="uc_{{pocket.id}}">
+
+        <div id="prevslide" style="left: 0; border-top-right-radius: 15px; border-bottom-right-radius: 15px;"
+         onclick="uc_prev()" class="valign-wrapper car_nav">
+        <i class="material-icons center-align">skip_previous</i>
+        </div>
+
+        <div id="nextslide" style="right: 0; border-top-left-radius: 15px; border-bottom-left-radius: 15px;"
+         onclick="uc_next()" class="valign-wrapper car_nav">
+        <i class="material-icons center-align">skip_next</i>
+        </div>
 
         <div class="fixed-action-btn delpocket">
 
