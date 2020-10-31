@@ -161,17 +161,34 @@ socket.on('newmessage', function(data){
         case 164:{
             $('#category_modal').remove();
             $('#pagecontent').append(data['htm']);
+
+            $('#cat_type').change(function(){
+                if(this.checked) {
+                    $('#cat_span').removeClass("red")
+                } else{
+                    $('#cat_span').addClass("red")
+                }
+            });
+
             $('#close_modal').click(function(){
                 $('#addcategory_modal').remove();
+                show_cat();
                 });
             $('#add_category').click(function(){
                 //! check if category name is zero length !
-                var data = {
-                    event: 268,
-                    cname: $('#category_name').val(),
-                    cid: $('#hidden_id').attr('cid')
+                if ( !$('#category_name').val() || $('#category_name').val().length<=0 ){
+                    var data ={event: 291, message:'A name must be set for this transfer!'};
+                    send_message('newmessage', data);
+                }
+                else{
+                    var data = {
+                        event: 268,
+                        cname: $('#category_name').val(),
+                        cid: $('#hidden_id').attr('cid'),
+                        type: $('#cat_type').prop( "checked" )
                     };
-                send_message('newmessage', data);
+                    send_message('newmessage', data);
+                }
             });
             }
             break;

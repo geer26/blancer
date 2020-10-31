@@ -56,8 +56,7 @@ class Transfer(db.Model):
     amount = db.Column(db.Integer, default=0)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.now)
     pocket = db.Column(db.Integer, db.ForeignKey('pocket.id'))
-    category_id = db.Column(db.Integer)
-    category_name = db.Column(db.String(40))
+    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
 
     def __repr__(self):
         return str(self.id)+'_'+str(self.amount)
@@ -66,7 +65,10 @@ class Transfer(db.Model):
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40))
+    type = db.Column(db.Integer, default=1)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    # THINK OF CASCADING!!!
+    transfer = db.relationship('Transfer', backref='_category')
 
     def __repr__(self):
         return self.name

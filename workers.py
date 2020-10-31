@@ -57,9 +57,9 @@ def verifiy_signup(data):
     u.last_activity = datetime.now()
     db.session.add(u)
 
-    d_i = Category(name='default income', _user=u)
+    d_i = Category(name='default income', _user=u, type=1)
     db.session.add(d_i)
-    d_e = Category(name='default expense', _user=u)
+    d_e = Category(name='default expense', _user=u, type=-1)
     db.session.add(d_e)
 
     p = Pocket(name='default', _user=u)
@@ -126,8 +126,16 @@ def add_cat(data,u):
     if data['cid']:
         c=Category.query.get(int(data['cid']))
         c.name=data['cname']
+        if data['type']:
+            c.type = 1
+        else:
+            c.type = -1
     else:
         c = Category(name=data['cname'], _user=u)
+        if data['type']:
+            c.type = 1
+        else:
+            c.type = -1
         db.session.add(c)
     db.session.commit()
     return True
