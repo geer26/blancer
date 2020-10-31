@@ -2,10 +2,13 @@
 
     <div class="addm_frame">
 
-        <p id="hidden_id" style="display: none;">
+        <p id="hidden_id" style="display: none;"
            {% if c %}
-           {{c.id}}
+           cid="{{c.id}}"
+           {% else %}
+           cid=""
            {% endif %}
+           >
         </p>
 
         <img class="close_btn" draggable="false" src="/static/img/icons/close.png" id="close_modal">

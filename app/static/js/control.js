@@ -161,23 +161,18 @@ socket.on('newmessage', function(data){
         case 164:{
             $('#category_modal').remove();
             $('#pagecontent').append(data['htm']);
-            console.log(data['htm']);
             $('#close_modal').click(function(){
                 $('#addcategory_modal').remove();
                 });
-            $('#add_category').click(function(){
-                $('#addcategory_modal').remove();
-                /*<------------------------------------------------------->*/
-                console.log($('#category_name'));
-                console.log($('#hidden_id'));
-                /*<------------------------------------------------------->*/
+            $(document).on('click', '#add_category', function(){
                 var data = {
                     event: 268,
                     cname: $('#category_name').val(),
-                    cid: $('#hidden_id').text()
+                    cid: $('#hidden_id').data()
                     };
                 console.log(data);
                 send_message('newmessage', data);
+                $('#addcategory_modal').remove();
             });
             }
             break;
