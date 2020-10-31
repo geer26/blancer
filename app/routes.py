@@ -5,7 +5,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from app import app, socket, db
 from app.forms import LoginForm, SignupForm
 from app.models import User, Pocket, Transfer, Category
-from workers import verifiy_signup, hassu, deluser, getid, addpocket, delpocket, delcategory
+from workers import verifiy_signup, hassu, deluser, getid, addpocket, delpocket, delcategory, add_cat
 
 
 #logs in user - ERROR!
@@ -195,7 +195,12 @@ def newmessage(data):
 
     #user sends a category
     if data['event'] == 268:
-        print(data)
+        if add_cat(data, current_user):
+            categories = Category.query.order_by(Category.name).filter_by(user_id=current_user.id).all()
+            mess = {}
+            mess['event'] = 169
+            mess['htm'] = render_template('category_modal.html', categories=categories)
+            socket.emit('newmessage', mess, room=sid)
         return True
 
 

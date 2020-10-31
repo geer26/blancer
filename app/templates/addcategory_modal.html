@@ -4,9 +4,9 @@
 
         <p id="hidden_id" style="display: none;"
            {% if c %}
-           cid="{{c.id}}"
+           cid= "{{c.id}}"
            {% else %}
-           cid=""
+           cid= ""
            {% endif %}
            >
         </p>
@@ -23,6 +23,8 @@
             <input id="category_name" type="text" class="validate" data-length="40"
                    {% if c %}
                    value="{{c.name}}"
+                   {% else %}
+                   value = ""
                    {%endif%}
             >
             <label for="category_name">name</label>

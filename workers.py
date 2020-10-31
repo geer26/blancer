@@ -70,7 +70,6 @@ def verifiy_signup(data):
     return 0
 
 
-
 def deluser(data):
     u = User.query.get(int(data['userid']))
     if not u : return False
@@ -89,7 +88,7 @@ def getid(username):
 
 
 def addpocket(data,u):
-    p=Pocket(_user=u)
+    p=Pocket(_user=u )
 
     p.name = data['p_name']
 
@@ -119,5 +118,16 @@ def delpocket(data):
 def delcategory(id):
     c = Category.query.get(int(id))
     db.session.delete(c)
-    #db.commit()
+    db.commit()
+    return True
+
+
+def add_cat(data,u):
+    if data['cid']:
+        c=Category.query.get(int(data['cid']))
+        c.name=data['cname']
+    else:
+        c = Category(name=data['cname'], _user=u)
+        db.session.add(c)
+    db.session.commit()
     return True

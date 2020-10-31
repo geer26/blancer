@@ -164,15 +164,14 @@ socket.on('newmessage', function(data){
             $('#close_modal').click(function(){
                 $('#addcategory_modal').remove();
                 });
-            $(document).on('click', '#add_category', function(){
+            $('#add_category').click(function(){
+                //! check if category name is zero length !
                 var data = {
                     event: 268,
                     cname: $('#category_name').val(),
-                    cid: $('#hidden_id').data()
+                    cid: $('#hidden_id').attr('cid')
                     };
-                console.log(data);
                 send_message('newmessage', data);
-                $('#addcategory_modal').remove();
             });
             }
             break;
@@ -186,7 +185,13 @@ socket.on('newmessage', function(data){
 
 
         //category added or modified, remove category modal and replace it with this
-        case 169:
+        case 169:{
+            $('#addcategory_modal').remove();
+            $('#pagecontent').append(data['htm']);
+            $('#close_modal').click(function(){
+                $('#category_modal').remove();
+                });
+            }
             break;
 
 
