@@ -49,6 +49,9 @@ body{
     overflow: auto; /* Enable scroll if needed */
     background-color: red; /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    animation-duration: .2s;
+    animation-name: fadein;
+    animation-timing-function: ease-out;
 }
 
 .modal_frame{
@@ -61,6 +64,9 @@ body{
     max-width: 50vw;
     margin: 25vh auto;
     box-shadow: 0px 0px 6px 2px rgba(255, 0, 0, 1);
+    animation-duration: .2s;
+    animation-name: slidein;
+    animation-timing-function: ease-out;
 }
 
 .message_frame{
@@ -73,6 +79,9 @@ body{
     max-width: 50vw;
     margin: 25vh auto;
     box-shadow: 0px 0px 6px 2px rgba(25, 118, 210, 1);
+    animation-duration: .2s;
+    animation-name: slidein;
+    animation-timing-function: ease-out;
 }
 
 .viking{
@@ -114,6 +123,9 @@ body{
     padding: 5px;
     max-width: 90vw;
     box-shadow: 0px 0px 6px 2px rgba(25, 118, 210, 1);
+    animation-duration: .2s;
+    animation-name: slidein;
+    animation-timing-function: ease-out;
 }
 
 .delpocket{
@@ -134,4 +146,25 @@ body{
 .car_nav:hover{
     width: 6vw;
     background-color: rgba(0, 0, 0, 0.15);
+}
+
+/* animations */
+
+@keyframes slidein {
+  from {
+    margin-left: 100%;
+  }
+
+  to {
+    margin-left: 0%;
+  }
+}
+
+@keyframes fadein{
+    from{
+        background-color: rgba(0,0,0,0.0);
+    }
+    to{
+        background-color: rgba(0,0,0,0.4);
+    }
 }
