@@ -38,14 +38,14 @@
                     {% if c %}
                         {% if c.type > 0 %}
                             <input type="checkbox" class="green" id="cat_type" checked>
-                            <span id="cat_span" class="lever green"></span>
+                            <span id="cat_span" class="lever"></span>
                         {% else %}
                             <input type="checkbox" class="red" id="cat_type">
                             <span id="cat_span" class="lever red"></span>
                         {% endif %}
                     {% else %}
                         <input type="checkbox" class="green" id="cat_type" checked>
-                        <span id="cat_span" class="lever green"></span>
+                        <span id="cat_span" class="lever"></span>
                     {% endif %}
                 <i class="small material-icons green-text">publish</i>
                 </label>
@@ -53,7 +53,7 @@
 
         </li>
 
-        <li class="center-align">
+        <li class="center-align" style="margin-top: 10px;">
           <a class="waves-effect waves-light btn btn-small green darken-2" style="border-radius: 2px;" id="add_category">
             <i class="material-icons left">add_circle</i>
               {% if c %}

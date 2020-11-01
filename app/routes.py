@@ -160,9 +160,6 @@ def newmessage(data):
 
         pockets = Pocket.query.filter_by(_user=current_user).order_by(Pocket.name).all()
 
-        for p in pockets:
-            print(p.name)
-
         actual_pocket = data['pocket'].split('_')[1]
 
         mess = {}
