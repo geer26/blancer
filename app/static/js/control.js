@@ -177,7 +177,7 @@ socket.on('newmessage', function(data){
             $('#add_category').click(function(){
                 //! check if category name is zero length !
                 if ( !$('#category_name').val() || $('#category_name').val().length<=0 ){
-                    var data ={event: 291, message:'A name must be set for this transfer!'};
+                    var data ={event: 291, message:'A name must be set for this category!'};
                     send_message('newmessage', data);
                 }
                 else{

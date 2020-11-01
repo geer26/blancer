@@ -5,11 +5,13 @@ from app.models import User, Pocket, Transfer, Category
 from datetime import datetime, date
 
 
+# - DONE
 def validate_email(email):
     pattern = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
     return (re.search(pattern, email))
 
 
+# - DONE
 def email_exist(email):
     for user in User.query.all():
         if user.email == email: return True
@@ -17,6 +19,7 @@ def email_exist(email):
     return False
 
 
+# - DONE
 def validate_password(password):
     lowers = '[+a-z]'
     uppers = '[+A-Z]'
@@ -26,13 +29,14 @@ def validate_password(password):
     return False
 
 
+# - DONE
 def hassu():
     for user in User.query.all():
         if user.is_superuser: return True
     return False
 
 
-#NEEDs TEST
+#NEEDS TEST
 def verifiy_signup(data):
 
     if not validate_email(data['email']) or email_exist(data['email']):
@@ -70,6 +74,7 @@ def verifiy_signup(data):
     return 0
 
 
+# - DONE
 def deluser(data):
     u = User.query.get(int(data['userid']))
     if not u : return False
@@ -87,6 +92,7 @@ def getid(username):
     return False
 
 
+# - DONE
 def addpocket(data,u):
     p=Pocket(_user=u )
 
@@ -107,6 +113,7 @@ def addpocket(data,u):
     return True
 
 
+# - DONE
 def delpocket(data):
     p = Pocket.query.get(int(data['p_id']))
     if not p: return False
@@ -115,6 +122,7 @@ def delpocket(data):
     return True
 
 
+# - DONE
 def delcategory(id):
     c = Category.query.get(int(id))
     db.session.delete(c)
@@ -122,6 +130,7 @@ def delcategory(id):
     return True
 
 
+# - DONE
 def add_cat(data,u):
     if data['cid']:
         c=Category.query.get(int(data['cid']))
