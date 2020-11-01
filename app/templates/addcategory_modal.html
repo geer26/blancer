@@ -34,20 +34,20 @@
         <li>
             <div class="switch">
                 <label>
-                Expense
+                <i class="small material-icons rotate180 red-text">publish</i>
                     {% if c %}
                         {% if c.type > 0 %}
-                            <input type="checkbox" id="cat_type" checked>
-                            <span id="cat_span" class="lever"></span>
+                            <input type="checkbox" class="green" id="cat_type" checked>
+                            <span id="cat_span" class="lever green"></span>
                         {% else %}
                             <input type="checkbox" class="red" id="cat_type">
                             <span id="cat_span" class="lever red"></span>
                         {% endif %}
                     {% else %}
-                        <input type="checkbox" id="cat_type" checked>
-                        <span id="cat_span" class="lever "></span>
+                        <input type="checkbox" class="green" id="cat_type" checked>
+                        <span id="cat_span" class="lever green"></span>
                     {% endif %}
-                Income
+                <i class="small material-icons green-text">publish</i>
                 </label>
             </div>
 

@@ -21,6 +21,7 @@
 #       149 - pocket deleted successfully
 
 #   15X - transfer events
+#       151 - send transfer modal
 
 #   16X - category events
 #       161 - send category modal
@@ -53,6 +54,7 @@
 #       244 - user confirms delete pocket
 
 #   25X - transfer events
+#       251 - user asks for transfer modal
 
 #   26X - category events
 #       261 - user asks for category modal

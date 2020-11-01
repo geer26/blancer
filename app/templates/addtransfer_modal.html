@@ -1,0 +1,52 @@
+<div id="addtransfer_modal" class="modalback ">
+
+    <div class="addm_frame">
+
+        <p id="hidden_pocket_id" style="display: none;"
+           {% if p %}
+           pid= "{{c.id}}"
+           {% else %}
+           pid= ""
+           {% endif %}
+           >
+        </p>
+
+        <img class="close_btn" draggable="false" src="/static/img/icons/close.png" id="close_modal">
+
+        <h6>add transfer</h6>
+
+        <ul>
+
+        <!-- Pocket selector -->
+        <li>
+            <label for="pockets">select a pocket:</label>
+            <select id="pockets">
+                {% for pocket in pockets %}
+                <option value={{pocket.id}}>{{pocket.name}}</option>
+                {% endfor %}
+            </select>
+        </li>
+
+        {% for pocket in pockets %}
+        <li>
+            {{pocket.name}}
+        </li>
+        {% endfor %}
+
+        <!-- Category selector -->
+
+        <!-- value input -->
+
+        <!-- submit button -->
+        <!-- <li class="center-align">
+          <a class="waves-effect waves-light btn btn-small green darken-2" style="border-radius: 2px;" id="add_category">
+            <i class="material-icons left">add_circle</i>
+              transfer
+          </a>
+        </li> -->
+
+        </ul>
+
+    </div>
+
+</div>

@@ -14,9 +14,7 @@ $(document).ready(function(){
     });
 
 
-    $(document).ready(function() {
-        $('input#signup_username, input#signup_email').characterCounter();
-    });
+    $('input#signup_username, input#signup_email').characterCounter({});
 
 
     $('.carousel.carousel-slider').carousel({
@@ -30,9 +28,7 @@ $(document).ready(function(){
     });
 
 
-    $('.modal').modal({
-
-    });
+    $('.modal').modal({});
 
   });
 
@@ -147,6 +143,17 @@ socket.on('newmessage', function(data){
             break;
 
 
+        //here is a transfer modal!
+        case 151:{
+            //$('select').material_select();
+            $('#pagecontent').append(data['htm']);
+            $('#close_modal').click(function(){
+                $('#addtransfer_modal').remove();
+                });
+            }
+            break;
+
+
         //here is a category modal!
         case 161:{
             $('#pagecontent').append(data['htm']);
@@ -231,6 +238,12 @@ function addpocket(){
     var data = {event: 241};
     send_message('newmessage', data);
 };
+
+
+function addtransfer(type){
+    var data = {event: 251, type: type, pocket: current_slide}
+    send_message('newmessage', data);
+}
 
 
 function show_cat(){

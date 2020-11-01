@@ -150,6 +150,29 @@ def newmessage(data):
         socket.emit('newmessage', mess, room=sid)
 
 
+    #user want to add transfer
+    if data['event'] == 251:
+
+        if data['type'] == 1:
+            cats = Category.query.filter_by(_user=current_user).filter_by(type=1).order_by(Category.name).all()
+        else:
+            cats = Category.query.filter_by(_user=current_user).filter_by(type=-1).order_by(Category.name).all()
+
+        pockets = Pocket.query.filter_by(_user=current_user).order_by(Pocket.name).all()
+
+        for p in pockets:
+            print(p.name)
+
+        actual_pocket = data['pocket'].split('_')[1]
+
+        mess = {}
+        mess['event'] = 151
+        mess['htm'] = render_template('addtransfer_modal.html', categories=cats, pockets=pockets, ap=actual_pocket)
+        socket.emit('newmessage', mess, room=sid)
+
+        return True
+
+
     #user wants to see the categories
     if data['event'] == 261:
         categories = Category.query.order_by(Category.name).filter_by( user_id = current_user.id).all()
