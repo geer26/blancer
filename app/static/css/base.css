@@ -168,7 +168,7 @@ body{
     animation-timing-function: ease-in;
 }
 
-@keyframe slideout{
+@keyframes slideout{
     from{
         margin-left: 0%;
     }

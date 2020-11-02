@@ -82,7 +82,7 @@ socket.on('newmessage', function(data){
             }
             break;
 
-        //here is an usercarousel as whole - SOLVE SET CAROUSEL TO ACTUAL!
+        //here is an usercarousel as whole - DONE!
         case 181:{
 
             $('#usercarousel').remove();
@@ -90,7 +90,7 @@ socket.on('newmessage', function(data){
             var cs = data['slides'][current_slide];
 
             $('#uc').append(data['htm']);
-            car = $('.carousel.carousel-slider').carousel({
+            var car = $('.carousel.carousel-slider').carousel({
                 fullWidth: true,
                 //indicators: true,
                 onCycleTo: function(data) {
@@ -99,7 +99,7 @@ socket.on('newmessage', function(data){
                     //console.log(current_slide);
                     }
                 });
-            //car.set(cs);
+            $('.carousel').carousel('set', cs);
             }
             break;
 
@@ -175,7 +175,6 @@ socket.on('newmessage', function(data){
         case 151:{
             $('#pagecontent').append(data['htm']);
             $('#close_modal').click(function(){
-                $('#addtransfer_modal').addClass('sout');
                 $('#addtransfer_modal').remove();
                 });
             }
@@ -184,6 +183,7 @@ socket.on('newmessage', function(data){
 
         //transfer registered, close the modal - DONE!
         case 152:{
+            $('#addtransfer_modal').slideUp();
             $('#addtransfer_modal').remove();
             refresh_carousel();
             }
