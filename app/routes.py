@@ -154,13 +154,16 @@ def newmessage(data):
     if data['event'] == 251:
 
         if data['type'] == 1:
-            cats = Category.query.filter_by(_user=current_user).filter_by(type=1).order_by(Category.name).all()
+            cats = Category.query.order_by(Category.name).filter_by(_user=current_user).filter_by(type=1).all()
         else:
-            cats = Category.query.filter_by(_user=current_user).filter_by(type=-1).order_by(Category.name).all()
+            cats = Category.query.order_by(Category.name).filter_by(_user=current_user).filter_by(type=-1).all()
 
         pockets = Pocket.query.filter_by(_user=current_user).order_by(Pocket.name).all()
 
-        actual_pocket = data['pocket'].split('_')[1]
+        actual_pocket = int(data['pocket'].split('_')[1])
+
+        for cat in cats:
+            print(cat.name)
 
         mess = {}
         mess['event'] = 151

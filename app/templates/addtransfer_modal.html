@@ -18,29 +18,44 @@
         <ul>
 
         <!-- Pocket selector -->
-        <div class="input-field">
+        <div class="input-field" id="pocket_s">
             <li>
-                <label for="pocket_selector">select a pocket:</label>
+                <label for="pocket_selector">pocket:</label>
                 <select id="pocket_selector">
                     {% for pocket in pockets %}
-                    <option value={{pocket.id}}>{{pocket.name}}</option>
+                    <option value={{pocket.id}}
+                    {% if pocket.id == ap %}
+                            selected
+                    {% endif %}
+                    >{{pocket.name}}</option>
                     {% endfor %}
                 </select>
             </li>
         </div>
 
+        <!-- Category selector -->
+        <div class="input-field" id="category_s">
+            <li>
+                <label for="category_selector">category:</label>
+                <select id="category_selector">
+                    {% for category in categories %}
+                    <option value={{category.id}}>
+                        {{category.name}}
+                    </option>
+                    {% endfor %}
+                </select>
+            </li>
+        </div>
+
+
+
         <script>
             $(document).ready(function(){
-                console.log('INIT???');
-                $('#pocket_selector select').formSelect();
+                $('#pocket_s select').formSelect();
+                $('#category_s select').formSelect();
             });
         </script>
 
-        {% for pocket in pockets %}
-        <li>
-            {{pocket.name}}
-        </li>
-        {% endfor %}
 
         <!-- Category selector -->
 
