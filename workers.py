@@ -148,3 +148,20 @@ def add_cat(data,u):
         db.session.add(c)
     db.session.commit()
     return True
+
+
+def add_transfer(data,u):
+    pocket = Pocket.query.get(int(data['pocketid']))
+    category = Category.query.get(int(data['categoryid']))
+    amount = category.type*int(data['amount'])
+
+    print(pocket.balance)
+    pocket.balance += amount
+    print(pocket.balance)
+
+    transfer = Transfer(amount=amount, _category=category, _pocket=pocket)
+
+    db.session.add(transfer)
+    db.session.commit()
+
+    return True

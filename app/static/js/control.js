@@ -55,7 +55,7 @@ $('#signupbutton').click(function(){
 socket.on('newmessage', function(data){
     switch (data['event']){
 
-        //signed up, user created! - READY
+        //signed up, user created! - DONE
         case 111:{
             $('#signup_username').val('');
             $('#signup_email').val('');
@@ -70,7 +70,7 @@ socket.on('newmessage', function(data){
             }
             break;
 
-        //here is an error message, show it to user! - READY
+        //here is an error message, show it to user! - DONE
         case 191:{
             $('#pagecontent').append(data['htm']);
             $('#error_modal').click(function(){
@@ -79,7 +79,25 @@ socket.on('newmessage', function(data){
             }
             break;
 
-        //here is an addpocket modal, use it wisely! - READY
+        //here is an usercarousel as whole
+        case 181:{
+            $('#usercarousel').remove();
+            $('#uc').append(data['htm']);
+            $('.carousel.carousel-slider').carousel({
+                fullWidth: true,
+                indicators: true,
+                //set: current_slide,
+                onCycleTo: function(data) {
+                    current_slide = data.id;
+                    //when user changes page, current slide id will be stored in current_slide as "uc_XXX", where XXX is the id of the pocket
+                    //console.log(current_slide);
+                    }
+                });
+            }
+            break;
+
+
+        //here is an addpocket modal, use it wisely! - DONE
         case 141:{
             $('#pagecontent').append(data['htm']);
             $('#close_modal').click(function(){
@@ -107,7 +125,7 @@ socket.on('newmessage', function(data){
             break;
 
 
-       //user must confirm deletion of pocket - READY
+       //user must confirm deletion of pocket - DONE
        case 142:{
             $('#pagecontent').append(data['htm']);
             $('#cancelbutton').click(function(){
@@ -125,25 +143,29 @@ socket.on('newmessage', function(data){
             break;
 
 
-        //pocket created successfully, close modal! - READY
+        //pocket created successfully, close modal!
         case 148:{
             $('#addpocket_modal').remove();
             $('#usercarousel').remove();
             $('#uc').append(data['htm']);
-            location.reload();
+            refresh_carousel();
+            //location.reload();
+            //solve refresh page!
             }
             break;
 
 
-        //pocket deleted successfully, refresh page! - READY
+        //pocket deleted successfully, refresh page!
         case 149:{
             $('#'+data['pid']).remove();
-            location.reload();
+            //solve refresh page!
+            refresh_carousel();
+            //location.reload();
             }
             break;
 
 
-        //here is a transfer modal!
+        //here is a transfer modal! - DONE
         case 151:{
             //$('select').material_select();
             $('#pagecontent').append(data['htm']);
@@ -154,7 +176,17 @@ socket.on('newmessage', function(data){
             break;
 
 
-        //here is a category modal!
+        //transfer registered, close the modal
+        case 152:{
+            $('#addtransfer_modal').remove();
+            //solve refresh page!
+            refresh_carousel();
+            //location.reload();
+            }
+            break;
+
+
+        //here is a category modal! - DOME
         case 161:{
             $('#pagecontent').append(data['htm']);
             $('#close_modal').click(function(){
@@ -164,7 +196,7 @@ socket.on('newmessage', function(data){
             break;
 
 
-        //here is a modal frame where you can add or modify category, remove category_modal
+        //here is a modal frame where you can add or modify category, remove category_modal - DONE
         case 164:{
             $('#category_modal').remove();
             $('#pagecontent').append(data['htm']);
@@ -201,7 +233,7 @@ socket.on('newmessage', function(data){
             break;
 
 
-        //category deleted, remove from list
+        //category deleted, remove from list - DONE
         case 162:{
             $('#'+data['id']).remove();
             }
@@ -219,7 +251,7 @@ socket.on('newmessage', function(data){
             break;
 
 
-        //del this id row from page
+        //del this id row from page - DONE
         case 171:{
                 $('#'+data['to_del']).remove();
             }
@@ -243,7 +275,22 @@ function addpocket(){
 function addtransfer(type){
     var data = {event: 251, type: type, pocket: current_slide}
     send_message('newmessage', data);
-}
+};
+
+
+function transfer(p, c, a){
+
+    if (!a || isNaN(a)){
+        var data ={event: 291, message:'Transfer amount must be numeric!'};
+        send_message('newmessage', data);
+        $('#transfer_amount').val('');
+        return;
+    };
+
+    var data = {event: 252, pocketid: p, categoryid: c, amount: a}
+    send_message('newmessage', data);
+    return;
+};
 
 
 function show_cat(){
@@ -276,9 +323,15 @@ function delpocket(pocket_id){
 };
 
 
+function refresh_carousel(){
+    var data = {event: 281};
+    send_message('newmessage', data);
+};
+
+
 function uc_next(){
     $('#usercarousel').carousel('next');
-}
+};
 
 function uc_prev(){
     $('#usercarousel').carousel('prev');

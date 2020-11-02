@@ -22,6 +22,7 @@
 
 #   15X - transfer events
 #       151 - send transfer modal
+#       152 - transfer registered
 
 #   16X - category events
 #       161 - send category modal
@@ -29,6 +30,9 @@
 #       163 - category edited
 #       164 - sending addcategory modal
 #       169- category added or modified,sending new category modal with the new data
+
+#   18X - resh events
+#       181 - send usercarousel as whole
 
 #   19X - send error modal
 #       191 - simple error modal with string
@@ -55,6 +59,7 @@
 
 #   25X - transfer events
 #       251 - user asks for transfer modal
+#       252 - user sends transfer details
 
 #   26X - category events
 #       261 - user asks for category modal
@@ -62,6 +67,9 @@
 #       263 - user want to edit a category
 #       264 - user want to add a category
 #       268 - user adds or modifies category
+
+#   28X - page refresh
+#       281 - user wants to refresh carousel
 
 #   29X - request for error modal
 #      291 - request for error modal with message string

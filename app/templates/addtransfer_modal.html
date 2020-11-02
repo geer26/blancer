@@ -1,6 +1,6 @@
 <div id="addtransfer_modal" class="modalback ">
 
-    <div class="addm_frame">
+    <div class="addm_frame flow-tex">
 
         <p id="hidden_pocket_id" style="display: none;"
            {% if p %}
@@ -18,59 +18,75 @@
         <ul>
 
         <!-- Pocket selector -->
-        <div class="input-field" id="pocket_s">
-            <li>
+        <li>
+            <div class="input-field flow-text" id="pocket_s">
                 <label for="pocket_selector">pocket:</label>
-                <select id="pocket_selector">
+                <select id="pocket_selector" class="left-align">
                     {% for pocket in pockets %}
                     <option value={{pocket.id}}
                     {% if pocket.id == ap %}
-                            selected
-                    {% endif %}
-                    >{{pocket.name}}</option>
-                    {% endfor %}
-                </select>
-            </li>
-        </div>
-
-        <!-- Category selector -->
-        <div class="input-field" id="category_s">
-            <li>
-                <label for="category_selector">category:</label>
-                <select id="category_selector">
-                    {% for category in categories %}
-                    <option value={{category.id}}>
-                        {{category.name}}
+                    selected
+                    {% endif %}>
+                    {{pocket.name}}
                     </option>
                     {% endfor %}
                 </select>
-            </li>
-        </div>
-
-
-
-        <script>
-            $(document).ready(function(){
-                $('#pocket_s select').formSelect();
-                $('#category_s select').formSelect();
-            });
-        </script>
-
+            </div>
+        </li>
 
         <!-- Category selector -->
+        <li>
+            <div class="input-field flow-text" id="category_s">
+                <label for="category_selector">category:</label>
+                <select id="category_selector" class="left-align">
+                    {% for category in categories %}
+                    <option value={{category.id}}>
+                        <p class="left-align">{{category.name}}</p>
+
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </li>
 
         <!-- value input -->
+        <li>
+            <div class="input-field">
+
+                <input id="transfer_amount" type="text" class="validate">
+                <label for="transfer_amount">
+                    {% if type > 0 %}
+                    <i class="small material-icons left green-text darken-2">publish</i>
+                    {% else %}
+                    <i class="small material-icons left rotate180 red-text">publish</i>
+                    {% endif %}
+                    value
+                </label>
+            </div>
+        </li>
 
         <!-- submit button -->
-        <!-- <li class="center-align">
-          <a class="waves-effect waves-light btn btn-small green darken-2" style="border-radius: 2px;" id="add_category">
-            <i class="material-icons left">add_circle</i>
-              transfer
+        <li class="center-align">
+          <a class="waves-effect waves-light btn btn-small green darken-2" style="border-radius: 2px;" id="add_transfer"
+             onclick="transfer( $('#pocket_selector').val(), $('#category_selector').val(), $('#transfer_amount').val() )">
+              {% if type > 0 %}
+              <i class="small material-icons left green-text darken-2">publish</i>
+              {% else %}
+              <i class="small material-icons left rotate180 red-text">publish</i>
+              {% endif %}
+              add transfer
           </a>
-        </li> -->
+        </li>
 
         </ul>
 
     </div>
+
+    <script>
+            $(document).ready(function(){
+                $('#pocket_s select').formSelect();
+                $('#category_s select').formSelect();
+            });
+    </script>
 
 </div>

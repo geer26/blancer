@@ -5,7 +5,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from app import app, socket, db
 from app.forms import LoginForm, SignupForm
 from app.models import User, Pocket, Transfer, Category
-from workers import verifiy_signup, hassu, deluser, getid, addpocket, delpocket, delcategory, add_cat
+from workers import verifiy_signup, hassu, deluser, getid, addpocket, delpocket, delcategory, add_cat, add_transfer
 
 
 #logs in user - ERROR!
@@ -148,6 +148,19 @@ def newmessage(data):
         mess['event'] = 191
         mess['htm'] = render_template('errormessage.html', message=data['message'])
         socket.emit('newmessage', mess, room=sid)
+        return True
+
+
+    #incoming request for refresh the usercarousel
+    if data['event'] == 281:
+
+        pockets = Pocket.query.filter_by(user_id=current_user.id).all()
+
+        mess = {}
+        mess['event'] = 181
+        mess['htm'] = render_template('usercarousel.html', pockets=pockets)
+        socket.emit('newmessage', mess, room=sid)
+        return True
 
 
     #user want to add transfer
@@ -155,8 +168,10 @@ def newmessage(data):
 
         if data['type'] == 1:
             cats = Category.query.order_by(Category.name).filter_by(_user=current_user).filter_by(type=1).all()
+            typ = 1
         else:
             cats = Category.query.order_by(Category.name).filter_by(_user=current_user).filter_by(type=-1).all()
+            typ = -1
 
         pockets = Pocket.query.filter_by(_user=current_user).order_by(Pocket.name).all()
 
@@ -164,9 +179,18 @@ def newmessage(data):
 
         mess = {}
         mess['event'] = 151
-        mess['htm'] = render_template('addtransfer_modal.html', categories=cats, pockets=pockets, ap=actual_pocket)
+        mess['htm'] = render_template('addtransfer_modal.html', categories=cats, pockets=pockets, ap=actual_pocket, type=typ)
         socket.emit('newmessage', mess, room=sid)
 
+        return True
+
+
+    #user sends transfer details
+    if data['event'] == 252:
+        if add_transfer(data,current_user):
+            mess = {}
+            mess['event'] = 152
+            socket.emit('newmessage', mess, room=sid)
         return True
 
 
