@@ -162,9 +162,6 @@ def newmessage(data):
 
         actual_pocket = int(data['pocket'].split('_')[1])
 
-        for cat in cats:
-            print(cat.name)
-
         mess = {}
         mess['event'] = 151
         mess['htm'] = render_template('addtransfer_modal.html', categories=cats, pockets=pockets, ap=actual_pocket)
