@@ -9,7 +9,8 @@
               <th>ID</th>
               <th>Timestamp</th>
               <th>Amount</th>
-              <th>Pocket ID</th>
+              <th>Category</th>
+              <th>Pocket</th>
           </tr>
         </thead>
 
@@ -19,7 +20,8 @@
               <td>{{transfer.id}}</td>
               <td>{{transfer.timestamp}}</td>
               <td>{{transfer.amount}}</td>
-              <td>{{transfer.pocket}}</td>
+              <td>{{transfer._category.name}}</td>
+              <td>{{transfer._pocket.name}}</td>
           </tr>
         {% endfor %}
         </tbody>
