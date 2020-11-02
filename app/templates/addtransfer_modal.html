@@ -18,14 +18,23 @@
         <ul>
 
         <!-- Pocket selector -->
-        <li>
-            <label for="pockets">select a pocket:</label>
-            <select id="pockets">
-                {% for pocket in pockets %}
-                <option value={{pocket.id}}>{{pocket.name}}</option>
-                {% endfor %}
-            </select>
-        </li>
+        <div class="input-field">
+            <li>
+                <label for="pocket_selector">select a pocket:</label>
+                <select id="pocket_selector">
+                    {% for pocket in pockets %}
+                    <option value={{pocket.id}}>{{pocket.name}}</option>
+                    {% endfor %}
+                </select>
+            </li>
+        </div>
+
+        <script>
+            $(document).ready(function(){
+                console.log('INIT???');
+                $('#pocket_selector select').formSelect();
+            });
+        </script>
 
         {% for pocket in pockets %}
         <li>

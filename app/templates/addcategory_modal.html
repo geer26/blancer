@@ -13,7 +13,11 @@
 
         <img class="close_btn" draggable="false" src="/static/img/icons/close.png" id="close_modal">
 
+        {% if c %}
+        <h6>modify category</h6>
+        {% else %}
         <h6>add category</h6>
+        {% endif %}
 
         <ul>
 
@@ -53,14 +57,15 @@
 
         </li>
 
-        <li class="center-align" style="margin-top: 10px;">
+        <li class="center-align" style="margin-top: 3vh;">
           <a class="waves-effect waves-light btn btn-small green darken-2" style="border-radius: 2px;" id="add_category">
+            {% if c %}
+            <i class="material-icons left">check_circle</i>
+            modify
+            {% else %}
             <i class="material-icons left">add_circle</i>
-              {% if c %}
-                modify
-              {% else %}
-                add category
-              {% endif %}
+            add category
+            {% endif %}
           </a>
         </li>
 
