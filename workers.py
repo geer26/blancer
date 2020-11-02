@@ -36,7 +36,7 @@ def hassu():
     return False
 
 
-#NEEDS TEST
+# - NEEDS TEST
 def verifiy_signup(data):
 
     if not validate_email(data['email']) or email_exist(data['email']):
@@ -150,14 +150,13 @@ def add_cat(data,u):
     return True
 
 
+# - DONE
 def add_transfer(data,u):
     pocket = Pocket.query.get(int(data['pocketid']))
     category = Category.query.get(int(data['categoryid']))
     amount = category.type*int(data['amount'])
 
-    print(pocket.balance)
     pocket.balance += amount
-    print(pocket.balance)
 
     transfer = Transfer(amount=amount, _category=category, _pocket=pocket)
 

@@ -2,7 +2,9 @@
 socket = io();
 
 var current_slide = 0;
-var current_cindex = 0;
+var slide_id = 0;
+
+var slides_in_carousel = {};
 
 function send_message(e_name,message){
     socket.emit(e_name,message);
@@ -18,15 +20,13 @@ $(document).ready(function(){
     $('input#signup_username, input#signup_email').characterCounter({});
 
 
-    $('.carousel.carousel-slider').carousel({
+    var car = $('.carousel.carousel-slider').carousel({
     fullWidth: true,
-    indicators: true,
+    //indicators: true,
     onCycleTo: function(data) {
       current_slide = data.id;
-      current_cindex = $('.carousel.carousel-slider').data('cindex');
       //when user changes page, current slide id will be stored in current_slide as "uc_XXX", where XXX is the id of the pocket
       //console.log(current_slide);
-      console.log(current_cindex);
     }
     });
 
@@ -82,21 +82,24 @@ socket.on('newmessage', function(data){
             }
             break;
 
-        //here is an usercarousel as whole -SOLVE SET CAROUSEL TO ACTUAL!
+        //here is an usercarousel as whole - SOLVE SET CAROUSEL TO ACTUAL!
         case 181:{
+
             $('#usercarousel').remove();
+
+            var cs = data['slides'][current_slide];
+
             $('#uc').append(data['htm']);
-            $('.carousel.carousel-slider').carousel({
+            car = $('.carousel.carousel-slider').carousel({
                 fullWidth: true,
-                indicators: true,
-                //set: current_slide,
+                //indicators: true,
                 onCycleTo: function(data) {
                     current_slide = data.id;
                     //when user changes page, current slide id will be stored in current_slide as "uc_XXX", where XXX is the id of the pocket
                     //console.log(current_slide);
                     }
                 });
-
+            //car.set(cs);
             }
             break;
 
@@ -105,6 +108,7 @@ socket.on('newmessage', function(data){
         case 141:{
             $('#pagecontent').append(data['htm']);
             $('#close_modal').click(function(){
+                $('#addpocket_modal').addClass('sout');
                 $('#addpocket_modal').remove();
                 });
             $('#add_pocket').click(function(){
@@ -147,8 +151,9 @@ socket.on('newmessage', function(data){
             break;
 
 
-        //pocket created successfully, close modal! - DONE
+        //pocket created successfully, close modal! - DONE!
         case 148:{
+            $('#addpocket_modal').addClass('sout');
             $('#addpocket_modal').remove();
             $('#usercarousel').remove();
             $('#uc').append(data['htm']);
@@ -157,8 +162,9 @@ socket.on('newmessage', function(data){
             break;
 
 
-        //pocket deleted successfully, refresh page! - DONE
+        //pocket deleted successfully, refresh page! - DONE!
         case 149:{
+
             $('#'+data['pid']).remove();
             refresh_carousel();
             }
@@ -167,16 +173,16 @@ socket.on('newmessage', function(data){
 
         //here is a transfer modal! - DONE
         case 151:{
-            //$('select').material_select();
             $('#pagecontent').append(data['htm']);
             $('#close_modal').click(function(){
+                $('#addtransfer_modal').addClass('sout');
                 $('#addtransfer_modal').remove();
                 });
             }
             break;
 
 
-        //transfer registered, close the modal - DONE
+        //transfer registered, close the modal - DONE!
         case 152:{
             $('#addtransfer_modal').remove();
             refresh_carousel();
@@ -322,7 +328,7 @@ function delpocket(pocket_id){
 
 
 function refresh_carousel(){
-    var data = {event: 281};
+    var data = {event: 281, cs: current_slide};
     send_message('newmessage', data);
 };
 

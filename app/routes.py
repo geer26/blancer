@@ -156,7 +156,12 @@ def newmessage(data):
 
         pockets = Pocket.query.filter_by(user_id=current_user.id).all()
 
+        nth = {}
+        for index,p in enumerate(pockets):
+            nth['uc_' + str(p.id)] = index
+
         mess = {}
+        mess['slides'] = nth
         mess['event'] = 181
         mess['htm'] = render_template('usercarousel.html', pockets=pockets)
         socket.emit('newmessage', mess, room=sid)
