@@ -1,7 +1,7 @@
 
 /* mains */
 body{
-    background-color: #b2dfdb;
+    background-color: #d7ccc8;
     letter-spacing: 2px;
     word-spacing: 2px;
     color: #000000;
@@ -34,6 +34,24 @@ body{
     -o-transform: rotate(180deg);
     -ms-transform: rotate(180deg);
     transform: rotate(180deg);
+}
+
+.pocketname{
+    border: 1px solid red;
+    padding: 0;
+}
+
+.pocketbalance{
+    border: 1px solid red;
+    display: inline-block;
+}
+
+.negative_transfers{
+    border: 1px solid green;
+}
+
+.positive_transfers{
+    border: 1px solid red;
 }
 
 /* ERROR MESSAGE STYLE */

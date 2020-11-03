@@ -2,6 +2,8 @@ from datetime import date, datetime
 
 from flask import render_template, redirect, request
 from flask_login import current_user, login_user, logout_user, login_required
+from sqlalchemy import desc
+
 from app import app, socket, db
 from app.forms import LoginForm, SignupForm
 from app.models import User, Pocket, Transfer, Category
@@ -46,7 +48,12 @@ def index():
                                users=users, pockets=pockets, transfers=transfers, categories=categories)
 
     elif current_user.is_authenticated and not current_user.is_superuser:
-        pockets = Pocket.query.filter_by( user_id = current_user.id ).all()
+        pockets = Pocket.query.filter_by( _user = current_user ).all()
+        '''t = Transfer.query.filter_by(_user=current_user).order_by(desc(Transfer.timestamp)).filter_by(type=1).all(5)
+        for tr in t:
+            print(t.timestamp)
+        ptranfers=None
+        ntransfers=None'''
 
         return render_template('index.html', title='Index', loginform=loginform, signupform=signupform, pockets=pockets)
 

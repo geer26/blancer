@@ -19,10 +19,6 @@
 
         <div class="fixed-action-btn delpocket">
 
-            <!-- <a class="btn-floating btn amber" onclick="random_transfers()">
-                <i class="large material-icons">help</i>
-            </a> -->
-
             <a class="btn-floating btn teal">
                 <i class="large material-icons">create</i>
             </a>
@@ -33,17 +29,35 @@
 
         </div>
 
-        <h2 style=" margin-top: 10px; margin-left: 10px;" class="left-align">{{pocket.name}}</h2>
+        <div class="pocketname flow-text">
 
-        <h1
-        {% if pocket.balance >= 0%}
-          class = "green-text darken-2"
-         {% else %}
-          class = "red-text darken-2"
-        {% endif %}
-        >{{pocket.balance}}
-        </h1>
+            <h4 style=" margin-top: 10px; margin-left: 10px;" class="left-align">{{pocket.name}}</h4>
+            <p style=" margin-left: 10px;" class="left-align">{{pocket.description}}</p>
 
+        </div>
+
+        <div class="pocketbalance flow-text">
+            <h1
+            {% if pocket.balance >= 0%}
+            class = "green-text darken-2"
+            {% else %}
+             class = "red-text darken-2"
+            {% endif %}
+            >{{pocket.balance}}
+            </h1>
+        </div>
+
+        <div id="l5_transfers" class="row flow-text">
+
+            <div id="l5_pos" class="col s12 m6 positive_transfers">
+
+            </div>
+
+            <div id=l4_neg class="col s12 m6 negative_transfers">
+
+            </div>
+
+        </div>
         <!-- here was the chart -->
 
     </div>
