@@ -29,14 +29,14 @@
 
         </div>
 
-        <div class="pocketname flow-text">
+        <div class="pocketname row flow-text">
 
             <h4 style=" margin-top: 10px; margin-left: 10px;" class="left-align">{{pocket.name}}</h4>
             <p style=" margin-left: 10px;" class="left-align">{{pocket.description}}</p>
 
         </div>
 
-        <div class="pocketbalance flow-text">
+        <div class="pocketbalance row flow-text">
             <h1
             {% if pocket.balance >= 0%}
             class = "green-text darken-2"
@@ -50,10 +50,12 @@
         <div id="l5_transfers" class="row flow-text">
 
             <div id="l5_pos" class="col s12 m6 positive_transfers">
+                <p>Last 5 expenses</p>
 
             </div>
 
             <div id=l4_neg class="col s12 m6 negative_transfers">
+                <p>Last 5 incomes</p>
 
             </div>
 
