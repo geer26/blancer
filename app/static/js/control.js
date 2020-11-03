@@ -17,6 +17,9 @@ $(document).ready(function(){
     });
 
 
+    $('.tooltipped').tooltip({delay: 50});
+
+
     $('input#signup_username, input#signup_email').characterCounter({});
 
 
