@@ -4,14 +4,12 @@
 
         <p id="hidden_id" style="display: none;"
            {% if c %}
-           cid= "{{c.id}}"
-           {% else %}
-           cid= ""
+           cid="{{c.id}}"
            {% endif %}
            >
         </p>
 
-        <img class="close_btn tooltipped" draggable="false" src="/static/img/icons/close.png" id="close_modal" data-position="bottom" data-delay="50" data-tooltip="Close modal">
+        <img class="close_btn" draggable="false" src="/static/img/icons/close.png" id="close_modal">
 
         {% if c %}
         <h6>modify category</h6>
@@ -38,7 +36,7 @@
         <li>
             <div class="switch">
                 <label>
-                <i class="small material-icons rotate180 red-text tooltipped" data-position="bottom" data-delay="50" data-tooltip="Set as expense">
+                <i class="small material-icons rotate180 red-text">
                     publish
                 </i>
                     {% if c %}
@@ -53,7 +51,7 @@
                         <input type="checkbox" class="green darken-2" id="cat_type" checked>
                         <span id="cat_span" class="lever"></span>
                     {% endif %}
-                <i class="small material-icons green-text darken-2 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Set az income">
+                <i class="small material-icons green-text darken-2">
                     publish
                 </i>
                 </label>

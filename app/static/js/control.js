@@ -6,6 +6,7 @@ var slide_id = 0;
 
 var inanim = 'bounceIn';
 var outanim = 'bounceOut';
+var removeanim = 'fadeOutLeft';
 
 var slides_in_carousel = {};
 
@@ -39,6 +40,8 @@ $(document).ready(function(){
 
     $('.modal').modal({});
 
+    animateCSS('#logo', inanim);
+
   });
 
 
@@ -65,6 +68,7 @@ socket.on('newmessage', function(data){
     switch (data['event']){
 
         //signed up, user created! - DONE
+        //add anim!
         case 111:{
             $('#signup_username').val('');
             $('#signup_email').val('');
@@ -82,9 +86,9 @@ socket.on('newmessage', function(data){
         //here is an error message, show it to user! - DONE
         case 191:{
             $('#pagecontent').append(data['htm']);
-            animateCSS('#error_message', 'bounceIn');
+            animateCSS('#error_message', inanim);
             $('#error_modal').click(function(){
-                animateCSS('#error_message', 'bounceOut').then((message) => {
+                animateCSS('#error_message', outanim).then((message) => {
                 $('#error_modal').remove();
                 });
             });
@@ -116,7 +120,7 @@ socket.on('newmessage', function(data){
         //here is an addpocket modal, use it wisely! - DONE
         case 141:{
             $('#pagecontent').append(data['htm']);
-            animateCSS('#addm_frame', 'bounceIn');
+            animateCSS('#addm_frame', inanim);
             $('#close_modal').click(function(){
                 animateCSS('#addm_frame', 'bounceOut').then((message) => {
                 $('#addpocket_modal').remove();
@@ -147,7 +151,7 @@ socket.on('newmessage', function(data){
        //user must confirm deletion of pocket - DONE
        case 142:{
             $('#pagecontent').append(data['htm']);
-            animateCSS('#delp_confirm', 'bounceIn');
+            animateCSS('#delp_confirm', inanim);
             $('#cancelbutton').click(function(){
                 animateCSS('#delp_confirm', 'bounceOut').then((message) => {
                 $('#delpocket_confirm').remove();
@@ -159,7 +163,7 @@ socket.on('newmessage', function(data){
                     p_id: $('#p_id').text()
                 };
                 send_message('newmessage', data);
-                animateCSS('#delp_confirm', 'bounceOut').then((message) => {
+                animateCSS('#delp_confirm', outanim).then((message) => {
                 $('#delpocket_confirm').remove();
                 });
             });
@@ -169,7 +173,7 @@ socket.on('newmessage', function(data){
 
         //pocket created successfully, close modal! - DONE!
         case 148:{
-            animateCSS('#addm_frame', 'bounceOut').then((message) => {
+            animateCSS('#addm_frame', outanim).then((message) => {
                 $('#addpocket_modal').remove();
             });
             $('#uc').append(data['htm']);
@@ -189,9 +193,9 @@ socket.on('newmessage', function(data){
         //here is a transfer modal! - DONE
         case 151:{
             $('#pagecontent').append(data['htm']);
-            animateCSS('#addt_frame', 'bounceIn');
+            animateCSS('#addt_frame', inanim);
             $('#close_modal').click(function(){
-                animateCSS('#addt_frame', 'bounceOut').then((message) => {
+                animateCSS('#addt_frame', outanim).then((message) => {
                 $('#addtransfer_modal').remove();
                 });
                 });
@@ -223,52 +227,67 @@ socket.on('newmessage', function(data){
             break;
 
 
-        //here is a modal frame where you can add or modify category, remove category_modal - DONE
+        //here is a modal frame where you can add or modify category, remove category_modal
         case 164:{
-
             animateCSS('#cat_frame', outanim).then((message) => {
                 $('#category_modal').remove();
                 $('#pagecontent').append(data['htm']);
                 animateCSS('#addc_frame', inanim);
-                });
+                }).then((m) =>
+                 {
 
-            $('#cat_type').change(function(){
-                if(this.checked) {
-                    $('#cat_span').removeClass("red")
-                } else{
-                    $('#cat_span').addClass("red")
-                }
-            });
+                    $('#close_modal').click(function(){
+                    animateCSS('#addc_frame', outanim).then((message) => {
+                        $('#addcategory_modal').remove();
+                        show_cat();
+                    })
+                    });
 
-            $('#close_modal').click(function(){
-                animateCSS('#addc_frame', outanim).then((message) => {
-                $('#addcategory_modal').remove();
-                show_cat();
-                });
-                });
+                    $('#add_category').click(function(){
 
-            $('#add_category').click(function(){
-                //! check if category name is zero length !
-                if ( !$('#category_name').val() || $('#category_name').val().length<=0 ){
-                    var data ={event: 291, message:'A name must be set for this category!'};
-                    send_message('newmessage', data);
-                }
-                else{
-                    var data = {
-                        event: 268,
-                        cname: $('#category_name').val(),
-                        cid: $('#hidden_id').attr('cid'),
-                        type: $('#cat_type').prop( "checked" )
-                    };
-                    send_message('newmessage', data);
-                }
-            });
+                    if ( $('#hidden_id').attr('cid') ){
+                        var id = $('#hidden_id').attr('cid');
+                    }else{
+                        var id = false;
+                    }
+
+                    var type = $('#cat_type').is(':checked');
+                    var name = $('#category_name').val();
+
+                    if (name.length <= 0){
+                        var data ={event: 291, message:'Category name must be set!'};
+                    }
+                    else{
+                        var data= {event: 268, cid: id,  cname: name, type: type};
+                        send_message('newmessage', data);
+
+                    }
+
+                    /*animateCSS('#addc_frame', outanim).then((message) => {
+                        $('#addcategory_modal').remove();
+                        show_cat();
+                    })*/
+
+                    });
+
+                    $('#cat_type').change(function(){
+                    if(this.checked) {
+                        $('#cat_span').removeClass("red")
+                    }
+                    else{
+                        $('#cat_span').addClass("red")
+                    }
+                    });
+
+                 });
+
             }
             break;
 
 
         //category deleted, remove from list - DONE
         case 162:{
+            animateCSS( sel , removeanim );
             $('#'+data['id']).remove();
             }
             break;
@@ -286,7 +305,7 @@ socket.on('newmessage', function(data){
                 animateCSS('#cat_frame', 'bounceOut').then((message) => {
                 $('#category_modal').remove();
                 });
-                });
+            });
             }
             break;
 

@@ -1,6 +1,6 @@
 <div id="category_modal" class="modalback">
 
-    <div class="addm_frame" id="cat_frame">
+    <div class="addm_frame" id="cat_frame" style="overflow: auto;">
 
         <img class="close_btn" draggable="false" src="/static/img/icons/close.png" id="close_modal">
 
@@ -13,7 +13,6 @@
             {% for category in categories %}
             <tr id={{category.id}}>
                 <td style="overflow: auto;">
-
                     <a class="btn-floating btn-small waves-effect waves-light teal" id="{{category.id}}_edit" onclick="edit_cat({{category.id}})">
                         <i class="small material-icons">create</i>
                     </a>
@@ -21,9 +20,7 @@
                         <i class="small material-icons">delete</i>
                     </a>
                     {{category.name}}
-
                 </td>
-                <br>
             </tr>
             {% endfor %}
             </tbody>

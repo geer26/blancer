@@ -231,8 +231,10 @@ def newmessage(data):
 
     #user want to edit a category
     if data['event'] == 263:
-        id = data['id']
-        c = Category.query.get(int(id))
+        if data['id']:
+            id = data['id']
+            c = Category.query.get(int(id))
+
         mess = {}
         mess['event'] = 164
         mess['htm'] = render_template('addcategory_modal.html', c=c)

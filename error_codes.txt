@@ -64,7 +64,7 @@
 #   26X - category events
 #       261 - user asks for category modal
 #       262 - user want to del a category
-#       263 - user want to edit a category
+#       263 - user want to add or edit a category
 #       264 - user want to add a category
 #       268 - user adds or modifies category
 

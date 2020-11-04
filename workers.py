@@ -132,6 +132,7 @@ def delcategory(id):
 
 # - DONE
 def add_cat(data,u):
+    #print(data)
     if data['cid']:
         c=Category.query.get(int(data['cid']))
         c.name=data['cname']
