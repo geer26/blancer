@@ -38,7 +38,9 @@
         <li>
             <div class="switch">
                 <label>
-                <i class="small material-icons rotate180 red-text">publish</i>
+                <i class="small material-icons rotate180 red-text tooltipped" data-position="bottom" data-delay="50" data-tooltip="Set as expense">
+                    publish
+                </i>
                     {% if c %}
                         {% if c.type > 0 %}
                             <input type="checkbox" class="green darken-2" id="cat_type" checked>
@@ -51,7 +53,9 @@
                         <input type="checkbox" class="green darken-2" id="cat_type" checked>
                         <span id="cat_span" class="lever"></span>
                     {% endif %}
-                <i class="small material-icons green-text darken-2">publish</i>
+                <i class="small material-icons green-text darken-2 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Set az income">
+                    publish
+                </i>
                 </label>
             </div>
 
