@@ -287,7 +287,7 @@ socket.on('newmessage', function(data){
 
         //category deleted, remove from list - DONE
         case 162:{
-            animateCSS( sel , removeanim );
+            //animateCSS( sel , removeanim );
             $('#'+data['id']).remove();
             }
             break;
