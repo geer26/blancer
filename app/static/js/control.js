@@ -213,17 +213,17 @@ socket.on('newmessage', function(data){
             break;
 
 
-        //here is a category modal! - DONE
+        //here is a category modal!
         //FASZOM PROMISE!
         case 161:{
             $('#pagecontent').append(data['htm']);
-            animateCSS('#cat_frame', inanim);
-            $('#close_modal').click(function(){
-                animateCSS('#cat_frame', outanim).then((message) => {
-                $('#category_modal').remove();
+            animateCSS('#cat_frame', inanim).then((message) => {
+                $('#close_modal').click(function(){
+                    animateCSS('#cat_frame', outanim).then((message) => {
+                        $('#category_modal').remove();
+                       });
                 });
-
-                });
+            });
             }
             break;
 
@@ -235,7 +235,7 @@ socket.on('newmessage', function(data){
                 $('#category_modal').remove();
                 $('#pagecontent').append(data['htm']);
                 animateCSS('#addc_frame', inanim);
-                }).then((m) =>
+                }).then((message) =>
                  {
 
                     $('#close_modal').click(function(){
@@ -257,12 +257,12 @@ socket.on('newmessage', function(data){
                         var type = $('#cat_type').is(':checked');
 
                         if (!$('#category_name').val()){
-                            var data ={event: 291, message:'Category name must be set!'};
+                            req_for_error('Category name must be set!');
                         }
                         else{
                             var name = $('#category_name').val();
                             var data= {event: 268, cid: id,  cname: name, type: type};
-                            send_message('newmessage', data);
+                            send_message('newmessage', data)
                         }
                     });
 
@@ -291,10 +291,10 @@ socket.on('newmessage', function(data){
 
         //category added or modified, remove addcategory modal and replace it with this
         case 169:{
-            animateCSS('#addc_frame', outanim).then((message) => {
+            /*animateCSS('#addc_frame', outanim).then((message) => {
                 $('#addcategory_modal').remove();
-                });
-
+                });*/
+            $('#addcategory_modal').remove();
             $('#pagecontent').append(data['htm']);
             animateCSS('#cat_frame', 'bounceIn');
             $('#close_modal').click(function(){
@@ -313,6 +313,12 @@ socket.on('newmessage', function(data){
             break;
     }
 });
+
+
+function req_for_error(message){
+    console.log(message);
+    var data ={event: 291, message:message};
+};
 
 
 function deluser(e){
