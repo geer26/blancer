@@ -79,8 +79,11 @@ socket.on('newmessage', function(data){
         //here is an error message, show it to user! - DONE
         case 191:{
             $('#pagecontent').append(data['htm']);
+            animateCSS('#error_message', 'bounceIn');
             $('#error_modal').click(function(){
+                animateCSS('#error_message', 'bounceOut').then((message) => {
                 $('#error_modal').remove();
+                });
             });
             }
             break;
@@ -110,9 +113,11 @@ socket.on('newmessage', function(data){
         //here is an addpocket modal, use it wisely! - DONE
         case 141:{
             $('#pagecontent').append(data['htm']);
+            animateCSS('#addm_frame', 'bounceIn');
             $('#close_modal').click(function(){
-                $('#addpocket_modal').addClass('sout');
+                animateCSS('#addm_frame', 'bounceOut').then((message) => {
                 $('#addpocket_modal').remove();
+                });
                 });
             $('#add_pocket').click(function(){
                 //include check!
@@ -139,8 +144,11 @@ socket.on('newmessage', function(data){
        //user must confirm deletion of pocket - DONE
        case 142:{
             $('#pagecontent').append(data['htm']);
+            animateCSS('#delp_confirm', 'bounceIn');
             $('#cancelbutton').click(function(){
+                animateCSS('#delp_confirm', 'bounceOut').then((message) => {
                 $('#delpocket_confirm').remove();
+                });
             });
             $('#delbutton').click(function(){
                 var data = {
@@ -148,7 +156,9 @@ socket.on('newmessage', function(data){
                     p_id: $('#p_id').text()
                 };
                 send_message('newmessage', data);
+                animateCSS('#delp_confirm', 'bounceOut').then((message) => {
                 $('#delpocket_confirm').remove();
+                });
             });
             }
             break;
@@ -156,9 +166,9 @@ socket.on('newmessage', function(data){
 
         //pocket created successfully, close modal! - DONE!
         case 148:{
-            $('#addpocket_modal').addClass('sout');
-            $('#addpocket_modal').remove();
-            $('#usercarousel').remove();
+            animateCSS('#addm_frame', 'bounceOut').then((message) => {
+                $('#addpocket_modal').remove();
+            });
             $('#uc').append(data['htm']);
             refresh_carousel();
             }
@@ -167,7 +177,6 @@ socket.on('newmessage', function(data){
 
         //pocket deleted successfully, refresh page! - DONE!
         case 149:{
-
             $('#'+data['pid']).remove();
             refresh_carousel();
             }
@@ -177,8 +186,11 @@ socket.on('newmessage', function(data){
         //here is a transfer modal! - DONE
         case 151:{
             $('#pagecontent').append(data['htm']);
+            animateCSS('#addt_frame', 'bounceIn');
             $('#close_modal').click(function(){
+                animateCSS('#addt_frame', 'bounceOut').then((message) => {
                 $('#addtransfer_modal').remove();
+                });
                 });
             }
             break;
@@ -186,8 +198,9 @@ socket.on('newmessage', function(data){
 
         //transfer registered, close the modal - DONE!
         case 152:{
-            $('#addtransfer_modal').slideUp();
-            $('#addtransfer_modal').remove();
+            animateCSS('#addt_frame', 'bounceOut').then((message) => {
+                $('#addtransfer_modal').remove();
+            });
             refresh_carousel();
             }
             break;
@@ -196,8 +209,12 @@ socket.on('newmessage', function(data){
         //here is a category modal! - DOME
         case 161:{
             $('#pagecontent').append(data['htm']);
+            animateCSS('#addc_frame', 'bounceIn');
             $('#close_modal').click(function(){
+                animateCSS('#addc_frame', 'bounceOut').then((message) => {
                 $('#category_modal').remove();
+                });
+
                 });
             }
             break;
@@ -207,7 +224,7 @@ socket.on('newmessage', function(data){
         case 164:{
             $('#category_modal').remove();
             $('#pagecontent').append(data['htm']);
-
+            animateCSS('#addc_frame', 'bounceIn');
             $('#cat_type').change(function(){
                 if(this.checked) {
                     $('#cat_span').removeClass("red")
@@ -217,7 +234,9 @@ socket.on('newmessage', function(data){
             });
 
             $('#close_modal').click(function(){
-                $('#addcategory_modal').remove();
+                animateCSS('#addc_frame', 'bounceOut').then((message) => {
+                $('#category_modal').remove();
+                });
                 show_cat();
                 });
             $('#add_category').click(function(){
@@ -249,10 +268,15 @@ socket.on('newmessage', function(data){
 
         //category added or modified, remove category modal and replace it with this
         case 169:{
-            $('#addcategory_modal').remove();
-            $('#pagecontent').append(data['htm']);
-            $('#close_modal').click(function(){
+            animateCSS('#addc_frame', 'bounceOut').then((message) => {
                 $('#category_modal').remove();
+                });
+            $('#pagecontent').append(data['htm']);
+            animateCSS('#cat_frame', 'bounceIn');
+            $('#close_modal').click(function(){
+                animateCSS('#cat_frame', 'bounceOut').then((message) => {
+                $('#category_modal').remove();
+                });
                 });
             }
             break;
@@ -343,3 +367,22 @@ function uc_next(){
 function uc_prev(){
     $('#usercarousel').carousel('prev');
 }
+
+
+//animation handler
+const animateCSS = (element, animation, prefix = 'animate__') =>
+  // We create a Promise and return it
+  new Promise((resolve, reject) => {
+    const animationName = `${prefix}${animation}`;
+    const node = document.querySelector(element);
+
+    node.classList.add(`${prefix}animated`, animationName);
+
+    // When the animation ends, we clean the classes and resolve the Promise
+    function handleAnimationEnd() {
+      node.classList.remove(`${prefix}animated`, animationName);
+      resolve('Animation ended');
+    }
+
+    node.addEventListener('animationend', handleAnimationEnd, {once: true});
+  });
