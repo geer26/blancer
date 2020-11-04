@@ -4,6 +4,9 @@ socket = io();
 var current_slide = 0;
 var slide_id = 0;
 
+var inanim = 'bounceIn';
+var outanim = 'bounceOut';
+
 var slides_in_carousel = {};
 
 function send_message(e_name,message){
@@ -198,7 +201,7 @@ socket.on('newmessage', function(data){
 
         //transfer registered, close the modal - DONE!
         case 152:{
-            animateCSS('#addt_frame', 'bounceOut').then((message) => {
+            animateCSS('#addt_frame', outanim).then((message) => {
                 $('#addtransfer_modal').remove();
             });
             refresh_carousel();
@@ -206,12 +209,12 @@ socket.on('newmessage', function(data){
             break;
 
 
-        //here is a category modal! - DOME
+        //here is a category modal! - DONE
         case 161:{
             $('#pagecontent').append(data['htm']);
-            animateCSS('#addc_frame', 'bounceIn');
+            animateCSS('#cat_frame', inanim);
             $('#close_modal').click(function(){
-                animateCSS('#addc_frame', 'bounceOut').then((message) => {
+                animateCSS('#cat_frame', outanim).then((message) => {
                 $('#category_modal').remove();
                 });
 
@@ -222,9 +225,13 @@ socket.on('newmessage', function(data){
 
         //here is a modal frame where you can add or modify category, remove category_modal - DONE
         case 164:{
-            $('#category_modal').remove();
-            $('#pagecontent').append(data['htm']);
-            animateCSS('#addc_frame', 'bounceIn');
+
+            animateCSS('#cat_frame', outanim).then((message) => {
+                $('#category_modal').remove();
+                $('#pagecontent').append(data['htm']);
+                animateCSS('#addc_frame', inanim);
+                });
+
             $('#cat_type').change(function(){
                 if(this.checked) {
                     $('#cat_span').removeClass("red")
@@ -234,11 +241,12 @@ socket.on('newmessage', function(data){
             });
 
             $('#close_modal').click(function(){
-                animateCSS('#addc_frame', 'bounceOut').then((message) => {
-                $('#category_modal').remove();
-                });
+                animateCSS('#addc_frame', outanim).then((message) => {
+                $('#addcategory_modal').remove();
                 show_cat();
                 });
+                });
+
             $('#add_category').click(function(){
                 //! check if category name is zero length !
                 if ( !$('#category_name').val() || $('#category_name').val().length<=0 ){
@@ -266,11 +274,12 @@ socket.on('newmessage', function(data){
             break;
 
 
-        //category added or modified, remove category modal and replace it with this
+        //category added or modified, remove addcategory modal and replace it with this
         case 169:{
-            animateCSS('#addc_frame', 'bounceOut').then((message) => {
-                $('#category_modal').remove();
+            animateCSS('#addc_frame', outanim).then((message) => {
+                $('#addcategory_modal').remove();
                 });
+
             $('#pagecontent').append(data['htm']);
             animateCSS('#cat_frame', 'bounceIn');
             $('#close_modal').click(function(){
