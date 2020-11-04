@@ -54,6 +54,7 @@ class Pocket(db.Model):
 class Transfer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     amount = db.Column(db.Integer, default=0)
+    detail = db.Column(db.String(40))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.now)
     pocket = db.Column(db.Integer, db.ForeignKey('pocket.id'))
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))

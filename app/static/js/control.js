@@ -214,6 +214,7 @@ socket.on('newmessage', function(data){
 
 
         //here is a category modal! - DONE
+        //FASZOM PROMISE!
         case 161:{
             $('#pagecontent').append(data['htm']);
             animateCSS('#cat_frame', inanim);
@@ -228,6 +229,7 @@ socket.on('newmessage', function(data){
 
 
         //here is a modal frame where you can add or modify category, remove category_modal
+        //FASZOM PROMISE!
         case 164:{
             animateCSS('#cat_frame', outanim).then((message) => {
                 $('#category_modal').remove();
@@ -245,29 +247,23 @@ socket.on('newmessage', function(data){
 
                     $('#add_category').click(function(){
 
-                    if ( $('#hidden_id').attr('cid') ){
-                        var id = $('#hidden_id').attr('cid');
-                    }else{
-                        var id = false;
-                    }
+                        if ( $('#hidden_id').attr('cid') ){
+                            var id = $('#hidden_id').attr('cid');
+                        }
+                        else{
+                            var id = false;
+                        }
 
-                    var type = $('#cat_type').is(':checked');
-                    var name = $('#category_name').val();
+                        var type = $('#cat_type').is(':checked');
 
-                    if (name.length <= 0){
-                        var data ={event: 291, message:'Category name must be set!'};
-                    }
-                    else{
-                        var data= {event: 268, cid: id,  cname: name, type: type};
-                        send_message('newmessage', data);
-
-                    }
-
-                    /*animateCSS('#addc_frame', outanim).then((message) => {
-                        $('#addcategory_modal').remove();
-                        show_cat();
-                    })*/
-
+                        if (!$('#category_name').val()){
+                            var data ={event: 291, message:'Category name must be set!'};
+                        }
+                        else{
+                            var name = $('#category_name').val();
+                            var data= {event: 268, cid: id,  cname: name, type: type};
+                            send_message('newmessage', data);
+                        }
                     });
 
                     $('#cat_type').change(function(){
