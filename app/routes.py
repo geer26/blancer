@@ -171,8 +171,13 @@ def newmessage(data):
         mess = {}
         mess['slides'] = nth
         mess['event'] = 181
-        mess['htm'] = render_template('usercarousel.html', pockets=pockets)
+
+        ptransfers = get_ptransfers(current_user, 5)
+        ntransfers = get_ntransfers(current_user, 5)
+
+        mess['htm'] = render_template('usercarousel.html', title='Index', pockets=pockets, ptransfers=ptransfers, ntransfers=ntransfers)
         socket.emit('newmessage', mess, room=sid)
+
         return True
 
 
