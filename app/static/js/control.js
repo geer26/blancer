@@ -339,7 +339,7 @@ function addtransfer(type){
 };
 
 
-function transfer(p, c, a){
+function transfer(p, c, a, d){
 
     if (!a || isNaN(a)){
         var data ={event: 291, message:'Transfer amount must be numeric!'};
@@ -348,7 +348,7 @@ function transfer(p, c, a){
         return;
     };
 
-    var data = {event: 252, pocketid: p, categoryid: c, amount: a}
+    var data = {event: 252, pocketid: p, categoryid: c, amount: a, detail: d}
     send_message('newmessage', data);
     return;
 };

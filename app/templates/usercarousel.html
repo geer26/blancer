@@ -7,14 +7,14 @@
     <div class="carousel-item" style="overflow: hidden;"
          id="uc_{{pocket.id}}" cindex="{{pocket.id}}">
 
-        <div id="prevslide" style="left: 0; border-top-right-radius: 15px; border-bottom-right-radius: 15px;"
+        <div id="prevslide" style="left: 0; border-top-right-radius: 2px; border-bottom-right-radius: 2px;"
          onclick="uc_prev()" class="valign-wrapper car_nav">
-        <i class="material-icons small center-align" style="margin-right: 0;">skip_previous</i>
+        <i class="material-icons small navicon">skip_previous</i>
         </div>
 
-        <div id="nextslide" style="right: 0; border-top-left-radius: 15px; border-bottom-left-radius: 15px;"
+        <div id="nextslide" style="right: 0; border-top-left-radius: 2px; border-bottom-left-radius: 2px;"
          onclick="uc_next()" class="valign-wrapper car_nav">
-        <i class="material-icons small center-align">skip_next</i>
+        <i class="material-icons small navicon">skip_next</i>
         </div>
 
         <div class="fixed-action-btn delpocket">
@@ -36,7 +36,7 @@
 
         </div>
 
-        <div class="pocketbalance row flow-text">
+        <div class="pocketbalance row flow-text tooltipped" data-position="top" data-delay="50" data-tooltip="Actual balance">
             <h1
             {% if pocket.balance >= 0%}
             class = "green-text darken-2"
@@ -47,16 +47,32 @@
             </h1>
         </div>
 
-        <div id="l5_transfers" class="row flow-text">
+        <div id="l5_transfers" class="row flow-text" style="overflow: auto;">
 
             <div id="l5_pos" class="col s12 m6 positive_transfers">
                 <p>Last 5 expenses</p>
+                {% for transfer in ntransfers[pocket.id] %}
 
+                <p><span>
+                    {{transfer.detail}}
+                    {{transfer.amount}}
+                    {{transfer.timestamp.strftime('%d.%b.%Y,%H:%M')}}
+                </span></p>
+
+                {% endfor %}
             </div>
 
             <div id=l4_neg class="col s12 m6 negative_transfers">
                 <p>Last 5 incomes</p>
+                {% for transfer in ptransfers[pocket.id] %}
 
+                <p><span>
+                    {{transfer.detail}}
+                    {{transfer.amount}}
+                    {{transfer.timestamp.strftime('%d.%b.%Y,%H:%M')}}
+                </span></p>
+
+                {% endfor %}
             </div>
 
         </div>

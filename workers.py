@@ -1,5 +1,7 @@
 import re
 
+from sqlalchemy import desc
+
 from app import app,socket,db
 from app.models import User, Pocket, Transfer, Category
 from datetime import datetime, date
@@ -153,15 +155,60 @@ def add_cat(data,u):
 
 # - DONE
 def add_transfer(data,u):
+
     pocket = Pocket.query.get(int(data['pocketid']))
     category = Category.query.get(int(data['categoryid']))
     amount = category.type*int(data['amount'])
+    detail = str(data['detail'])
 
     pocket.balance += amount
 
-    transfer = Transfer(amount=amount, _category=category, _pocket=pocket)
+    transfer = Transfer(amount=amount, _category=category, _pocket=pocket, detail=detail)
 
     db.session.add(transfer)
     db.session.commit()
 
     return True
+
+
+def get_ptransfers(u,num=None):
+    #print('positives')
+    transfers = {}
+
+    pockets = Pocket.query.filter_by(_user=u).all()
+    for pocket in pockets:
+        tr_by_pocket = []
+        id = pocket.id
+        ts=Transfer.query.filter_by(_pocket=pocket).order_by(desc(Transfer.timestamp)).all()
+        for transf in ts:
+            if transf._category.type == 1:
+                tr_by_pocket.append(transf)
+
+        if num:
+            transfers[id] = tr_by_pocket[:num]
+        else:
+            transfers[id] = tr_by_pocket
+    #print(transfers)
+    return transfers
+
+
+def get_ntransfers(u,num=None):
+    #print('negatives')
+    transfers = {}
+
+    pockets = Pocket.query.filter_by(_user=u).all()
+    for pocket in pockets:
+        tr_by_pocket = []
+        id = pocket.id
+        ts = Transfer.query.filter_by(_pocket=pocket).order_by(desc(Transfer.timestamp)).all()
+        for transf in ts:
+            if transf._category.type == -1:
+                tr_by_pocket.append(transf)
+
+        if num:
+            transfers[id] = tr_by_pocket[:num]
+        else:
+            transfers[id] = tr_by_pocket
+
+    #print(transfers)
+    return transfers

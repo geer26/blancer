@@ -7,7 +7,8 @@ from sqlalchemy import desc
 from app import app, socket, db
 from app.forms import LoginForm, SignupForm
 from app.models import User, Pocket, Transfer, Category
-from workers import verifiy_signup, hassu, deluser, getid, addpocket, delpocket, delcategory, add_cat, add_transfer
+from workers import verifiy_signup, hassu, deluser, getid, addpocket, delpocket, delcategory, add_cat, add_transfer, \
+    get_ptransfers, get_ntransfers
 
 
 #logs in user - ERROR!
@@ -48,14 +49,14 @@ def index():
                                users=users, pockets=pockets, transfers=transfers, categories=categories)
 
     elif current_user.is_authenticated and not current_user.is_superuser:
-        pockets = Pocket.query.filter_by( _user = current_user ).all()
-        '''t = Transfer.query.filter_by(_user=current_user).order_by(desc(Transfer.timestamp)).filter_by(type=1).all(5)
-        for tr in t:
-            print(t.timestamp)
-        ptranfers=None
-        ntransfers=None'''
 
-        return render_template('index.html', title='Index', loginform=loginform, signupform=signupform, pockets=pockets)
+        pockets = Pocket.query.filter_by( _user = current_user ).all()
+
+        ptransfers = get_ptransfers(current_user, 5)
+        ntransfers = get_ntransfers(current_user, 5)
+
+        return render_template('index.html', title='Index', loginform=loginform, signupform=signupform, pockets=pockets,\
+                               ptransfers=ptransfers, ntransfers=ntransfers)
 
     else:
 

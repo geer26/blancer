@@ -65,10 +65,22 @@
             </div>
         </li>
 
+        <!-- detail input -->
+        <li>
+            <div class="input-field">
+                <input id="transfer_detail" type="text" class="validate">
+                <label for="transfer_detail">
+                    detail
+                </label>
+            </div>
+        </li>
+
         <!-- submit button -->
         <li class="center-align">
           <a class="waves-effect waves-light btn btn-small green darken-2" style="border-radius: 2px;" id="add_transfer"
-             onclick="transfer( $('#pocket_selector').val(), $('#category_selector').val(), $('#transfer_amount').val() )">
+             onclick="transfer(
+             $('#pocket_selector').val(), $('#category_selector').val(), $('#transfer_amount').val(), $('#transfer_detail').val()
+             )">
               {% if type > 0 %}
               <i class="small material-icons left green-text darken-2">publish</i>
               {% else %}
