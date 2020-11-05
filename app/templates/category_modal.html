@@ -10,7 +10,7 @@
 
         <div id="tableholder" class="tableholder">
             {% for category in categories %}
-            <p class="categories_span" id="{{category.id}}">
+            <p class="categories_span" id="row_{{category.id}}">
             <span id="cat_{{category.id}}" class="valign-wrapper">
                 <a class="btn-floating btn-small waves-effect waves-light teal" id="{{category.id}}_edit" onclick="edit_cat({{category.id}})"
                    style="margin: 5px;">

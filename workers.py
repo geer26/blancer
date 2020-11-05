@@ -17,7 +17,13 @@ def validate_email(email):
 def email_exist(email):
     for user in User.query.all():
         if user.email == email: return True
+    return False
 
+
+# - DONE
+def user_exist(username):
+    for user in User.query.all():
+        if user.username == username: return True
     return False
 
 
@@ -31,6 +37,17 @@ def validate_password(password):
     return False
 
 
+def validate_loginattempt(data):
+    user = User.query.filter_by(username=str(data['username'])).first()
+    if not user:
+        print('NO USER')
+        return False
+    if not user.check_password(str(data['password'])):
+        print('WRONG PASSWORD')
+        return False
+    return False
+
+
 # - DONE
 def hassu():
     for user in User.query.all():
@@ -39,6 +56,7 @@ def hassu():
 
 
 # - NEEDS TEST
+# - ADD USERNAME UNIQUE CHECK!
 def verifiy_signup(data):
 
     if not validate_email(data['email']) or email_exist(data['email']):
@@ -52,6 +70,8 @@ def verifiy_signup(data):
 
     if not data['agreed']:
         return 4
+
+
 
     # all data OK, create user and, a default pocket, and two default categories
     u = User()
@@ -171,6 +191,7 @@ def add_transfer(data,u):
     return True
 
 
+# - DONE
 def get_ptransfers(u,num=None):
     #print('positives')
     transfers = {}
@@ -192,6 +213,7 @@ def get_ptransfers(u,num=None):
     return transfers
 
 
+# - DONE
 def get_ntransfers(u,num=None):
     #print('negatives')
     transfers = {}

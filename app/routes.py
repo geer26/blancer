@@ -8,7 +8,7 @@ from app import app, socket, db
 from app.forms import LoginForm, SignupForm
 from app.models import User, Pocket, Transfer, Category
 from workers import verifiy_signup, hassu, deluser, getid, addpocket, delpocket, delcategory, add_cat, add_transfer, \
-    get_ptransfers, get_ntransfers
+    get_ptransfers, get_ntransfers, validate_loginattempt
 
 
 #logs in user - ERROR!
@@ -322,6 +322,22 @@ def newmessage(data):
             socket.emit('newmessage', mess, room=sid)
 
         return True
+
+
+    #ser wants to login, sends data
+    if data['event'] == 221:
+
+        if validate_loginattempt(data):
+            mess = {}
+            mess['event'] = 121
+            socket.emit('newmessage', mess, room=sid)
+            return True
+        else:
+            mess = {}
+            mess['event'] = 191
+            mess['htm'] = render_template('errormessage.html', message='Username or password is invalid!')
+            socket.emit('newmessage', mess, room=sid)
+            return True
 
 
     #delete username

@@ -1,18 +1,16 @@
 {% if not current_user.is_authenticated %}
 
-    <a class="waves-effect waves-light btn btn-small modal-trigger" href="#loginmodal" style="border-radius: 2px;">
+    <a class="waves-effect waves-light btn btn-small" style="border-radius: 2px;" onclick="show_loginmodal()">
         <i class="material-icons left">login</i>
         login
     </a>
 
-    {% include 'loginmodal.html' %}
 
     <span style="margin-left: 10px; margin-right: 10px;">
         or
         <a href="#signupmodal" class="modal-trigger" style="color: black;">sign up!</a>
     </span>
 
-    {% include 'signupmodal.html' %}
 
 {% else %}
 

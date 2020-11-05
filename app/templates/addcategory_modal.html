@@ -24,7 +24,7 @@
             <i class="material-icons prefix">description</i>
             <input id="category_name" type="text" class="validate" data-length="40"
                    {% if c %}
-                   value="{{c.name}}"
+                   value="{{c.name}}" autofocus
                    {% else %}
                    value = ""
                    {%endif%}

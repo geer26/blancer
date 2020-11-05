@@ -83,6 +83,13 @@ socket.on('newmessage', function(data){
             }
             break;
 
+        //login seems to be ok, send the form!
+        case 121:{
+                console.log('SEEMS OK, SUBMIT THE FORM!');
+                //submitform('loginform');
+            }
+            break;
+
         //here is an error message, show it to user! - DONE
         case 191:{
             $('#pagecontent').append(data['htm']);
@@ -122,7 +129,7 @@ socket.on('newmessage', function(data){
             $('#pagecontent').append(data['htm']);
             animateCSS('#addm_frame', inanim);
             $('#close_modal').click(function(){
-                animateCSS('#addm_frame', 'bounceOut').then((message) => {
+                animateCSS('#addm_frame', outanim ).then((message) => {
                 $('#addpocket_modal').remove();
                 });
                 });
@@ -283,8 +290,7 @@ socket.on('newmessage', function(data){
 
         //category deleted, remove from list - DONE
         case 162:{
-            //animateCSS( sel , removeanim );
-            $('#'+data['id']).remove();
+            animateCSS( "#row_"+data['id'].toString() , removeanim ).then( (message) => $('#row_'+data['id']).remove() );
             }
             break;
 
@@ -378,6 +384,11 @@ function add_cat(){
 };
 
 
+function submitform(form){
+    $("#"+form.toString()).submit()
+};
+
+
 function delpocket(pocket_id){
     var data = {event: 242, p_id: pocket_id};
     send_message('newmessage', data);
@@ -386,6 +397,27 @@ function delpocket(pocket_id){
 
 function refresh_carousel(){
     var data = {event: 281, cs: current_slide};
+    send_message('newmessage', data);
+};
+
+
+function show_loginmodal(){
+    $("#loginmodal").show();
+    animateCSS( "#login_frame" , inanim);
+};
+
+
+function hideitem(item1, item2){
+    animateCSS( "#"+item1.toString() , outanim).then((message) => {
+        $( "#"+item2.toString()).hide();
+        });
+};
+
+
+function loginattempt(){
+    var username = $('#login_username').val();
+    var password = $('#login_password').val();
+    var data = {event: 221, username: username, password: password};
     send_message('newmessage', data);
 };
 
@@ -400,7 +432,7 @@ function uc_prev(){
 
 
 //animation handler
-const animateCSS = (element, animation, prefix = 'animate__') =>
+const animateCSS = (element, animation, prefix = 'animate__',) =>
   // We create a Promise and return it
   new Promise((resolve, reject) => {
     const animationName = `${prefix}${animation}`;
