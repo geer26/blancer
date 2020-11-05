@@ -85,8 +85,7 @@ socket.on('newmessage', function(data){
 
         //login seems to be ok, send the form!
         case 121:{
-                console.log('SEEMS OK, SUBMIT THE FORM!');
-                //submitform('loginform');
+                submitform('loginform');
             }
             break;
 

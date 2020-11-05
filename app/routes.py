@@ -324,20 +324,20 @@ def newmessage(data):
         return True
 
 
-    #ser wants to login, sends data
+    #ser wants to login, sends data - DONE
     if data['event'] == 221:
 
         if validate_loginattempt(data):
             mess = {}
             mess['event'] = 121
             socket.emit('newmessage', mess, room=sid)
-            return True
         else:
             mess = {}
             mess['event'] = 191
             mess['htm'] = render_template('errormessage.html', message='Username or password is invalid!')
             socket.emit('newmessage', mess, room=sid)
-            return True
+
+        return True
 
 
     #delete username

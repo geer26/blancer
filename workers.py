@@ -40,12 +40,10 @@ def validate_password(password):
 def validate_loginattempt(data):
     user = User.query.filter_by(username=str(data['username'])).first()
     if not user:
-        print('NO USER')
         return False
     if not user.check_password(str(data['password'])):
-        print('WRONG PASSWORD')
         return False
-    return False
+    return True
 
 
 # - DONE
