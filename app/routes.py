@@ -180,6 +180,15 @@ def newmessage(data):
         return True
 
 
+    #user requests for helpmodal
+    if data['event'] == 289:
+        mess = {}
+        mess['event'] = 189
+        mess['htm'] = render_template('helpmodal.html')
+        socket.emit('newmessage', mess, room=sid)
+        return True
+
+
     #user want to add transfer
     if data['event'] == 251:
 

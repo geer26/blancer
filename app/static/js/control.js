@@ -130,6 +130,14 @@ socket.on('newmessage', function(data){
             break;
 
 
+        //here is the helpmodal, show it to the user!
+        case 189:{
+            $('#pagecontent').append(data['htm']);
+            animateCSS('#help_frame', inanim);
+            }
+            break;
+
+
         //here is an addpocket modal, use it wisely! - DONE
         case 141:{
             $('#pagecontent').append(data['htm']);
@@ -427,7 +435,9 @@ function reset_password(){
 
 
 function show_help(){
-    console.log('SHOW HELP MODAL!');
+    //console.log('SHOW HELP MODAL!');
+    var data = {event: 289};
+    send_message('newmessage', data);
 };
 
 

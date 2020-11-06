@@ -31,8 +31,9 @@
 #       164 - sending addcategory modal
 #       169- category added or modified,sending new category modal with the new data
 
-#   18X - resh events
+#   18X - refresh and temp events
 #       181 - send usercarousel as whole
+#       189 - sending helpmodal as DOM element
 
 #   19X - send error modal
 #       191 - simple error modal with string
@@ -68,8 +69,9 @@
 #       264 - user want to add a category
 #       268 - user adds or modifies category
 
-#   28X - page refresh
+#   28X - page refresh  and etc
 #       281 - user wants to refresh carousel
+#       289 - user request for helpmodal
 
 #   29X - request for error modal
 #      291 - request for error modal with message string
