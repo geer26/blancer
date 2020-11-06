@@ -4,8 +4,8 @@ socket = io();
 var current_slide = 0;
 var slide_id = 0;
 
-var inanim = 'bounceIn';
-var outanim = 'bounceOut';
+var inanim = 'fadeIn';
+var outanim = 'fadeOut';
 var removeanim = 'fadeOutLeft';
 var attentionanim = 'rubberBand';
 
