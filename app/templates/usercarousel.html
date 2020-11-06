@@ -28,26 +28,25 @@
 
         </div>
 
-        <div class="pocketname row flow-text">
-
-            <h4 style=" margin-top: 10px; margin-left: 10px;" class="left-align">{{pocket.name}}</h4>
-            <p style=" margin-left: 10px;" class="left-align">{{pocket.description}}</p>
-
+        <div class="pocketname row flow-text valign-wrapper">
+            <div style="display: inline-block; border: 1px solid red; margin-left: 20px; margin-top:20px; margin-bottom:20px;">
+                <h5 style="font-weight: bold; margin: 0;" class="left-align">{{pocket.name}}</h5>
+                <h6 style=" margin :0;" class="left-align">{{pocket.description}}</h6>
+            </div>
         </div>
 
         <div class="pocketbalance row tooltipped" data-position="top" data-delay="50" data-tooltip="Actual balance" id="actual_b">
-            <h2 style="margin: 0;"
+            <h3 id="pbalance" style="margin: 0;"
             {% if pocket.balance >= 0%}
             class = "green-text darken-2"
             {% else %}
              class = "red-text darken-2"
             {% endif %}
-            >
-                {{pocket.balance}}
-            </h2>
+            >{{pocket.balance}}
+            </h3>
         </div>
 
-        <div class="row flow-text" style="border: 1px solid blue;">
+        <div class="row flow-text" style="">
             <h6 style="margin: 0;">
                 recent transfers:
             </h6>

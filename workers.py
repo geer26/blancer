@@ -121,7 +121,7 @@ def addpocket(data,u):
     if data['p_desc'] and data['p_desc'] != '':
         p.description = str(data['p_desc'])
     else:
-        p.description = 'none'
+        p.description = ''
 
     if data['p_balance'] and data['p_balance'] != '':
         p.balance = int(data['p_balance'])

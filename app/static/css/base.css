@@ -37,12 +37,16 @@ body{
 }
 
 .pocketname{
-    border: 1px solid red;
-    padding: 0;
+    background-color: #2196f3;
+    margin-left: 7vw;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    /*box-shadow: -5px 0px 6px 4px rgba(0,0,0,0.5);*/
 }
 
 .pocketbalance{
     /*border: 1px solid red;*/
+    position: relative;
     border-radius: 5px;
     padding: 5px;
     display: inline-block;
@@ -51,13 +55,18 @@ body{
     transition: 0.2s;
 }
 
+.pocketbalance h3{
+    font-weight: 550;
+}
+
 
 .pocketbalance:hover{
     background-color: rgba(0, 0, 0, 0.1);
-    box-shadow: 0px 0px 5px 6px rgba(0, 0 ,0, .45);
-    padding-left: 7px;
-    padding-right: 7px;
-    font-size: 105%;
+}
+
+
+.pocketbalance:hover h3{
+    font-size: 305%;
 }
 
 
