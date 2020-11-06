@@ -421,6 +421,16 @@ function show_signupmodal(){
 };
 
 
+function reset_password(){
+    console.log('RESET PASSWORD!');
+};
+
+
+function show_help(){
+    console.log('SHOW HELP MODAL!');
+};
+
+
 function hideitem(item1, item2){
     animateCSS( "#"+item1.toString() , outanim).then((message) => {
         $( "#"+item2.toString()).hide();
