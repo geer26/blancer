@@ -116,10 +116,10 @@ def getid(username):
 def addpocket(data,u):
     p=Pocket(_user=u )
 
-    p.name = data['p_name']
+    p.name = str(data['p_name'])
 
     if data['p_desc'] and data['p_desc'] != '':
-        p.description = data['p_desc']
+        p.description = str(data['p_desc'])
     else:
         p.description = 'none'
 

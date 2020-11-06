@@ -151,7 +151,8 @@ socket.on('newmessage', function(data){
                     send_message('newmessage', data);
                 }
                 });
-            }
+
+            };
             break;
 
 
@@ -180,6 +181,7 @@ socket.on('newmessage', function(data){
 
         //pocket created successfully, close modal! - DONE!
         case 148:{
+        console.log('SHOULD BE REMOVED!');
             animateCSS('#addm_frame', outanim).then((message) => {
                 $('#addpocket_modal').remove();
             });
@@ -337,6 +339,30 @@ function addpocket(){
     var data = {event: 241};
     send_message('newmessage', data);
 };
+
+
+/*function addp(){
+    $('#add_pocket').click(function(){
+        console.log('SEND?');
+        //include check!
+        if ($('#addp_bal').val()!='' && isNaN($('#addp_bal').val())){
+                    var data ={event: 291, message:'Initial balance must be a number or leave it blank!'};
+                    send_message('newmessage', data);
+                    $('#addp_bal').val('');
+                }
+
+        else if (!$('#addp_name').val()){
+                    var data ={event: 291, message:'A name must be set for this pocket!'};
+                    send_message('newmessage', data);
+                }
+
+        else {
+            var data ={ event: 243, p_name: $('#addp_name').val(), p_desc: $('#addp_desc').val(), p_balance: $('#addp_bal').val() };
+            send_message('newmessage', data);
+            console.log('SENT!');
+        }
+        })
+};*/
 
 
 function addtransfer(type){

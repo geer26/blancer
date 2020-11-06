@@ -142,10 +142,9 @@ def del_transfers():  #swipe database!
     return redirect('/')
 
 
+#websocket event dispatcher
 @socket.on('newmessage')
 def newmessage(data):
-
-    #print(data)
 
     sid = request.sid
 
@@ -365,6 +364,7 @@ def newmessage(data):
         mess['event'] = 141
         mess['htm'] = render_template('addpocket_modal.html')
         socket.emit('newmessage', mess, room=sid)
+        return True
 
 
     #user want to del a pocket - DONE
@@ -373,6 +373,7 @@ def newmessage(data):
         mess['event'] = 142
         mess['htm'] = render_template('delpocket_confirm.html', p_id=data['p_id'])
         socket.emit('newmessage', mess, room=sid)
+        return True
 
 
     #user send a new pocket data - DONE
@@ -381,11 +382,15 @@ def newmessage(data):
 
             pockets = Pocket.query.filter_by(user_id=current_user.id).all()
 
+            ptransfers = get_ptransfers(current_user, 5)
+            ntransfers = get_ntransfers(current_user, 5)
+
             mess = {}
             mess['event'] = 148
             mess['status'] = 1
-            mess['htm'] = render_template('usercarousel.html', pockets=pockets)
+            mess['htm'] = render_template('usercarousel.html', pockets=pockets, ptransfers=ptransfers, ntransfers=ntransfers)
             socket.emit('newmessage', mess, room=sid)
+
         return True
 
 
