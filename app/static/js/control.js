@@ -7,6 +7,7 @@ var slide_id = 0;
 var inanim = 'bounceIn';
 var outanim = 'bounceOut';
 var removeanim = 'fadeOutLeft';
+var attentionanim = 'rubberBand';
 
 var slides_in_carousel = {};
 
