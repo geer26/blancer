@@ -3,62 +3,61 @@
 
     <div class="addm_frame" id="signup_frame">
 
+      <img class="close_btn" draggable="false" src="/static/img/icons/close.png" id="close_modal" onclick="hideitem('signup_frame', 'signupmodal')">
+
       <h4>signup</h4>
 
-      <ul>
+      <form method="post" id="signupform" novalidate>
+            {{ signupform.hidden_tag() }}
 
-        <li>
-          <div class="input-field center-align" >
-            <i class="material-icons prefix">account_circle</i>
-            <input id="signup_username" type="text" class="validate" data-length="12">
-            <label for="signup_username">username</label>
-          </div>
-        </li>
+            <ul>
 
-        <li>
-          <div class="input-field center-align">
-            <i class="material-icons prefix">email</i>
-            <input id="signup_email" type="text" class="validate" data-length="120">
-            <label for="signup_email">email</label>
-          </div>
-        </li>
+              <li>
+                <div class="input-field center-align" >
+                  <i class="material-icons prefix">account_circle</i>
+                  <input id="signup_username" type="text" class="validate" data-length="12">
+                  <label for="signup_username">username</label>
+                </div>
+              </li>
 
-        <li>
-          <div class="input-field center-align">
-            <i class="material-icons prefix">pending</i>
-            <input id="signup_password" type="password" class="validate">
-            <label for="signup_password">password</label>
-          </div>
-        </li>
+              <li>
+                <div class="input-field center-align">
+                  <i class="material-icons prefix">email</i>
+                  <input id="signup_email" type="text" class="validate" data-length="120">
+                  <label for="signup_email">email</label>
+                </div>
+              </li>
 
-        <li>
-          <div class="input-field center-align">
-            <i class="material-icons prefix">pending</i>
-            <input id="signup_password2" type="password" class="validate">
-            <label for="signup_password2">password again</label>
-          </div>
-        </li>
+              <li>
+                <div class="input-field center-align">
+                  <i class="material-icons prefix">pending</i>
+                  <input id="signup_password" type="password" class="validate">
+                  <label for="signup_password">password</label>
+                </div>
+              </li>
 
-        <li>
-          <p class="center-align">
-            <label>
-              <input type="checkbox" id="signup_agree"/>
-              <span>I've read and agreed to the <a href="#">TERMS</a>!</span>
-            </label>
-          </p>
-        </li>
+              <li>
+                <div class="input-field center-align">
+                  <i class="material-icons prefix">pending</i>
+                  <input id="signup_password2" type="password" class="validate">
+                  <label for="signup_password2">password again</label>
+                </div>
+              </li>
 
-        <li class="center-align">
-          <a class="waves-effect waves-light btn btn-small" style="border-radius: 2px;" id="signupbutton">
-            <i class="material-icons left">check_circle</i>
-            signup_orig
-          </a>
-        </li>
+              <li>
+                <p class="center-align">
+                  <label>
+                    <input type="checkbox" id="signup_agree"/>
+                    <span>I've read and agreed to the <a href="#">TERMS</a>!</span>
+                  </label>
+                </p>
+              </li>
 
-      </ul>
+            </ul>
 
-      <a class="waves-effect waves-light btn btn-small" style="border-radius: 2px;" id="signupbutton2">
-          <i class="material-icons left">check_circle</i>
+      </form>
+
+      <a class="waves-effect waves-light btn btn-small" style="border-radius: 2px;" id="signupbutton2" onclick="signupattempt()">
           signup
       </a>
 

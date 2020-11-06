@@ -410,6 +410,12 @@ function show_loginmodal(){
 };
 
 
+function show_signupmodal(){
+    $("#signupmodal").show();
+    animateCSS( "#signup_frame" , inanim);
+};
+
+
 function hideitem(item1, item2){
     animateCSS( "#"+item1.toString() , outanim).then((message) => {
         $( "#"+item2.toString()).hide();
@@ -422,6 +428,15 @@ function loginattempt(){
     var password = $('#login_password').val();
     var data = {event: 221, username: username, password: password};
     send_message('newmessage', data);
+};
+
+
+function signupattempt(){
+    /*var username = $('#login_username').val();
+    var password = $('#login_password').val();
+    var data = {event: 221, username: username, password: password};
+    send_message('newmessage', data);*/
+    console.log('SIGNUPATTEMPT');
 };
 
 
