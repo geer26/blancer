@@ -1,4 +1,6 @@
-<div class="carousel carousel-slider center" style="margin: auto; max-width: 100vw; min-height: 85vh;" id="usercarousel">
+<div class="carousel carousel-slider center "
+     style="margin: auto; max-width: 100vw; min-height: 85vh;"
+     id="usercarousel">
 
     <div id="prevslide" style="left: 0; border-top-right-radius: 5px; border-bottom-right-radius: 5px;"
          onclick="uc_prev()" class="valign-wrapper car_nav">
@@ -29,9 +31,9 @@
         </div>
 
         <div class="pocketname row flow-text valign-wrapper">
-            <div style="display: inline-block; border: 1px solid red; margin-left: 20px; margin-top:20px; margin-bottom:20px;">
-                <h5 style="font-weight: bold; margin: 0;" class="left-align">{{pocket.name}}</h5>
-                <h6 style=" margin :0;" class="left-align">{{pocket.description}}</h6>
+            <div style="display: inline-block; margin-left: 20px; margin-top:20px; margin-bottom:20px;">
+                <h5 style="font-weight: bold; margin: 0; text-shadow: -1px -1px 3px #ffffff;" class="left-align">{{pocket.name}}</h5>
+                <h6 style=" margin :0; text-shadow: -1px -1px 3px #ffffff;" class="left-align">{{pocket.description}}</h6>
             </div>
         </div>
 
@@ -60,7 +62,7 @@
                 <p>
                     <span class="negtransfer">{{transfer.amount}}</span>
                     <span class="tranferdate">({{transfer.timestamp.strftime('%d.%b.%Y,%H:%M')}})</span>
-                    <span>{{transfer.detail}}</span>
+                    <span style="font-weight: bold;">{{transfer.detail}}</span>
                 </p>
 
                 {% endfor %}
@@ -72,7 +74,7 @@
                 <p>
                     <span class="postransfer">{{transfer.amount}}</span>
                     <span class="tranferdate">({{transfer.timestamp.strftime('%d.%b.%Y,%H:%M')}})</span>
-                    <span>{{transfer.detail}}</span>
+                    <span style="font-weight: bold;">{{transfer.detail}}</span>
                 </p>
 
                 {% endfor %}

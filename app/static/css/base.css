@@ -5,7 +5,7 @@ body{
     letter-spacing: 2px;
     word-spacing: 2px;
     color: #000000;
-    /*font-family: Andale Mono, monospace;*/
+    font-family: 'Space Grotesk', sans-serif;
     font size: 2vh;
     font-weight: none;
     padding: 0;
@@ -144,17 +144,17 @@ body{
 
 .close_btn{
     position: absolute;
-    max-width: 3vw;
+    max-width: 3vmax;
     /*bottom: 90%;*/
-    top: -1.25vw;
-    right: -1.25vw;
+    top: -1.25vmax;
+    right: -1.25vmax;
     transition: 0.3s;
 }
 
 .close_btn:hover{
-    max-width: 4vw;
-    top: -1.5vw;
-    right: -1.5vw;
+    max-width: 4vmax;
+    top: -1.5vmax;
+    right: -1.5vmax;
 }
 
 .addm_frame{

@@ -31,6 +31,7 @@ $(document).ready(function(){
     var car = $('.carousel.carousel-slider').carousel({
     fullWidth: true,
     //indicators: true,
+    //noWrap: true,
     onCycleTo: function(data) {
       current_slide = data.id;
       //when user changes page, current slide id will be stored in current_slide as "uc_XXX", where XXX is the id of the pocket
