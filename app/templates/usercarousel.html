@@ -1,21 +1,20 @@
 <div class="carousel carousel-slider center" style="margin: auto; max-width: 100vw; min-height: 85vh;" id="usercarousel">
 
+    <div id="prevslide" style="left: 0; border-top-right-radius: 5px; border-bottom-right-radius: 5px;"
+         onclick="uc_prev()" class="valign-wrapper car_nav">
+        <i class="material-icons small navicon">skip_previous</i>
+    </div>
+
+    <div id="nextslide" style="right: 0; border-top-left-radius: 5px; border-bottom-left-radius: 5px;"
+         onclick="uc_next()" class="valign-wrapper car_nav">
+        <i class="material-icons small navicon">skip_next</i>
+    </div>
 
     {% for pocket in pockets %}
 
 
     <div class="carousel-item" style="overflow: hidden;"
          id="uc_{{pocket.id}}" cindex="{{pocket.id}}">
-
-        <div id="prevslide" style="left: 0; border-top-right-radius: 2px; border-bottom-right-radius: 2px;"
-         onclick="uc_prev()" class="valign-wrapper car_nav">
-        <i class="material-icons small navicon">skip_previous</i>
-        </div>
-
-        <div id="nextslide" style="right: 0; border-top-left-radius: 2px; border-bottom-left-radius: 2px;"
-         onclick="uc_next()" class="valign-wrapper car_nav">
-        <i class="material-icons small navicon">skip_next</i>
-        </div>
 
         <div class="fixed-action-btn delpocket">
 
@@ -36,8 +35,8 @@
 
         </div>
 
-        <div class="pocketbalance row flow-text tooltipped" data-position="top" data-delay="50" data-tooltip="Actual balance" id="actual_b">
-            <h1 style="margin: 0;"
+        <div class="pocketbalance row tooltipped" data-position="top" data-delay="50" data-tooltip="Actual balance" id="actual_b">
+            <h2 style="margin: 0;"
             {% if pocket.balance >= 0%}
             class = "green-text darken-2"
             {% else %}
@@ -45,37 +44,37 @@
             {% endif %}
             >
                 {{pocket.balance}}
-            </h1>
+            </h2>
         </div>
 
         <div class="row flow-text" style="border: 1px solid blue;">
-            <h4 style="margin: 0;">
-                recently
-            </h4>
+            <h6 style="margin: 0;">
+                recent transfers:
+            </h6>
         </div>
 
-        <div id="l5_transfers" class="row flow-text" style="overflow: auto;">
+        <div id="l5_transfers" class="row flow-text container" style="overflow: auto;">
 
-            <div id="l5_pos" class="col s12 m6 positive_transfers">
+            <div id="l5_pos" class="col s12 m6 negative_transfers">
                 {% for transfer in ntransfers[pocket.id] %}
 
-                <p><span>
-                    {{transfer.detail}}
-                    {{transfer.amount}}
-                    {{transfer.timestamp.strftime('%d.%b.%Y,%H:%M')}}
-                </span></p>
+                <p>
+                    <span class="negtransfer">{{transfer.amount}}</span>
+                    <span class="tranferdate">({{transfer.timestamp.strftime('%d.%b.%Y,%H:%M')}})</span>
+                    <span>{{transfer.detail}}</span>
+                </p>
 
                 {% endfor %}
             </div>
 
-            <div id=l4_neg class="col s12 m6 negative_transfers">
+            <div id=l4_neg class="col s12 m6 positive_transfers">
                 {% for transfer in ptransfers[pocket.id] %}
 
-                <p><span>
-                    {{transfer.detail}}
-                    {{transfer.amount}}
-                    {{transfer.timestamp.strftime('%d.%b.%Y,%H:%M')}}
-                </span></p>
+                <p>
+                    <span class="postransfer">{{transfer.amount}}</span>
+                    <span class="tranferdate">({{transfer.timestamp.strftime('%d.%b.%Y,%H:%M')}})</span>
+                    <span>{{transfer.detail}}</span>
+                </p>
 
                 {% endfor %}
             </div>

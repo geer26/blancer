@@ -184,9 +184,11 @@ socket.on('newmessage', function(data){
         console.log('SHOULD BE REMOVED!');
             animateCSS('#addm_frame', outanim).then((message) => {
                 $('#addpocket_modal').remove();
+                //$('#uc').append(data['htm']);
+                refresh_carousel();
             });
-            $('#uc').append(data['htm']);
-            refresh_carousel();
+            /*$('#uc').append(data['htm']);
+            refresh_carousel();*/
             }
             break;
 
@@ -223,7 +225,6 @@ socket.on('newmessage', function(data){
 
 
         //here is a category modal!
-        //FASZOM PROMISE!
         case 161:{
             $('#pagecontent').append(data['htm']);
             animateCSS('#cat_frame', inanim).then((message) => {
@@ -238,7 +239,6 @@ socket.on('newmessage', function(data){
 
 
         //here is a modal frame where you can add or modify category, remove category_modal
-        //FASZOM PROMISE!
         case 164:{
             animateCSS('#cat_frame', outanim).then((message) => {
                 $('#category_modal').remove();
@@ -339,30 +339,6 @@ function addpocket(){
     var data = {event: 241};
     send_message('newmessage', data);
 };
-
-
-/*function addp(){
-    $('#add_pocket').click(function(){
-        console.log('SEND?');
-        //include check!
-        if ($('#addp_bal').val()!='' && isNaN($('#addp_bal').val())){
-                    var data ={event: 291, message:'Initial balance must be a number or leave it blank!'};
-                    send_message('newmessage', data);
-                    $('#addp_bal').val('');
-                }
-
-        else if (!$('#addp_name').val()){
-                    var data ={event: 291, message:'A name must be set for this pocket!'};
-                    send_message('newmessage', data);
-                }
-
-        else {
-            var data ={ event: 243, p_name: $('#addp_name').val(), p_desc: $('#addp_desc').val(), p_balance: $('#addp_bal').val() };
-            send_message('newmessage', data);
-            console.log('SENT!');
-        }
-        })
-};*/
 
 
 function addtransfer(type){
