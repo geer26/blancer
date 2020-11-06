@@ -13,6 +13,12 @@ def validate_email(email):
     return (re.search(pattern, email))
 
 
+def validate_username(username):
+    u = User.query.filter_by(username=str(username)).first()
+    if u: return False
+    return True
+
+
 # - DONE
 def email_exist(email):
     for user in User.query.all():
@@ -69,14 +75,15 @@ def verifiy_signup(data):
     if not data['agreed']:
         return 4
 
-
+    if not validate_username(data['username']):
+        return 5
 
     # all data OK, create user and, a default pocket, and two default categories
     u = User()
-    u.username = data['username']
+    u.username = str(data['username'])
     u.set_password(str(data['password1']))
     u.is_superuser = False
-    u.email = data['email']
+    u.email = str(data['email'])
     u.joined = date.today()
     u.last_activity = datetime.now()
     db.session.add(u)
@@ -86,7 +93,7 @@ def verifiy_signup(data):
     d_e = Category(name='default expense', _user=u, type=-1)
     db.session.add(d_e)
 
-    p = Pocket(name='default', _user=u)
+    p = Pocket(name='default pocket', _user=u)
     db.session.add(p)
 
     db.session.commit()

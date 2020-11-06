@@ -69,19 +69,24 @@ $('#signupbutton').click(function(){
 socket.on('newmessage', function(data){
     switch (data['event']){
 
-        //signed up, user created! - DONE
-        //add anim!
+        //signed up, user created!
         case 111:{
             $('#signup_username').val('');
             $('#signup_email').val('');
             $('#signup_password').val('');
             $('#signup_password2').val('');
             $('#signup_agree').prop("checked", false);
-            $('#signupmodal').modal('close');
+
+            hideitem('signup_frame', 'signupmodal')
+
             $('#pagecontent').append(data['htm']);
+            animateCSS('#info_frame', inanim);
             $('#info_modal').click(function(){
+                animateCSS('#info_frame', outanim).then((message) => {
                 $('#info_modal').remove();
+                });
             });
+
             }
             break;
 
@@ -432,11 +437,15 @@ function loginattempt(){
 
 
 function signupattempt(){
-    /*var username = $('#login_username').val();
-    var password = $('#login_password').val();
-    var data = {event: 221, username: username, password: password};
-    send_message('newmessage', data);*/
-    console.log('SIGNUPATTEMPT');
+    var username = $('#signup_username').val();
+    var email = $('#signup_email').val();
+    var password1 = $('#signup_password').val();
+    var password2 = $('#signup_password2').val();
+    var agreed = $('#signup_agree').is(':checked');
+
+    var data = {event: 211, username: username, email:email, password1: password1, password2: password2, agreed: agreed};
+    send_message('newmessage', data);
+    //console.log(data);
 };
 
 

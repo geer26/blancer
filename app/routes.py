@@ -267,18 +267,18 @@ def newmessage(data):
         return True
 
 
-    # incoming signup request - DONE
+    # user wants to signup
     if data['event'] == 211:
-        #"i want to signup with theese data"
 
         r = verifiy_signup(data)
 
         if r == 0:
-            #ok, data are great, i added you to the database, log in
+            #ok, data are great, i added you to the database, try to login
             mess = {}
             mess['event'] = 111
             mess['htm'] = render_template('infomessage.html', message='You can login now!')
             socket.emit('newmessage', mess, room=sid)
+            return True
 
         elif r == 1:
             #invalid email address
@@ -287,6 +287,7 @@ def newmessage(data):
             mess['event'] = 191
             mess['htm'] = render_template('errormessage.html', message='Invalid email or email is already registered!')
             socket.emit('newmessage', mess, room=sid)
+            return True
 
         elif r == 2:
             # invalid  password
@@ -295,22 +296,34 @@ def newmessage(data):
             mess['event'] = 191
             mess['htm'] = render_template('errormessage.html', message='Passord must have UPPER and lowercase chars, numbers, and must be at least 8 chars length!')
             socket.emit('newmessage', mess, room=sid)
+            return True
 
         elif r == 3:
             # passwords do not match
             socket.emit('newmessage', {'event': 119}, room=sid)
             mess = {}
             mess['event'] = 191
-            mess['htm'] = render_template('errormessage.html', message='Passwords do not match')
+            mess['htm'] = render_template('errormessage.html', message='Passwords do not match!')
             socket.emit('newmessage', mess, room=sid)
+            return True
 
         elif r == 4:
             # did not agree
             socket.emit('newmessage', {'event': 119}, room=sid)
             mess = {}
             mess['event'] = 191
-            mess['htm'] = render_template('errormessage.html', message='Please read and accept the terms')
+            mess['htm'] = render_template('errormessage.html', message='Please read and accept the terms!')
             socket.emit('newmessage', mess, room=sid)
+            return True
+
+        elif r == 5:
+            # username already exists
+            socket.emit('newmessage', {'event': 119}, room=sid)
+            mess = {}
+            mess['event'] = 191
+            mess['htm'] = render_template('errormessage.html', message='Somebody registered with this username, choose another!')
+            socket.emit('newmessage', mess, room=sid)
+            return True
 
         else:
             # no, noo, something isn't ok
@@ -319,8 +332,7 @@ def newmessage(data):
             mess['event'] = 191
             mess['htm'] = render_template('errormessage.html', message='SIGNUP NOT SUCCESS!')
             socket.emit('newmessage', mess, room=sid)
-
-        return True
+            return True
 
 
     #ser wants to login, sends data - DONE
