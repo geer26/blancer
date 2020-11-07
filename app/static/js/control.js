@@ -485,7 +485,7 @@ const animateCSS = (element, animation, prefix = 'animate__',) =>
     const animationName = `${prefix}${animation}`;
     const node = document.querySelector(element);
 
-    node.classList.add(`${prefix}animated`, animationName);
+    node.classList.add(`${prefix}animated`, animationName, 'animate__faster');
 
     // When the animation ends, we clean the classes and resolve the Promise
     function handleAnimationEnd() {
