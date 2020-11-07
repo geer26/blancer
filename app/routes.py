@@ -180,6 +180,21 @@ def newmessage(data):
         return True
 
 
+    #user sends resetpassword data, check
+    if data['event'] == 287:
+        #if ok send status at 187
+        return True
+
+
+    #User wants to reset password
+    if data['event'] == 288:
+        mess = {}
+        mess['event'] = 188
+        mess['htm'] = render_template('rpassword_modal.html')
+        socket.emit('newmessage', mess, room=sid)
+        return True
+
+
     #user requests for helpmodal
     if data['event'] == 289:
         mess = {}

@@ -130,6 +130,20 @@ socket.on('newmessage', function(data){
             break;
 
 
+        //password reset OK
+        case 187:
+            console.log('OK');
+            break;
+
+
+        //here is the resetpassword modal
+        case 188:{
+            $('#pagecontent').append(data['htm']);
+            animateCSS('#rp_frame', inanim);
+            }
+            break;
+
+
         //here is the helpmodal, show it to the user!
         case 189:{
             $('#pagecontent').append(data['htm']);
@@ -318,9 +332,9 @@ socket.on('newmessage', function(data){
                 });*/
             $('#addcategory_modal').remove();
             $('#pagecontent').append(data['htm']);
-            animateCSS('#cat_frame', 'bounceIn');
+            animateCSS('#cat_frame', inanim);
             $('#close_modal').click(function(){
-                animateCSS('#cat_frame', 'bounceOut').then((message) => {
+                animateCSS('#cat_frame', outanim).then((message) => {
                 $('#category_modal').remove();
                 });
             });
@@ -429,15 +443,25 @@ function show_signupmodal(){
 };
 
 
-function reset_password(){
-    console.log('RESET PASSWORD!');
-};
-
-
 function show_help(){
     //console.log('SHOW HELP MODAL!');
     var data = {event: 289};
     send_message('newmessage', data);
+};
+
+
+function show_resetp(){
+    var data = {event: 288};
+    send_message('newmessage', data);
+};
+
+
+function reset_p(){
+    var p_o = $('#c_password').val();
+    var p1 = $('#n_password1').val();
+    var p_o = $('#n_password2').val();
+    //send to 287
+    console.log('RESET PASSWORD');
 };
 
 

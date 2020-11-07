@@ -33,6 +33,8 @@
 
 #   18X - refresh and temp events
 #       181 - send usercarousel as whole
+#       187 - password reseted OK
+#       188 - send resetpassword modal
 #       189 - sending helpmodal as DOM element
 
 #   19X - send error modal
@@ -71,6 +73,8 @@
 
 #   28X - page refresh  and etc
 #       281 - user wants to refresh carousel
+#       287 - user sends new password
+#       288 - user wants to reset password
 #       289 - user request for helpmodal
 
 #   29X - request for error modal
