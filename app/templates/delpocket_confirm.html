@@ -6,14 +6,16 @@
 
         <p id="p_id" style="display:none;">{{p_id}}</p>
 
-        <a class="waves-effect waves-light btn btn-small green darken-2" style="border-radius: 2px;" id="cancelbutton">
+        <a class="waves-effect waves-light btn btn-small green darken-2" style="border-radius: 2px;" id="cancelbutton"
+        onclick="removeitem('delp_confirm', 'delpocket_confirm')">
             <i class="material-icons left">check_circle</i>
-            no
+            keep
         </a>
 
-        <a class="waves-effect waves-light btn btn-small red" style="border-radius: 2px;" id="delbutton">
+        <a class="waves-effect waves-light btn btn-small red" style="border-radius: 2px;" id="delbutton"
+        onclick="removeitem('delp_confirm', 'delpocket_confirm')">
             <i class="material-icons left">delete</i>
-            yes
+            delete
         </a>
 
     </div>

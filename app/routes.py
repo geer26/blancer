@@ -182,6 +182,7 @@ def newmessage(data):
 
     #user sends resetpassword data, check
     if data['event'] == 287:
+        print(data)
         #if ok send status at 187
         return True
 

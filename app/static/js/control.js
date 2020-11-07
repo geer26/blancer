@@ -81,12 +81,6 @@ socket.on('newmessage', function(data){
 
             $('#pagecontent').append(data['htm']);
             animateCSS('#info_frame', inanim);
-            $('#info_modal').click(function(){
-                animateCSS('#info_frame', outanim).then((message) => {
-                $('#info_modal').remove();
-                });
-            });
-
             }
             break;
 
@@ -100,11 +94,6 @@ socket.on('newmessage', function(data){
         case 191:{
             $('#pagecontent').append(data['htm']);
             animateCSS('#error_message', inanim);
-            $('#error_modal').click(function(){
-                animateCSS('#error_message', outanim).then((message) => {
-                $('#error_modal').remove();
-                });
-            });
             }
             break;
 
@@ -132,7 +121,8 @@ socket.on('newmessage', function(data){
 
         //password reset OK
         case 187:
-            console.log('OK');
+            console.log('PW RESET OK');
+            removeitem('rp_frame', 'rp_modal');
             break;
 
 
@@ -154,13 +144,9 @@ socket.on('newmessage', function(data){
 
         //here is an addpocket modal, use it wisely! - DONE
         case 141:{
+
             $('#pagecontent').append(data['htm']);
             animateCSS('#addm_frame', inanim);
-            $('#close_modal').click(function(){
-                animateCSS('#addm_frame', outanim ).then((message) => {
-                $('#addpocket_modal').remove();
-                });
-                });
             $('#add_pocket').click(function(){
                 //include check!
                 if ($('#addp_bal').val()!='' && isNaN($('#addp_bal').val())){
@@ -189,9 +175,10 @@ socket.on('newmessage', function(data){
             $('#pagecontent').append(data['htm']);
             animateCSS('#delp_confirm', inanim);
             $('#cancelbutton').click(function(){
-                animateCSS('#delp_confirm', 'bounceOut').then((message) => {
+                /*animateCSS('#delp_confirm', 'bounceOut').then((message) => {
                 $('#delpocket_confirm').remove();
-                });
+                });*/
+                removeitem('delp_confirm', 'delpocket_confirm');
             });
             $('#delbutton').click(function(){
                 var data = {
@@ -199,9 +186,10 @@ socket.on('newmessage', function(data){
                     p_id: $('#p_id').text()
                 };
                 send_message('newmessage', data);
-                animateCSS('#delp_confirm', outanim).then((message) => {
+                /*animateCSS('#delp_confirm', outanim).then((message) => {
                 $('#delpocket_confirm').remove();
-                });
+                });*/
+                removeitem('delp_confirm', 'delpocket_confirm');
             });
             }
             break;
@@ -209,12 +197,14 @@ socket.on('newmessage', function(data){
 
         //pocket created successfully, close modal! - DONE!
         case 148:{
-        console.log('SHOULD BE REMOVED!');
-            animateCSS('#addm_frame', outanim).then((message) => {
-                $('#addpocket_modal').remove();
+            removeitem('addm_frame', 'addpocket_modal');
+            refresh_carousel();
+            //console.log('SHOULD BE REMOVED!');
+            //animateCSS('#addm_frame', outanim).then((message) => {
+                //$('#addpocket_modal').remove();
                 //$('#uc').append(data['htm']);
-                refresh_carousel();
-            });
+                //refresh_carousel();
+            //});
             /*$('#uc').append(data['htm']);
             refresh_carousel();*/
             }
@@ -233,20 +223,18 @@ socket.on('newmessage', function(data){
         case 151:{
             $('#pagecontent').append(data['htm']);
             animateCSS('#addt_frame', inanim);
-            $('#close_modal').click(function(){
+            /*$('#close_modal').click(function(){
                 animateCSS('#addt_frame', outanim).then((message) => {
                 $('#addtransfer_modal').remove();
                 });
-                });
+                });*/
             }
             break;
 
 
         //transfer registered, close the modal - DONE!
         case 152:{
-            animateCSS('#addt_frame', outanim).then((message) => {
-                $('#addtransfer_modal').remove();
-            });
+            removeitem('addt_frame', 'addtransfer_modal')
             refresh_carousel();
             }
             break;
@@ -255,13 +243,7 @@ socket.on('newmessage', function(data){
         //here is a category modal!
         case 161:{
             $('#pagecontent').append(data['htm']);
-            animateCSS('#cat_frame', inanim).then((message) => {
-                $('#close_modal').click(function(){
-                    animateCSS('#cat_frame', outanim).then((message) => {
-                        $('#category_modal').remove();
-                       });
-                });
-            });
+            animateCSS('#cat_frame', inanim)
             }
             break;
 
@@ -274,14 +256,6 @@ socket.on('newmessage', function(data){
                 animateCSS('#addc_frame', inanim);
                 }).then((message) =>
                  {
-
-                    $('#close_modal').click(function(){
-                    animateCSS('#addc_frame', outanim).then((message) => {
-                        $('#addcategory_modal').remove();
-                        show_cat();
-                    })
-                    });
-
                     $('#add_category').click(function(){
 
                         if ( $('#hidden_id').attr('cid') ){
@@ -296,11 +270,13 @@ socket.on('newmessage', function(data){
                         if (!$('#category_name').val()){
                             req_for_error('Category name must be set!');
                         }
+
                         else{
                             var name = $('#category_name').val();
                             var data= {event: 268, cid: id,  cname: name, type: type};
                             send_message('newmessage', data)
                         }
+
                     });
 
                     $('#cat_type').change(function(){
@@ -311,7 +287,6 @@ socket.on('newmessage', function(data){
                         $('#cat_span').addClass("red")
                     }
                     });
-
                  });
 
             }
@@ -327,17 +302,9 @@ socket.on('newmessage', function(data){
 
         //category added or modified, remove addcategory modal and replace it with this
         case 169:{
-            /*animateCSS('#addc_frame', outanim).then((message) => {
-                $('#addcategory_modal').remove();
-                });*/
             $('#addcategory_modal').remove();
             $('#pagecontent').append(data['htm']);
             animateCSS('#cat_frame', inanim);
-            $('#close_modal').click(function(){
-                animateCSS('#cat_frame', outanim).then((message) => {
-                $('#category_modal').remove();
-                });
-            });
             }
             break;
 
@@ -352,8 +319,8 @@ socket.on('newmessage', function(data){
 
 
 function req_for_error(message){
-    console.log(message);
-    var data ={event: 291, message:message};
+    var data = {event: 291, message:message};
+    send_message('newmessage', data);
 };
 
 
@@ -459,8 +426,14 @@ function show_resetp(){
 function reset_p(){
     var p_o = $('#c_password').val();
     var p1 = $('#n_password1').val();
-    var p_o = $('#n_password2').val();
+    var p2 = $('#n_password2').val();
     //send to 287
+    if((!p_o||p_o=='')||(!p1||p1=='')||(!p2||p2=='')){
+        req_for_error('All inputs must be set!');
+        return;
+    }
+    var data = {event: 287, o_pw: p_o, n_pw1: p1, n_pw2: p2};
+    send_message('newmessage', data);
     console.log('RESET PASSWORD');
 };
 
@@ -468,6 +441,13 @@ function reset_p(){
 function hideitem(item1, item2){
     animateCSS( "#"+item1.toString() , outanim).then((message) => {
         $( "#"+item2.toString()).hide();
+        });
+};
+
+
+function removeitem(item1, item2){
+    animateCSS( "#"+item1.toString() , outanim).then((message) => {
+        $( "#"+item2.toString()).remove();
         });
 };
 
@@ -489,7 +469,6 @@ function signupattempt(){
 
     var data = {event: 211, username: username, email:email, password1: password1, password2: password2, agreed: agreed};
     send_message('newmessage', data);
-    //console.log(data);
 };
 
 
