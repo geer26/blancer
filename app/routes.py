@@ -8,7 +8,7 @@ from app import app, socket, db
 from app.forms import LoginForm, SignupForm
 from app.models import User, Pocket, Transfer, Category
 from workers import verifiy_signup, hassu, deluser, getid, addpocket, delpocket, delcategory, add_cat, add_transfer, \
-    get_ptransfers, get_ntransfers, validate_loginattempt
+    get_ptransfers, get_ntransfers, validate_loginattempt, resetpassword
 
 
 #logs in user - ERROR!
@@ -182,10 +182,52 @@ def newmessage(data):
 
     #user sends resetpassword data, check
     if data['event'] == 287:
-        print(data)
-        #if ok send status at 187
-        return True
 
+        rp=resetpassword(data,current_user)
+
+        if rp == 0:
+            #OK, inform the user! 187 event
+            mess = {}
+            mess['event'] = 187
+            mess['htm'] = render_template('infomessage.html', message='Password has been changed succesfully!')
+            socket.emit('newmessage', mess, room=sid)
+            return True
+
+        elif rp == 1:
+            #wrong password!
+            message = 'The old password does not match!'
+            mess = {}
+            mess['event'] = 191
+            mess['htm'] = render_template('errormessage.html', message=message)
+            socket.emit('newmessage', mess, room=sid)
+            return True
+
+        elif rp == 2:
+            #mismatch
+            message = 'The new passwords do not match!'
+            mess = {}
+            mess['event'] = 191
+            mess['htm'] = render_template('errormessage.html', message=message)
+            socket.emit('newmessage', mess, room=sid)
+            return True
+
+        elif rp == 3:
+            #wrong pw compleyity
+            message = 'Password must have UPPER and lowercase chars, numbers, and must be at least 8 chars length!'
+            mess = {}
+            mess['event'] = 191
+            mess['htm'] = render_template('errormessage.html', message=message)
+            socket.emit('newmessage', mess, room=sid)
+            return True
+
+        elif rp == 4:
+            #old and new password is the same
+            message = 'The old and the new password must be different!'
+            mess = {}
+            mess['event'] = 191
+            mess['htm'] = render_template('errormessage.html', message=message)
+            socket.emit('newmessage', mess, room=sid)
+            return True
 
     #User wants to reset password
     if data['event'] == 288:

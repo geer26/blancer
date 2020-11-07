@@ -43,6 +43,7 @@ def validate_password(password):
     return False
 
 
+# - DONE
 def validate_loginattempt(data):
     user = User.query.filter_by(username=str(data['username'])).first()
     if not user:
@@ -50,6 +51,20 @@ def validate_loginattempt(data):
     if not user.check_password(str(data['password'])):
         return False
     return True
+
+
+def resetpassword(data, user):
+    if not user.check_password(str(data['o_pw'])):
+        return 1
+    if str(data['n_pw1']) != str(data['n_pw2']):
+        return 2
+    if not validate_password(str(data['n_pw1'])):
+        return 3
+    if str(data['o_pw']) == str(data['n_pw1']):
+        return 4
+    user.set_password(str(data['n_pw1']))
+    db.session.commit()
+    return 0
 
 
 # - DONE

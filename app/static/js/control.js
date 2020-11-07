@@ -120,9 +120,12 @@ socket.on('newmessage', function(data){
 
 
         //password reset OK
-        case 187:
+        case 187:{
             console.log('PW RESET OK');
             removeitem('rp_frame', 'rp_modal');
+            $('#pagecontent').append(data['htm']);
+            animateCSS('#info_frame', inanim);
+            }
             break;
 
 
