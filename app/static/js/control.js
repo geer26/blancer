@@ -198,6 +198,24 @@ socket.on('newmessage', function(data){
             break;
 
 
+       //here is a modal where you can edit the current pocket
+       case 145:{
+
+            $('#pagecontent').append(data['htm']);
+            animateCSS('#editp_frame', inanim);
+
+            };
+            break;
+
+
+       //pocket edited succesfully
+       case 146:{
+            removeitem('editp_frame', 'editpocket_modal');
+            refresh_carousel();
+            };
+            break;
+
+
         //pocket created successfully, close modal! - DONE!
         case 148:{
             removeitem('addm_frame', 'addpocket_modal');
@@ -396,13 +414,25 @@ function delpocket(pocket_id){
 
 
 function edit_pocket(pid){
-    console.log(pid);
     var data = {event: 245, pid: pid};
     send_message('newmessage', data);
 };
 
 
 function send_edited_pocket(){
+
+    var pid = $('#hiddenid').attr('id_data');
+    var pname = $('#editp_name').val();
+    var pdesc = $('#editp_desc').val();
+
+    if (!pname || pname == ''){
+        req_for_error('The pocket must have a name!');
+        return;
+    }
+    else{
+        var data = {event: 246, pname: pname, pdesc: pdesc, pid: pid};
+        send_message('newmessage', data);
+    }
 };
 
 

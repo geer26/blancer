@@ -487,11 +487,25 @@ def newmessage(data):
 
     #user wants to edit a pocket by id
     if data['event'] == 245 and current_user.is_authenticated:
-        print(data)
+        #print(data)
         p = Pocket.query.get(int(data['pid']))
         mess = {}
         mess['event'] = 145
         mess['htm'] = render_template('editpocket_modal.html', pocket=p)
+        socket.emit('newmessage', mess, room=sid)
+        return True
+
+
+    #user sends edited pocket data
+    if data['event'] == 246 and current_user.is_authenticated:
+
+        p = Pocket.query.get(int(data['pid']))
+        p.name = str(data['pname'])
+        p.description = str(data['pdesc'])
+        db.session.commit()
+
+        mess = {}
+        mess['event'] = 146
         socket.emit('newmessage', mess, room=sid)
         return True
 

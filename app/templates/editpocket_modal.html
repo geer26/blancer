@@ -9,6 +9,8 @@
 
         <ul>
 
+            <p id="hiddenid" style="display: none;" id_data="{{pocket.id}}"></p>
+
         <li>
           <div class="input-field center-align">
             <i class="material-icons prefix">border_color</i>
@@ -20,7 +22,10 @@
         <li>
           <div class="input-field center-align">
             <i class="material-icons prefix">article</i>
-            <input id="editp_desc" type="text" class="validate" data-length="120" value="{{pocket.description}}">
+            <input id="editp_desc" type="text" class="validate" data-length="120" value="{{pocket.description}}"
+            {% if pocket.description %}
+                   autofocus
+            {% endif %}>
             <label for="editp_desc">description</label>
           </div>
         </li>
