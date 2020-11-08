@@ -85,9 +85,13 @@
 #      291 - request for error modal with message string
 
 #   27X - Admin operations
-#      271 - delete user witj given username
+#      271 - delete user with given username
 <------------------------------------------------------------>
 
 #   4XX - Dev operations
 #       410 - Ask for random transfers
 <------------------------------------------------------------>
+
+<------------------------------------------------------------>
+#   6XX - REST API server events
+#   7XX - REST API client events
