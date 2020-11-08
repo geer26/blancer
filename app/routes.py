@@ -159,7 +159,7 @@ def newmessage(data):
 
 
     #incoming request for refresh the usercarousel
-    if data['event'] == 281:
+    if data['event'] == 281 and current_user.is_authenticated:
 
         pockets = Pocket.query.filter_by(user_id=current_user.id).all()
 
@@ -181,7 +181,7 @@ def newmessage(data):
 
 
     #user sends resetpassword data, check
-    if data['event'] == 287:
+    if data['event'] == 287 and current_user.is_authenticated:
 
         rp=resetpassword(data,current_user)
 
@@ -230,7 +230,7 @@ def newmessage(data):
             return True
 
     #User wants to reset password
-    if data['event'] == 288:
+    if data['event'] == 288 and current_user.is_authenticated:
         mess = {}
         mess['event'] = 188
         mess['htm'] = render_template('rpassword_modal.html')
@@ -239,7 +239,7 @@ def newmessage(data):
 
 
     #user requests for helpmodal
-    if data['event'] == 289:
+    if data['event'] == 289 and current_user.is_authenticated:
         mess = {}
         mess['event'] = 189
         mess['htm'] = render_template('helpmodal.html')
@@ -248,7 +248,7 @@ def newmessage(data):
 
 
     #user want to add transfer
-    if data['event'] == 251:
+    if data['event'] == 251 and current_user.is_authenticated:
 
         if data['type'] == 1:
             cats = Category.query.order_by(Category.name).filter_by(_user=current_user).filter_by(type=1).all()
@@ -270,7 +270,7 @@ def newmessage(data):
 
 
     #user sends transfer details
-    if data['event'] == 252:
+    if data['event'] == 252 and current_user.is_authenticated:
         if add_transfer(data,current_user):
             mess = {}
             mess['event'] = 152
@@ -279,7 +279,7 @@ def newmessage(data):
 
 
     #user wants to see the categories
-    if data['event'] == 261:
+    if data['event'] == 261 and current_user.is_authenticated:
         categories = Category.query.order_by(Category.name).filter_by( user_id = current_user.id).all()
         mess = {}
         mess['event'] = 161
@@ -289,7 +289,7 @@ def newmessage(data):
 
 
     #user want to del a category - DONE
-    if data['event'] == 262:
+    if data['event'] == 262 and current_user.is_authenticated:
 
         id = data['id']
 
@@ -302,7 +302,7 @@ def newmessage(data):
 
 
     #user want to edit a category
-    if data['event'] == 263:
+    if data['event'] == 263 and current_user.is_authenticated:
         if data['id']:
             id = data['id']
             c = Category.query.get(int(id))
@@ -315,7 +315,7 @@ def newmessage(data):
 
 
     #user wants to add a category
-    if data['event'] == 264:
+    if data['event'] == 264 and current_user.is_authenticated:
         mess = {}
         mess['event'] = 164
         mess['htm'] = render_template('addcategory_modal.html')
@@ -324,7 +324,7 @@ def newmessage(data):
 
 
     #user sends a category
-    if data['event'] == 268:
+    if data['event'] == 268 and current_user.is_authenticated:
         if add_cat(data, current_user):
             categories = Category.query.order_by(Category.name).filter_by(user_id=current_user.id).all()
             mess = {}
@@ -482,6 +482,17 @@ def newmessage(data):
             mess['status'] = 1
             mess['pid'] = 'uc_'+str(data['p_id'])
             socket.emit('newmessage', mess, room=sid)
+        return True
+
+
+    #user wants to edit a pocket by id
+    if data['event'] == 245 and current_user.is_authenticated:
+        print(data)
+        p = Pocket.query.get(int(data['pid']))
+        mess = {}
+        mess['event'] = 145
+        mess['htm'] = render_template('editpocket_modal.html', pocket=p)
+        socket.emit('newmessage', mess, room=sid)
         return True
 
 

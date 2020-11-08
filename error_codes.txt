@@ -17,6 +17,7 @@
 #   14X - pocket events
 #       141 - send addpocket modal
 #       142 - send delform modal
+#       145 - send editpocket modal
 #       148 - pocket added succesfully
 #       149 - pocket deleted successfully
 
@@ -59,6 +60,7 @@
 #       242 - user want to del a pocket
 #       243 - user send pocket data
 #       244 - user confirms delete pocket
+#       245 - user want to edit pocket
 
 #   25X - transfer events
 #       251 - user asks for transfer modal

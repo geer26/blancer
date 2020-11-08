@@ -1,0 +1,39 @@
+<div id="editpocket_modal" class="modalback valign-wrapper">
+
+    <div class="addm_frame" id="editp_frame">
+
+        <img class="close_btn tooltipped" draggable="false" src="/static/img/icons/close.png"
+             id="close_modal" onclick="removeitem('editp_frame', 'editpocket_modal')">
+
+        <h6>edit pocket</h6>
+
+        <ul>
+
+        <li>
+          <div class="input-field center-align">
+            <i class="material-icons prefix">border_color</i>
+            <input id="editp_name" type="text" class="validate" data-length="40" value="{{pocket.name}}">
+            <label for="editp_name">name</label>
+          </div>
+        </li>
+
+        <li>
+          <div class="input-field center-align">
+            <i class="material-icons prefix">article</i>
+            <input id="editp_desc" type="text" class="validate" data-length="120" value="{{pocket.description}}">
+            <label for="editp_desc">description</label>
+          </div>
+        </li>
+
+        <li class="center-align">
+          <a class="waves-effect waves-light btn btn-small green darken-2" style="border-radius: 2px;" id="edit_pocket"
+          onclick="send_edited_pocket()">
+            submit
+          </a>
+        </li>
+
+      </ul>
+
+    </div>
+
+</div>

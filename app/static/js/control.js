@@ -395,6 +395,17 @@ function delpocket(pocket_id){
 };
 
 
+function edit_pocket(pid){
+    console.log(pid);
+    var data = {event: 245, pid: pid};
+    send_message('newmessage', data);
+};
+
+
+function send_edited_pocket(){
+};
+
+
 function refresh_carousel(){
     var data = {event: 281, cs: current_slide};
     send_message('newmessage', data);
