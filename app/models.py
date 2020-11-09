@@ -67,6 +67,8 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40))
     type = db.Column(db.Integer, default=1)
+    hidden = db.Column(db.Boolean, default=False)
+    last_active = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     # THINK OF CASCADING!!!
     transfer = db.relationship('Transfer', backref='_category')

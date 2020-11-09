@@ -251,10 +251,10 @@ def newmessage(data):
     if data['event'] == 251 and current_user.is_authenticated:
 
         if data['type'] == 1:
-            cats = Category.query.order_by(Category.name).filter_by(_user=current_user).filter_by(type=1).all()
+            cats = Category.query.order_by(Category.name).filter_by(_user=current_user).filter_by(type=1).filter_by(hidden=False).all()
             typ = 1
         else:
-            cats = Category.query.order_by(Category.name).filter_by(_user=current_user).filter_by(type=-1).all()
+            cats = Category.query.order_by(Category.name).filter_by(_user=current_user).filter_by(type=-1).filter_by(hidden=False).all()
             typ = -1
 
         pockets = Pocket.query.filter_by(_user=current_user).order_by(Pocket.name).all()
@@ -280,7 +280,7 @@ def newmessage(data):
 
     #user wants to see the categories
     if data['event'] == 261 and current_user.is_authenticated:
-        categories = Category.query.order_by(Category.name).filter_by( user_id = current_user.id).all()
+        categories = Category.query.order_by(Category.name).filter_by( user_id = current_user.id).filter_by(hidden = False).all()
         mess = {}
         mess['event'] = 161
         mess['htm'] = render_template('category_modal.html', categories=categories)
@@ -440,6 +440,19 @@ def newmessage(data):
             for pocket in pockets:
                 mess['to_del'] = pocket.id
                 socket.emit('newmessage', mess, room=sid)
+        return True
+
+
+    #admin wants to restore category
+    if data['event'] ==272 and current_user.is_superuser:
+        print(data)
+        c = Category.query.get(int(data['cid']))
+        if c.hidden:
+            c.hidden = False
+            db.session.commit()
+            mess={}
+            mess['event'] = 172
+            socket.emit('newmessage', mess, room=sid)
         return True
 
 

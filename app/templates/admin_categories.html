@@ -1,3 +1,5 @@
+<div>
+
     <a class="waves-effect waves-light btn btn-small red" href="/del_users" style="border-radius: 2px;">
         <i class="material-icons left">delete_sweep</i>
         delete all
@@ -9,6 +11,8 @@
               <th>ID</th>
               <th>Category name</th>
               <th>user_id</th>
+              <th>hidden</th>
+              <th>last active</th>
               <th>type</th>
           </tr>
         </thead>
@@ -19,9 +23,19 @@
             <td>{{category.id}}</td>
             <td>{{category.name}}</td>
             <td>{{category.user_id}}</td>
+            <td>
+                {% if category.hidden %}
+                <a class="btn-floating btn-small green darken-2" onclick="revert_category({{category.id}})"><i class="small material-icons">autorenew</i></a>
+                {% endif %}
+                {{category.hidden}}
+
+            </td>
+            <th>{{category.last_active}}</th>
             <td>{{category.type}}</td>
           </tr>
         {% endfor %}
         </tbody>
 
     </table>
+
+</div>

@@ -55,28 +55,53 @@
             </h6>
         </div>
 
-        <div id="l5_transfers" class="row flow-text container" style="overflow: auto;">
+        <div id="l5_transfers" class="row flow-text container" style="overflow: visible;">
 
-            <div id="l5_pos" class="col s12 m6 negative_transfers">
+            <div id="l5_pos" class="col s12 m6 negative_transfers" style="overflow: auto;">
                 {% for transfer in ntransfers[pocket.id] %}
 
-                <p>
-                    <span class="negtransfer">{{transfer.amount}}</span>
-                    <span class="tranferdate">({{transfer.timestamp.strftime('%d.%b.%Y,%H:%M')}})</span>
-                    <span style="font-weight: bold;">{{transfer.detail}}</span>
-                </p>
+                <div style="display: inline-block;">
+
+                    <div style="display: inline-block; max-width: 50%; padding:0; margin: 0;">
+                        <p class="negtransfer">{{transfer.amount}}</p>
+                        <p class="tranferdate" style="font-size: 50%;">({{transfer.timestamp.strftime('%d.%b.%Y,%H:%M')}})</p>
+                    </div>
+
+                    <div style="display: inline-block; max-width: 50%; padding:0; margin: 0;">
+                        <p style="font-weight: bold; margin: 0;">{{transfer._category}}</p>
+                        {% if transfer.detail %}
+                        <p class="tranferdate" style="font-size: 50%; margin: 0;">({{transfer.detail}})</p>
+                        {% else %}
+                        <p class="transferdate" style="font-size: 50%; margin: 0;">No details</p>
+                        {% endif %}
+                    </div>
+
+                </div>
 
                 {% endfor %}
+
             </div>
 
             <div id=l4_neg class="col s12 m6 positive_transfers">
                 {% for transfer in ptransfers[pocket.id] %}
 
-                <p>
-                    <span class="postransfer">{{transfer.amount}}</span>
-                    <span class="tranferdate">({{transfer.timestamp.strftime('%d.%b.%Y,%H:%M')}})</span>
-                    <span style="font-weight: bold;">{{transfer.detail}}</span>
-                </p>
+                <div style="display: inline-block;">
+
+                    <div style="display: inline-block; max-width: 50%; padding:0; margin: 0;">
+                        <p class="postransfer">{{transfer.amount}}</p>
+                        <p class="tranferdate" style="font-size: 50%;">({{transfer.timestamp.strftime('%d.%b.%Y,%H:%M')}})</p>
+                    </div>
+
+                    <div style="display: inline-block; max-width: 50%; padding:0; margin: 0;">
+                        <p style="font-weight: bold; margin: 0;">{{transfer._category}}</p>
+                        {% if transfer.detail %}
+                        <p class="tranferdate" style="font-size: 50%; margin: 0;">({{transfer.detail}})</p>
+                        {% else %}
+                        <p class="transferdate" style="font-size: 50%; margin: 0;">No details</p>
+                        {% endif %}
+                    </div>
+
+                </div>
 
                 {% endfor %}
             </div>

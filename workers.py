@@ -167,7 +167,7 @@ def delpocket(data):
 # - DONE
 def delcategory(id):
     c = Category.query.get(int(id))
-    db.session.delete(c)
+    c.hidden = True
     db.session.commit()
     return True
 
@@ -183,7 +183,7 @@ def add_cat(data,u):
         if category.type == 1: t = True
         else: t = False
 
-        if category.name == str(data['cname']) and t == data['type']:
+        if category.name == str(data['cname']) and t == data['type'] and category.hidden == False:
             return False
         elif category.name == str(data['cname']) and t != data['type']:
             if data['type']:
@@ -194,6 +194,7 @@ def add_cat(data,u):
             return True
 
     c = Category(name=str(data['cname']), _user=u)
+    c.last_active = datetime.now()
     if data['type']:
         c.type = 1
     else:
@@ -225,6 +226,7 @@ def add_transfer(data,u):
 
     pocket = Pocket.query.get(int(data['pocketid']))
     category = Category.query.get(int(data['categoryid']))
+    category.last_active = datetime.now()
     amount = category.type*int(data['amount'])
     detail = str(data['detail'])
 

@@ -335,6 +335,12 @@ socket.on('newmessage', function(data){
                 $('#'+data['to_del']).remove();
             }
             break;
+
+
+        //category reverted
+        case 172:
+            location.reload();
+            break;
     }
 });
 
@@ -348,6 +354,11 @@ function req_for_error(message){
 function deluser(e){
         var data = {userid: e.id, event: 271};
         send_message('newmessage', data);
+};
+
+function revert_category(id){
+    var data = {event: 272, cid: id};
+    send_message('newmessage', data);
 };
 
 
