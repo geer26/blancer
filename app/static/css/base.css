@@ -273,3 +273,21 @@ body{
     font-size: 50%;
     margin: 0;
 }
+
+
+/* noauthindex stylesheets */
+.qmarks{
+    position: relative;
+    display: inline-block;
+    padding: 3px;
+    border: 1ps solid red;
+    border-radius: 2px;
+    background-color: #2196f3;
+    box-shadow: 0px 0px 7px 5px rgba(0, 0, 0, .5);
+}
+
+.qicon{
+    display: inline-block;
+    max-width: 5vmin;
+    height: auto;
+}
