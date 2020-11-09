@@ -11,7 +11,7 @@ from workers import verifiy_signup, hassu, deluser, getid, addpocket, delpocket,
     get_ptransfers, get_ntransfers, validate_loginattempt, resetpassword
 
 
-#logs in user - ERROR!
+#logs in user - DONE
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
