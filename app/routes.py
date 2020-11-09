@@ -331,7 +331,13 @@ def newmessage(data):
             mess['event'] = 169
             mess['htm'] = render_template('category_modal.html', categories=categories)
             socket.emit('newmessage', mess, room=sid)
-        return True
+            return True
+        else:
+            mess = {}
+            mess['event'] = 191
+            mess['htm'] = render_template('errormessage.html', message='This category name already exists!')
+            socket.emit('newmessage', mess, room=sid)
+            return True
 
 
     # user wants to signup

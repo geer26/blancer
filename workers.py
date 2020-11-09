@@ -175,15 +175,20 @@ def delcategory(id):
 # - DONE
 def add_cat(data,u):
     #print(data)
+
+    categories = Category.query.filter_by(_user=u).all()
+    for category in categories:
+        if category.name == str(data['cname']):
+            return False
+
     if data['cid']:
-        c=Category.query.get(int(data['cid']))
-        c.name=data['cname']
+        c.name=str(data['cname'])
         if data['type']:
             c.type = 1
         else:
             c.type = -1
     else:
-        c = Category(name=data['cname'], _user=u)
+        c = Category(name=str(data['cname']), _user=u)
         if data['type']:
             c.type = 1
         else:
