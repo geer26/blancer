@@ -235,13 +235,14 @@ body{
 
 .negtransfer{
     background-color: rgba(211,47,47,1);
-    display: inline-block;
+    display: block;
     /*box-shadow: 0px 0px 2px 2px rgba(211,47,47, 1);*/
     color: white;
     border-radius: 2px;
-    padding: 2px;
+    padding-left: 2px;
     margin: 0;
     transition: .2s;
+    text-align: center;
 }
 
 
@@ -253,12 +254,13 @@ body{
 
 .postransfer{
     background-color: rgba(56,142,60,1);
-    display: inline-block;
+    display: block;
     color: white;
     border-radius: 2px;
-    padding: 2px;
+    padding-left: 2px;
     margin: 0;
     transition: .2s;
+    text-align: center;
 }
 
 
@@ -267,7 +269,7 @@ body{
     box-shadow: 0px 0px 2px 2px rgba(56,142,60, 1);
 }
 
-.tranferdate{
+.transferdate{
     font-size: 50%;
     margin: 0;
 }
