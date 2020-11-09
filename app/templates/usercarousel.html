@@ -62,17 +62,17 @@
 
                 <div style="display: inline-block; width: 100%;" class="valign-wrapper">
 
-                    <div style="display: inline-block; max-width: 50%; padding:0; margin: 0; text-align: right;">
+                    <div style="display: inline-block; max-width: 50%; padding:0; margin: auto; text-align: right;">
                         <p class="negtransfer" style="margin:0;">{{transfer.amount}}</p>
                         <p class="transferdate" style="font-size: 50%; margin:0;">({{transfer.timestamp.strftime('%d.%b.%Y,%H:%M')}})</p>
                     </div>
 
-                    <div style="display: inline-block; max-width: 50%; padding:0; margin: 0; text-align: left;">
+                    <div style="display: inline-block; max-width: 50%; padding:0; margin: auto; text-align: left;">
                         <p style="font-weight: bold; margin: 0;">{{transfer._category}}</p>
                         {% if transfer.detail %}
                         <p class="transferdate" style="font-size: 50%; margin: 0;">({{transfer.detail}})</p>
                         {% else %}
-                        <p class="transferdate" style="font-size: 50%; margin: 0;">No details</p>
+                        <p class="transferdate" style="font-size: 50%; margin-right: 2px;">No details</p>
                         {% endif %}
                     </div>
 
@@ -86,7 +86,7 @@
 
                 <div style="display: inline-block; width: 100%;" class="valign-wrapper">
 
-                    <div style="display: inline-block; max-width: 50%; padding:0; margin: 0; text-align: right;">
+                    <div style="display: inline-block; max-width: 50%; padding:0; margin: auto; text-align: right;">
                         <p class="postransfer" style="margin:0;">{{transfer.amount}}</p>
                         <p class="transferdate" style="font-size: 49%; margin:0;">({{transfer.timestamp.strftime('%d.%b.%Y,%H:%M')}})</p>
                     </div>
@@ -94,9 +94,9 @@
                     <div style="display: inline-block; max-width: 50%; padding:0; margin: 0; text-align: left;">
                         <p style="font-weight: bold; margin: 0;">{{transfer._category}}</p>
                         {% if transfer.detail %}
-                        <p class="transferdate" style="font-size: 50%; margin: 0;">({{transfer.detail}})</p>
+                        <p class="transferdate" style="font-size: 50%; margin: auto;">({{transfer.detail}})</p>
                         {% else %}
-                        <p class="transferdate" style="font-size: 49%; margin: 0;">No details</p>
+                        <p class="transferdate" style="font-size: 49%; margin: 0; margin:auto;">No details</p>
                         {% endif %}
                     </div>
 
