@@ -1,0 +1,61 @@
+<div id="category_modal" class="modalback">
+    <!-- TODO create list for collapsible -->
+    <div class="addm_frame" id="cat_frame">
+
+        <img class="close_btn" draggable="false" src="/static/img/icons/close.png" id="close_modal"
+        onclick="removeitem('cat_frame', 'category_modal')">
+
+        <a class="btn-floating btn-medium waves-effect waves-light teal" onclick="add_cat()">
+            <i class="material-icons">add_circle</i>
+        </a>
+
+        <div id="tableholder" class="tableholder">
+
+            <ul class="collapsible popout" data-collapsible="accordion">
+                {% for category in categories %}
+                <li id="row_{{category.id}}">
+
+                    <div class="collapsible-header">
+                        <span id="cat_{{category.id}}" class="valign-wrapper">
+                        <a class="btn-floating btn-small waves-effect waves-light teal" id="{{category.id}}_edit" onclick="edit_cat({{category.id}})"
+                   style="margin: 5px;">
+                    <i class="small material-icons">create</i>
+                </a>
+                        <a class="btn-floating btn-small waves-effect waves-light red" id="{{category.id}}_del" onclick="del_cat({{category.id}})"
+                   style="margin: 5px;">
+                    <i class="small material-icons">delete</i>
+                </a>
+                        {{category.name}}
+                        {% if category.type == 1 %}
+                        <i class="small material-icons green-text">publish</i>
+                        {% else %}
+                        <i class="small material-icons rotate180 red-text">publish</i>
+                        {% endif %}
+                        </span>
+                    </div>
+
+                    <div class="collapsible-body" style="padding: 2px;">
+                        <span><p style="margin: 2px; padding: 0;">
+                            Last active:
+                            {{category.last_active.strftime('%d.%b.%Y,%H:%M')}}
+                        </p></span>
+                        <br>
+                        <span><p style="margin: 2px; padding: 0;">
+                            transfers:
+                            {{tr_nums[category.id]}}
+                        </p></span>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    $('.collapsible').collapsible();
+</script>

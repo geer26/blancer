@@ -14,8 +14,7 @@
 
     {% for pocket in pockets %}
 
-
-    <div class="carousel-item" style="overflow: hidden;"
+    <div class="carousel-item" style="overflow-y: auto;"
          id="uc_{{pocket.id}}" cindex="{{pocket.id}}">
 
         <div class="fixed-action-btn delpocket">
@@ -55,9 +54,9 @@
             </h6>
         </div>
 
-        <div id="l5_transfers" class="row flow-text container" style="overflow: auto;">
+        <div id="l5_transfers" class="row flow-text container">
 
-            <div id="l5_pos" class="col s12 m6 negative_transfers" style="overflow: auto; margin-left: 0;">
+            <div id="l5_pos" class="col s12 m6 negative_transfers" style="border: 1px solid blue;">
                 {% for transfer in ntransfers[pocket.id] %}
 
                 <div style="display: inline-block; width: 100%; border: 1px solid red;" class="valign-wrapper">
@@ -81,7 +80,7 @@
                 {% endfor %}
             </div>
 
-            <div id=l5_neg class="col s12 m6 positive_transfers" style="overflow: auto; margin-right: 0;">
+            <div id=l5_neg class="col s12 m6 positive_transfers" style="border: 1px solid blue;">
                 {% for transfer in ptransfers[pocket.id] %}
 
                 <div style="display: inline-block; width: 100%; border: 1px solid red;" class="valign-wrapper">

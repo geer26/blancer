@@ -281,9 +281,16 @@ def newmessage(data):
     #user wants to see the categories
     if data['event'] == 261 and current_user.is_authenticated:
         categories = Category.query.order_by(Category.name).filter_by( user_id = current_user.id).filter_by(hidden = False).all()
+
+        tr_nums = {}
+        for c in categories:
+            n = Transfer.query.filter_by(_category=c).all()
+            num = len(n)
+            tr_nums[c.id] = num
+
         mess = {}
         mess['event'] = 161
-        mess['htm'] = render_template('category_modal.html', categories=categories)
+        mess['htm'] = render_template('category_modal2.html', categories=categories, tr_nums=tr_nums)
         socket.emit('newmessage', mess, room=sid)
         return True
 
