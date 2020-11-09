@@ -177,10 +177,32 @@ def add_cat(data,u):
     #print(data)
 
     categories = Category.query.filter_by(_user=u).all()
-    for category in categories:
-        if category.name == str(data['cname']):
-            return False
 
+    for category in categories:
+
+        if category.type == 1: t = True
+        else: t = False
+
+        if category.name == str(data['cname']) and t == data['type']:
+            return False
+        elif category.name == str(data['cname']) and t != data['type']:
+            if data['type']:
+                category.type = 1
+            else:
+                category.type = -1
+            db.session.commit()
+            return True
+
+    c = Category(name=str(data['cname']), _user=u)
+    if data['type']:
+        c.type = 1
+    else:
+        c.type = -1
+    db.session.add(c)
+    db.session.commit()
+    return True
+
+    c=Category()
     if data['cid']:
         c.name=str(data['cname'])
         if data['type']:
