@@ -38,14 +38,14 @@
         </div>
 
         <div class="pocketbalance row tooltipped" data-position="top" data-delay="50" data-tooltip="Actual balance" id="actual_b">
-            <h3 id="pbalance" onclick="text_tolocale(this,{{pocket.balance}})" style="margin: 0;"
-            {% if pocket.balance >= 0%}
+            <h4 id="pbalance"  style="margin: 0;"
+            {% if pocket.balance>=0 %}
             class = "green-text darken-2"
             {% else %}
              class = "red-text darken-2"
-            {% endif %}
-            >{{pocket.balance}}
-            </h3>
+            {% endif %} >
+                {{ "{:,}".format(pocket.balance) }}
+            </h4>
         </div>
 
         <div class="row flow-text" style="">
@@ -62,7 +62,9 @@
                 <div style="display: inline-block; width: 100%; border: 1px solid red;" class="valign-wrapper">
 
                     <div style="display: inline-block; max-width: 50%; padding:0; margin: auto; text-align: right; border: 1px solid blue;">
-                        <p class="negtransfer" style="margin:0;">{{transfer.amount}}</p>
+                        <p class="negtransfer" style="margin:0;">
+                            {{ "{:,}".format(transfer.amount) }}
+                        </p>
                         <p class="transferdate" style="font-size: 50%; margin:0;">({{transfer.timestamp.strftime('%d.%b.%Y,%H:%M')}})</p>
                     </div>
 
@@ -87,7 +89,9 @@
 
                     <div style="display: inline-block; max-width: 50%; padding:0; margin-top: 0; text-align: right; border: 1px solid blue;">
 
-                        <p class="postransfer" style="margin:0;">{{transfer.amount}}</p>
+                        <p class="postransfer" style="margin:0;">
+                            {{ "{:,}".format(transfer.amount) }}
+                        </p>
                         <p class="transferdate" style="font-size: 49%; margin:0;">({{transfer.timestamp.strftime('%d.%b.%Y,%H:%M')}})</p>
 
                     </div>

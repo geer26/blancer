@@ -339,20 +339,19 @@ socket.on('newmessage', function(data){
 
 
 function text_tolocale(e,num){
-    console.log(e);
-    e.innerHTML = tolocale(num);
-    document.getElementById(e.id).innerHTML = "your new text here"
+    //console.log(e);
+    e.innerText = tolocale(num);
 };
 
 
 function tolocale(num){
     if (!num.isNaN){
-        console.log(num);
-        console.log(num.toLocaleString('en-US'));
+        //console.log(num);
+        //console.log(num.toLocaleString('en-US'));
         return num.toLocaleString();
     } else{
-        console.log('NaN');
-        console.log(num);
+        //console.log('NaN');
+        //console.log(num);
         return num;
     }
 };
