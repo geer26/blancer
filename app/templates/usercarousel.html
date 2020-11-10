@@ -56,24 +56,32 @@
 
         <div id="l5_transfers" class="row flow-text container">
 
-            <div id="l5_pos" class="col s12 m6 negative_transfers" style="border: 1px solid blue;">
+            <div id="l5_neg" class="col s12 m6 negative_transfers l_trans_holder">
                 {% for transfer in ntransfers[pocket.id] %}
 
-                <div style="display: inline-block; width: 100%; border: 1px solid red;" class="valign-wrapper">
+                <div class="valign-wrapper l_t_holder">
 
-                    <div style="display: inline-block; max-width: 50%; padding:0; margin: auto; text-align: right; border: 1px solid blue;">
-                        <p class="negtransfer" style="margin:0;">
+                    <div class="bal_date_holder flow-text">
+                        <p class="negtransfer">
                             {{ "{:,}".format(transfer.amount) }}
                         </p>
-                        <p class="transferdate" style="font-size: 50%; margin:0;">({{transfer.timestamp.strftime('%d.%b.%Y,%H:%M')}})</p>
+                        <p class="transferdate" style="font-size: 50%; margin: 0;">
+                            ({{transfer.timestamp.strftime('%d.%b.%Y,%H:%M')}})
+                        </p>
                     </div>
 
-                    <div style="display: inline-block; max-width: 49%; padding:0; margin: auto; text-align: left; border: 1px solid green;">
-                        <p style="font-weight: bold; margin: 0;">{{transfer._category}}</p>
+                    <div class="name_desc_holder">
+                        <p style="font-weight: bold; margin: 0;">
+                            {{transfer._category}}
+                        </p>
                         {% if transfer.detail %}
-                        <p class="transferdate" style="font-size: 50%; margin: 0;">({{transfer.detail}})</p>
+                        <p class="transferdate" style="font-size: 50%; margin: 0;">
+                            ({{transfer.detail}})
+                        </p>
                         {% else %}
-                        <p class="transferdate" style="font-size: 50%; margin-right: 2px;">No details</p>
+                        <p class="transferdate" style="font-size: 50%; margin-right: 2px;">
+                            No details
+                        </p>
                         {% endif %}
                     </div>
 
@@ -82,27 +90,31 @@
                 {% endfor %}
             </div>
 
-            <div id=l5_neg class="col s12 m6 positive_transfers" style="border: 1px solid blue;">
+            <div id=l5_pos class="col s12 m6 positive_transfers l_trans_holder">
                 {% for transfer in ptransfers[pocket.id] %}
 
-                <div style="display: inline-block; width: 100%; border: 1px solid red;" class="valign-wrapper">
+                <div class="valign-wrapper l_t_holder">
 
-                    <div style="display: inline-block; max-width: 50%; padding:0; margin-top: 0; text-align: right; border: 1px solid blue;">
-
-                        <p class="postransfer" style="margin:0;">
+                    <div class="bal_date_holder valign-wrapper">
+                        <p class="postransfer">
                             {{ "{:,}".format(transfer.amount) }}
                         </p>
-                        <p class="transferdate" style="font-size: 49%; margin:0;">({{transfer.timestamp.strftime('%d.%b.%Y,%H:%M')}})</p>
-
+                        <p class="transferdate" style="font-size: 49%; margin:0;">
+                            ({{transfer.timestamp.strftime('%d.%b.%Y,%H:%M')}})
+                        </p>
                     </div>
 
-                    <div style="display: inline-block; max-width: 49%; padding:0; margin: 0; text-align: left; border: 1px solid green;">
+                    <div class="name_desc_holder valign-wrapper">
 
                         <p style="font-weight: bold; margin: 0;">{{transfer._category}}</p>
                         {% if transfer.detail %}
-                        <p class="transferdate" style="font-size: 50%; margin: auto;">({{transfer.detail}})</p>
+                        <p class="transferdate" style="font-size: 50%; margin: auto;">
+                            ({{transfer.detail}})
+                        </p>
                         {% else %}
-                        <p class="transferdate" style="font-size: 50%; margin: 0; margin:auto;">No details</p>
+                        <p class="transferdate" style="font-size: 50%; margin: 0; margin:auto;">
+                            No details
+                        </p>
                         {% endif %}
 
                     </div>
