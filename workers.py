@@ -205,7 +205,7 @@ def add_cat(data,u):
         else:
             newc.type = -1
 
-        cats = Category.query.filer_by(_user=u).filter_by(hidden=False).all()
+        cats = Category.query.filter_by(_user=u).filter_by(hidden=False).all()
         for cat in cats:
             if cat.name == newc.name and cat.type == newc.type:
                 return False
