@@ -338,14 +338,22 @@ socket.on('newmessage', function(data){
 });
 
 
-function req_for_error(message){
-    var data = {event: 291, message:message};
-    send_message('newmessage', data);
+function tolocale(num){
+    if (!num.isNaN){
+        console.log(num);
+        console.log(num.toLocaleString('en-US'));
+        return num.toLocaleString();
+    } else{
+        console.log('NaN');
+        console.log(num);
+        return num;
+    }
 };
 
 
-// - MOVED TO ADMINCONTROL
-function deluser(e){
+function req_for_error(message){
+    var data = {event: 291, message:message};
+    send_message('newmessage', data);
 };
 
 
