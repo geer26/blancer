@@ -338,6 +338,13 @@ socket.on('newmessage', function(data){
 });
 
 
+function text_tolocale(e,num){
+    console.log(e);
+    e.innerHTML = tolocale(num);
+    document.getElementById(e.id).innerHTML = "your new text here"
+};
+
+
 function tolocale(num){
     if (!num.isNaN){
         console.log(num);

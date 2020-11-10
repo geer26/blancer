@@ -38,7 +38,7 @@
         </div>
 
         <div class="pocketbalance row tooltipped" data-position="top" data-delay="50" data-tooltip="Actual balance" id="actual_b">
-            <h3 id="pbalance" style="margin: 0;"
+            <h3 id="pbalance" onclick="text_tolocale(this,{{pocket.balance}})" style="margin: 0;"
             {% if pocket.balance >= 0%}
             class = "green-text darken-2"
             {% else %}
