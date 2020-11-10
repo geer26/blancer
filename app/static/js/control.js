@@ -152,7 +152,8 @@ socket.on('newmessage', function(data){
             animateCSS('#addm_frame', inanim);
             $('#add_pocket').click(function(){
                 //include check!
-                if ($('#addp_bal').val()!='' && isNaN($('#addp_bal').val())){
+                var init_balance = tonum($('#addp_bal').val());
+                if (init_balance!='' && isNaN(init_balance)){
                     var data ={event: 291, message:'Initial balance must be a number or leave it blank!'};
                     send_message('newmessage', data);
                     $('#addp_bal').val('');
@@ -164,7 +165,7 @@ socket.on('newmessage', function(data){
                 }
 
                 else {
-                    var data ={ event: 243, p_name: $('#addp_name').val(), p_desc: $('#addp_desc').val(), p_balance: $('#addp_bal').val() };
+                    var data ={ event: 243, p_name: $('#addp_name').val(), p_desc: $('#addp_desc').val(), p_balance: init_balance };
                     send_message('newmessage', data);
                 }
                 });
@@ -344,16 +345,20 @@ function text_tolocale(e,num){
 };
 
 
-function tolocale(num){
-    if (!num.isNaN){
-        //console.log(num);
-        //console.log(num.toLocaleString('en-US'));
-        return num.toLocaleString();
+function tolocale(e){
+    var num = parseInt(e.value.replace(',',''));
+    var nan = isNaN(e.value.replace(',',''));
+    console.log(nan);
+    /*if (!num.isNaN){
+        e.value = num.toLocaleString('en-US');
     } else{
-        //console.log('NaN');
-        //console.log(num);
-        return num;
-    }
+        e.value = num;
+    }*/
+};
+
+
+function tonum(text){
+    return text.replace(',','');
 };
 
 
