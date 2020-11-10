@@ -52,6 +52,9 @@
         <script src="/static/js/materialize.min.js"></script>
         <script src="/static/js/socket.io.js"></script>
         <script src="/static/js/control.js" id="logincontrol_js"></script>
+        {% if current_user.is_authenticated and current_user.is_superuser %}
+        <script src="/static/js/admincontrol.js" id="admincontrol_js"></script>
+        {%endif%}
 
     </body>
 
