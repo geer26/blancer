@@ -179,36 +179,44 @@ def delcategory(id):
 
 # - DONE
 def add_cat(data,u):
-    print(data)
 
     if not data['cid']:
 
-        newc =Category(_user=u, name=str(data['cname']), last_active=datetime.now(), type=data['type'])
         if data['type']:
-            newc.type = 1
+            t=1
         else:
-            newc.type = -1
+            t=-1
 
-        cats = Category.query.filer_by(_user=u).filter_by(hidden=False).all()
+        cats = Category.query.filter_by(_user=u).filter_by(hidden=False).all()
         for cat in cats:
-            if cat.name == newc.name and cat.type == newc.type:
+            if cat.name == str(data['cname']) and cat.type == t:
                 return False
+
+        newc = Category(_user=u, name=str(data['cname']), last_active=datetime.now(), type=data['type'])
+
         db.session.add(newc)
         db.session.commit()
         return True
 
     else:
+
+        if data['type']:
+            t=1
+        else:
+            t=-1
+
         newc = Category.query.get(int(data['cid']))
+
+        cats = Category.query.filter_by(_user=u).filter_by(hidden=False).all()
+        for cat in cats:
+            if cat.name == str(data['cname']) and cat.type == t:
+                return False
+
         newc.name = data['cname']
         if data['type']:
             newc.type = 1
         else:
             newc.type = -1
-
-        cats = Category.query.filter_by(_user=u).filter_by(hidden=False).all()
-        for cat in cats:
-            if cat.name == newc.name and cat.type == newc.type:
-                return False
 
         db.session.commit()
         return True
