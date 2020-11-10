@@ -346,9 +346,16 @@ function text_tolocale(e,num){
 
 
 function tolocale(e){
-    var num = parseInt(e.value.replace(',',''));
-    var nan = isNaN(e.value.replace(',',''));
-    console.log(nan);
+    //var num = parseInt(e.value.replace(',',''));
+    var chars = {',':'',' ':''};
+    //s = s.replace(/[abc]/g, m => chars[m]);
+    var is_number = !isNaN(e.value.replace(/[',',' ']/g, m => chars[m]));
+    //var is_number = !isNaN(e.value.replace(',','').replace(' ',''));
+    console.log('is_number: ', is_number);
+    if (is_number && e.value){
+        var num = e.value.replace(/[',',' ']/g, m => chars[m]);
+        e.value = parseInt(num).toLocaleString();
+    }
     /*if (!num.isNaN){
         e.value = num.toLocaleString('en-US');
     } else{
