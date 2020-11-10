@@ -323,6 +323,9 @@ def newmessage(data):
 
     #user wants to add a category
     if data['event'] == 264 and current_user.is_authenticated:
+
+
+
         mess = {}
         mess['event'] = 164
         mess['htm'] = render_template('addcategory_modal.html')
@@ -332,17 +335,27 @@ def newmessage(data):
 
     #user sends a category
     if data['event'] == 268 and current_user.is_authenticated:
+
         if add_cat(data, current_user):
-            categories = Category.query.order_by(Category.name).filter_by(user_id=current_user.id).all()
+
+            categories = Category.query.order_by(Category.name).filter_by( user_id = current_user.id).filter_by(hidden = False).all()
+
+            tr_nums = {}
+            for c in categories:
+                n = Transfer.query.filter_by(_category=c).all()
+                num = len(n)
+                tr_nums[c.id] = num
+
             mess = {}
             mess['event'] = 169
-            mess['htm'] = render_template('category_modal.html', categories=categories)
+            mess['htm'] = render_template('category_modal2.html', categories=categories, tr_nums=tr_nums)
             socket.emit('newmessage', mess, room=sid)
             return True
+
         else:
             mess = {}
             mess['event'] = 191
-            mess['htm'] = render_template('errormessage.html', message='This category name already exists!')
+            mess['htm'] = render_template('errormessage.html', message='This category already exists!')
             socket.emit('newmessage', mess, room=sid)
             return True
 
@@ -452,7 +465,7 @@ def newmessage(data):
 
     #admin wants to restore category
     if data['event'] ==272 and current_user.is_superuser:
-        print(data)
+        #print(data)
         c = Category.query.get(int(data['cid']))
         if c.hidden:
             c.hidden = False
@@ -460,6 +473,29 @@ def newmessage(data):
             mess={}
             mess['event'] = 172
             socket.emit('newmessage', mess, room=sid)
+        return True
+
+
+    #admin wants to hide a category
+    if data['event'] == 273 and current_user.is_superuser:
+        c = Category.query.get(int(data['cid']))
+        if not c.hidden:
+            c.hidden = True
+            db.session.commit()
+            mess = {}
+            mess['event'] = 172
+            socket.emit('newmessage', mess, room=sid)
+        return True
+
+
+    #admin wats to delete a category
+    if data['event'] == 274 and current_user.is_superuser:
+        c = Category.query.get(int(data['cid']))
+        db.session.delete(c)
+        db.session.commit()
+        mess = {}
+        mess['event'] = 172
+        socket.emit('newmessage', mess, room=sid)
         return True
 
 

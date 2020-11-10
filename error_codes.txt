@@ -43,7 +43,7 @@
 #       191 - simple error modal with string
 
 #   17X - admin operation confirmation
-#       172 - user category reverted
+#       172 - admin operation success
 <------------------------------------------------------------>
 
 #2XX - client-side events
@@ -88,6 +88,8 @@
 #   27X - Admin operations
 #      271 - delete user with given username
 #      272 - revert user category on passed id
+#      273 - admin wants to hide category by passed id
+#      274 - admin wants to del a category by passed id
 <------------------------------------------------------------>
 
 #   4XX - Dev operations

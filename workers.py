@@ -13,6 +13,7 @@ def validate_email(email):
     return (re.search(pattern, email))
 
 
+# - DONE
 def validate_username(username):
     u = User.query.filter_by(username=str(username)).first()
     if u: return False
@@ -53,6 +54,7 @@ def validate_loginattempt(data):
     return True
 
 
+# - DONE
 def resetpassword(data, user):
     if not user.check_password(str(data['o_pw'])):
         return 1
@@ -74,8 +76,7 @@ def hassu():
     return False
 
 
-# - NEEDS TEST
-# - ADD USERNAME UNIQUE CHECK!
+# - DONE!
 def verifiy_signup(data):
 
     if not validate_email(data['email']) or email_exist(data['email']):
@@ -104,8 +105,10 @@ def verifiy_signup(data):
     db.session.add(u)
 
     d_i = Category(name='default income', _user=u, type=1)
+    d_i.last_active = datetime.now()
     db.session.add(d_i)
     d_e = Category(name='default expense', _user=u, type=-1)
+    d_e.last_active = datetime.now()
     db.session.add(d_e)
 
     p = Pocket(name='default pocket', _user=u)
@@ -137,6 +140,8 @@ def getid(username):
 # - DONE
 def addpocket(data,u):
     p=Pocket(_user=u )
+
+    p.last_change = datetime.now()
 
     p.name = str(data['p_name'])
 
@@ -174,51 +179,39 @@ def delcategory(id):
 
 # - DONE
 def add_cat(data,u):
-    #print(data)
+    print(data)
 
-    categories = Category.query.filter_by(_user=u).all()
+    if not data['cid']:
 
-    for category in categories:
-
-        if category.type == 1: t = True
-        else: t = False
-
-        if category.name == str(data['cname']) and t == data['type'] and category.hidden == False:
-            return False
-        elif category.name == str(data['cname']) and t != data['type']:
-            if data['type']:
-                category.type = 1
-            else:
-                category.type = -1
-            db.session.commit()
-            return True
-
-    c = Category(name=str(data['cname']), _user=u)
-    c.last_active = datetime.now()
-    if data['type']:
-        c.type = 1
-    else:
-        c.type = -1
-    db.session.add(c)
-    db.session.commit()
-    return True
-
-    c=Category()
-    if data['cid']:
-        c.name=str(data['cname'])
+        newc =Category(_user=u, name=str(data['cname']), last_active=datetime.now(), type=data['type'])
         if data['type']:
-            c.type = 1
+            newc.type = 1
         else:
-            c.type = -1
+            newc.type = -1
+
+        cats = Category.query.filer_by(_user=u).filter_by(hidden=False).all()
+        for cat in cats:
+            if cat.name == newc.name and cat.type == newc.type:
+                return False
+        db.session.add(newc)
+        db.session.commit()
+        return True
+
     else:
-        c = Category(name=str(data['cname']), _user=u)
+        newc = Category.query.get(int(data['cid']))
+        newc.name = data['cname']
         if data['type']:
-            c.type = 1
+            newc.type = 1
         else:
-            c.type = -1
-        db.session.add(c)
-    db.session.commit()
-    return True
+            newc.type = -1
+
+        cats = Category.query.filer_by(_user=u).filter_by(hidden=False).all()
+        for cat in cats:
+            if cat.name == newc.name and cat.type == newc.type:
+                return False
+
+        db.session.commit()
+        return True
 
 
 # - DONE

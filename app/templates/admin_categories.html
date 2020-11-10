@@ -25,10 +25,11 @@
             <td>{{category.user_id}}</td>
             <td>
                 {% if category.hidden %}
-                <a class="btn-floating btn-small green darken-2" onclick="revert_category({{category.id}})"><i class="small material-icons">autorenew</i></a>
+                <a class="btn-floating btn-small green darken-2" onclick="revert_category({{category.id}})"><i class="small material-icons">visibility</i></a>
+                {% else %}
+                <a class="btn-floating btn-small amber darken-2" onclick="hide_category({{category.id}})"><i class="small material-icons">visibility_off</i></a>
                 {% endif %}
-                {{category.hidden}}
-
+                <a class="btn-floating btn-small red darken-2" onclick="del_category({{category.id}})"><i class="small material-icons">delete_forever</i></a>
             </td>
             <th>{{category.last_active}}</th>
             <td>{{category.type}}</td>
