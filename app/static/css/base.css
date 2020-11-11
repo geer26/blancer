@@ -314,6 +314,24 @@ body{
 }
 
 
+.typeholder{
+    background-color: rgba(97, 97, 97,1);
+    display: inline-block;
+    color: white;
+    border-radius: 2px;
+    padding-left: 2px;
+    margin: 0;
+    transition: .2s;
+    text-align: center;
+}
+
+
+.typeholder:hover{
+    font-size: 105%;
+    box-shadow: 0px 0px 2px 2px rgba(97, 97, 97, 1);
+}
+
+
 .transferdate{
     font-size: 50%;
     margin: 0;
