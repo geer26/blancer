@@ -15,9 +15,33 @@
         <h6 class="label_s noselect">{{pocket.name}} details</h6>
         <p class="detail_s noselect">({{pocket.description}})</p>
 
-        <div id="charts" class="noselect charts_s">
+        <div id="chartContainer" class="noselect charts_s carousel carousel-slider center">
+
+            <div id="charts_prevslide" style="left: 0; top: 50%-height/2; border-top-right-radius: 5px; border-bottom-right-radius: 5px;"
+                onclick="" class="valign-wrapper car_nav">
+                <i class="material-icons small navicon">skip_previous</i>
+            </div>
+
+            <div id="charts_nextslide" style="right: 0; top:50%-height/2; border-top-left-radius: 5px; border-bottom-left-radius: 5px;"
+                onclick="" class="valign-wrapper car_nav">
+                <i class="material-icons small navicon">skip_next</i>
+            </div>
+
+            <div class="carousel-item red" id="chartcarousel_1">
+                <p>Loremipsum</p>
+            </div>
+
+            <div class="carousel-item amber" id="chartcarousel_2">
+                <p>Loremipsum2</p>
+            </div>
+
+            <div class="carousel-item green" id="chartcarousel_3">
+                <p>Loremipsum3</p>
+            </div>
 
         </div>
+
+        <script type="text/javscript">$('#chartContainer').carousel({fullWidth: true});</script>
 
         <div id="filters" class="filters_s noselect">
         </div>

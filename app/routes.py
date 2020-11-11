@@ -162,11 +162,14 @@ def newmessage(data):
     if data['event'] == 292 and current_user.is_authenticated:
         pid = int(data['pid'])
         pocket = Pocket.query.get(pid)
-        charts = get_charts(pid)
+        #charts = get_charts(pid)
+        user = current_user
+        categories = Category.query.filter_by(_user=user).all()
+        transfers = Transfer.query.filter_by(_pocket=pocket).all()
 
         mess = {}
         mess['event'] = 192
-        mess['htm'] = render_template('detail_selector.html', p=pid, pocket=pocket, charts=charts)
+        mess['htm'] = render_template('detail_selector.html', p=pid, pocket=pocket, user=user, categories=categories, transfers=transfers)
         socket.emit('newmessage', mess, room=sid)
         return True
 
