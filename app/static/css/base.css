@@ -275,7 +275,9 @@ body{
 }
 
 .charts_s{
-    border: 1px solid red;
+    /*border: 1px solid red;*/
+    position: relative;
+    border-radius: 2px;
     height: 50%;
 }
 

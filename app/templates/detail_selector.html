@@ -1,5 +1,7 @@
 <div id="details_modal" class="modalback ">
 
+    <script type="text/javascript" src="/static/js/chart.js"></script>
+
     <div class="detail_frame" id="details_frame">
 
         <p id="hidden_id" style="display: none;"
@@ -15,35 +17,23 @@
         <h6 class="label_s noselect">{{pocket.name}} details</h6>
         <p class="detail_s noselect">({{pocket.description}})</p>
 
-        <div id="chartContainer" class="noselect charts_s carousel carousel-slider center">
+        <div id="chartContainer" class="charts_s green" onload="chart_loaded()">
 
-            <div id="charts_prevslide" style="left: 0; top: 50%-height/2; border-top-right-radius: 5px; border-bottom-right-radius: 5px;"
+            <div id="charts_prevslide" style="position: absolute; left: 0; top: 50%-height/2; border-top-right-radius: 5px; border-bottom-right-radius: 5px;"
                 onclick="" class="valign-wrapper car_nav">
                 <i class="material-icons small navicon">skip_previous</i>
             </div>
 
-            <div id="charts_nextslide" style="right: 0; top:50%-height/2; border-top-left-radius: 5px; border-bottom-left-radius: 5px;"
+            <div id="charts_nextslide" style="position: absolute; right: 0; top:50%-height/2; border-top-left-radius: 5px; border-bottom-left-radius: 5px;"
                 onclick="" class="valign-wrapper car_nav">
                 <i class="material-icons small navicon">skip_next</i>
             </div>
 
-            <div class="carousel-item red" id="chartcarousel_1">
+            <div id="chartcarousel_1">
                 <p>Loremipsum1</p>
             </div>
 
-            <div class="carousel-item amber" id="chartcarousel_2">
-                <p>Loremipsum2</p>
-            </div>
-
-            <div class="carousel-item green" id="chartcarousel_3">
-                <p>Loremipsum3</p>
-            </div>
-
         </div>
-
-        <script type="text/javscript">
-        $('#chartContainer').carousel({fullWidth: true});
-        </script>
 
         <div id="filters" class="filters_s noselect">
         </div>
