@@ -276,7 +276,6 @@ body{
 
 .charts_s{
     border: 1px solid red;
-    padding: 0;
     height: 50%;
 }
 
@@ -319,7 +318,7 @@ body{
 
 .car_nav{
     z-index: 1;
-    width: 3vmax;
+    width: fit-content;
     height: 20%;
     position: absolute;
     top: 40%;
