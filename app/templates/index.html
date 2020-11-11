@@ -43,8 +43,10 @@
             <div id="pagecontent" class="">
             {% if current_user.is_authenticated and current_user.is_superuser %}
                 {%include 'adminindex.html' %}
+                <script src="/static/js/admincontrol.js" id="admincontrol_js"></script>
             {% elif current_user.is_authenticated and not current_user.is_superuser %}
                 {% include 'userindex.html' %}
+                <script src="/static/js/charts.js"></script>
             {% else %}
                 {% include 'nonauth_index.html' %}
                 {% include 'loginmodal2.html' %}
@@ -53,10 +55,6 @@
             </div>
 
         </div>
-
-        {% if current_user.is_authenticated and current_user.is_superuser %}
-        <script src="/static/js/admincontrol.js" id="admincontrol_js"></script>
-        {%endif%}
 
     </body>
 

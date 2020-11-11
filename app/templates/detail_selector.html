@@ -1,6 +1,10 @@
-<div id="details_modal" class="modalback ">
+<div id="details_modal" class="modalback">
 
-    <script type="text/javascript" src="/static/js/chart.js"></script>
+    {%for transfer in transfers%}
+    <script>
+        fix_point( {{transfer.amount}}, {{transfer.timestamp|date_to_millis}}, '{{transfer.detail}}', '{{transfer._category.name}}');
+    </script>
+    {%endfor%}
 
     <div class="detail_frame" id="details_frame">
 
@@ -17,7 +21,7 @@
         <h6 class="label_s noselect">{{pocket.name}} details</h6>
         <p class="detail_s noselect">({{pocket.description}})</p>
 
-        <div id="chartContainer" class="charts_s green" onload="chart_loaded()">
+        <div id="chartContainer" class="charts_s green">
 
             <div id="charts_prevslide" style="position: absolute; left: 0; top: 50%-height/2; border-top-right-radius: 5px; border-bottom-right-radius: 5px;"
                 onclick="" class="valign-wrapper car_nav">
@@ -29,15 +33,23 @@
                 <i class="material-icons small navicon">skip_next</i>
             </div>
 
-            <div id="chartcarousel_1">
+            <div id="chartname">
                 <p>Loremipsum1</p>
             </div>
 
         </div>
 
         <div id="filters" class="filters_s noselect">
+            {% for t in transfers %}
+            {{t.amount}} - {{t.timestamp}} - {{t._category.name}}
+            <br>
+            {%endfor%}
         </div>
 
     </div>
+
+    <script type="text/javascript">
+    chart_loaded();
+    </script>
 
 </div>

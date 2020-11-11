@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import date, datetime, time
 
 from flask import render_template, redirect, request
 from flask_login import current_user, login_user, logout_user, login_required
@@ -9,6 +9,12 @@ from app.forms import LoginForm, SignupForm
 from app.models import User, Pocket, Transfer, Category
 from workers import verifiy_signup, hassu, deluser, getid, addpocket, delpocket, delcategory, add_cat, add_transfer, \
     get_ptransfers, get_ntransfers, validate_loginattempt, resetpassword, get_charts
+
+
+@app.template_filter('date_to_millis')
+def date_to_millis(d):
+    """Converts a datetime object to the number of milliseconds since the unix epoch."""
+    return int(d.timestamp()) * 1000
 
 
 #logs in user - DONE
@@ -158,6 +164,7 @@ def newmessage(data):
         return True
 
 
+    #TODO finish!
     #request for details view
     if data['event'] == 292 and current_user.is_authenticated:
         pid = int(data['pid'])
@@ -165,7 +172,7 @@ def newmessage(data):
         #charts = get_charts(pid)
         user = current_user
         categories = Category.query.filter_by(_user=user).all()
-        transfers = Transfer.query.filter_by(_pocket=pocket).all()
+        transfers = Transfer.query.filter_by(_pocket=pocket).order_by(Transfer.timestamp).all()
 
         mess = {}
         mess['event'] = 192
@@ -524,7 +531,7 @@ def newmessage(data):
         return True
 
 
-    #user want to del a pocket - DONE
+    #user want to delete a pocket - DONE
     if data['event'] == 242 and current_user.is_authenticated:
         mess = {}
         mess['event'] = 142
