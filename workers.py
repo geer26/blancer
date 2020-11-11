@@ -284,3 +284,22 @@ def get_ntransfers(u,num=None):
 
     #print(transfers)
     return transfers
+
+
+# - TODO finish!
+def get_charts(pid):
+    charts = []
+
+    horse = {id:'horse', 'src':'https://cdn.cnn.com/cnnnext/dam/assets/191203174105-edward-whitaker-1-exlarge-169.jpg', 'title': 'HORSE'}
+    charts.append(horse)
+
+    chart1 = {id:'barchart', 'src':'https://canvasjs.com/wp-content/uploads/images/gallery/javascript-charts/overview/javascript-charts-graphs-index-data-label.png', 'title':'bars'}
+    charts.append(chart1)
+
+    black_hole = {id: 'blackhole', 'src':'https://cdn.eso.org/images/thumb300y/eso1907a.jpg', 'title':'BLACK HOLE'}
+    charts.append(black_hole)
+
+    island = {id: 'island', 'src': 'https://image.shutterstock.com/image-photo/bright-spring-view-cameo-island-260nw-1048185397.jpg', 'title': 'ISLAND'}
+    charts.append(island)
+
+    return charts

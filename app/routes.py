@@ -8,7 +8,7 @@ from app import app, socket, db
 from app.forms import LoginForm, SignupForm
 from app.models import User, Pocket, Transfer, Category
 from workers import verifiy_signup, hassu, deluser, getid, addpocket, delpocket, delcategory, add_cat, add_transfer, \
-    get_ptransfers, get_ntransfers, validate_loginattempt, resetpassword
+    get_ptransfers, get_ntransfers, validate_loginattempt, resetpassword, get_charts
 
 
 #logs in user - DONE
@@ -154,6 +154,19 @@ def newmessage(data):
         mess = {}
         mess['event'] = 191
         mess['htm'] = render_template('errormessage.html', message=data['message'])
+        socket.emit('newmessage', mess, room=sid)
+        return True
+
+
+    #request for details view
+    if data['event'] == 292 and current_user.is_authenticated:
+        pid = int(data['pid'])
+        pocket = Pocket.query.get(pid)
+        charts = get_charts(pid)
+
+        mess = {}
+        mess['event'] = 192
+        mess['htm'] = render_template('detail_selector.html', p=pid, pocket=pocket, charts=charts)
         socket.emit('newmessage', mess, room=sid)
         return True
 

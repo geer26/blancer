@@ -39,8 +39,9 @@
 #       188 - send resetpassword modal
 #       189 - sending helpmodal as DOM element
 
-#   19X - send error modal
+#   19X - send error modal and detail operations
 #       191 - simple error modal with string
+#       192 - send details modal
 
 #   17X - admin operation confirmation
 #       172 - admin operation success
@@ -82,8 +83,9 @@
 #       288 - user wants to reset password
 #       289 - user request for helpmodal
 
-#   29X - request for error modal
+#   29X - request for error modal and detail view
 #      291 - request for error modal with message string
+#      292 - request for detail modal with pocket id
 
 #   27X - Admin operations
 #      271 - delete user with given username

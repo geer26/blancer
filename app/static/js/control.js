@@ -97,6 +97,15 @@ socket.on('newmessage', function(data){
             }
             break;
 
+
+        //here are the details, show it to user!
+        case 192:{
+            $('#pagecontent').append(data['htm']);
+            animateCSS('#details_frame', inanim);
+            };
+            break;
+
+
         //here is an usercarousel as whole - DONE!
         case 181:{
 
@@ -458,6 +467,13 @@ function send_edited_pocket(){
         send_message('newmessage', data);
     }
 };
+
+
+function show_detail(pid){
+    //console.log(pid);
+    var data = {event: 292, pid: pid};
+    send_message('newmessage', data);
+}
 
 
 function refresh_carousel(){

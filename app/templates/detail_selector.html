@@ -1,0 +1,27 @@
+<div id="details_modal" class="modalback ">
+
+    <div class="detail_frame" id="details_frame">
+
+        <p id="hidden_id" style="display: none;"
+           {% if p %}
+           pid="{{p.id}}"
+           {% endif %}
+           >
+        </p>
+
+        <img class="close_btn" draggable="false" src="/static/img/icons/close.png" id="close_modal"
+             onclick="removeitem('details_frame', 'details_modal')">
+
+        <h6 class="label_s noselect">{{pocket.name}} details</h6>
+        <p class="detail_s noselect">({{pocket.description}})</p>
+
+        <div id="charts" class="noselect charts_s">
+
+        </div>
+
+        <div id="filters" class="filters_s noselect">
+        </div>
+
+    </div>
+
+</div>
