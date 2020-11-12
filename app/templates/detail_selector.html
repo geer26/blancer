@@ -1,11 +1,5 @@
 <div id="details_modal" class="modalback">
 
-    {%for transfer in transfers%}
-    <script>
-        fix_point( {{transfer.amount}}, {{transfer.timestamp|date_to_millis}}, '{{transfer.detail}}', '{{transfer._category.name}}');
-    </script>
-    {%endfor%}
-
     <div class="detail_frame" id="details_frame">
 
         <p id="hidden_id" style="display: none;"
@@ -33,17 +27,20 @@
                 <i class="material-icons small navicon">skip_next</i>
             </div>
 
-            <div id="chartname">
-                <p>Loremipsum1</p>
-            </div>
-
         </div>
 
-        <div id="filters" class="filters_s noselect">
-            {% for t in transfers %}
-            {{t.amount}} - {{t.timestamp}} - {{t._category.name}}
+        <div id="filters" class="filters_s noselect blue lighten-2">
+
+            {% for transfer in transfers %}
+
+            <script type="text/javascript">
+                fix_point( {{transfer.amount}}, {{transfer.timestamp|date_to_millis}}, '{{transfer.detail}}', '{{transfer._category.name}}');
+            </script>
+
+            {{transfer.amount}} - {{transfer.timestamp}} - {{transfer._category.name}}
             <br>
             {%endfor%}
+
         </div>
 
     </div>
