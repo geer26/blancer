@@ -87,6 +87,7 @@ body{
     border-radius:2px;
 }
 
+
 .positive_transfers{
     text-align: left;
     border-radius:2px;
@@ -106,6 +107,7 @@ body{
     /*border: 1px solid red;*/
     transition: .2s;
 }
+
 
 .l_t_holder:hover{
     background-color: rgba(0,0,0,0.2);
@@ -167,6 +169,7 @@ body{
     animation-timing-function: ease-out;*/
 }
 
+
 .modal_frame{
     background-color: white;
     display: block;
@@ -181,6 +184,7 @@ body{
     animation-name: slidein;
     animation-timing-function: ease-out;*/
 }
+
 
 .message_frame{
     background-color: white;
@@ -197,6 +201,7 @@ body{
     animation-timing-function: ease-out;*/
 }
 
+
 .viking{
     position: absolute;
     max-width: 80px;
@@ -206,10 +211,12 @@ body{
     transition: 0.3s;
 }
 
+
 .viking:hover{
     max-width: 90px;
     left: -25px;
 }
+
 
 .close_btn{
     position: absolute;
@@ -220,11 +227,13 @@ body{
     transition: 0.3s;
 }
 
+
 .close_btn:hover{
     max-width: 4vmax;
     top: -1.5vmax;
     right: -1.5vmax;
 }
+
 
 .addm_frame{
     background-color: white;
@@ -269,6 +278,7 @@ body{
     border-radius: 2px;
 }
 
+
 .detail_s{
     /*border: 1px solid blue;*/
     width: fit-content;
@@ -278,16 +288,19 @@ body{
     font-size: 70%;
 }
 
+
 .filters_s{
     /*border: 1px solid blue;*/
-    max-height: 40%;
+    height: 40%;
     overflow: auto;
 }
+
 
 .charts_s{
     /*border: 1px solid red;*/
     position: relative;
     border-radius: 2px;
+    margin: 0;
     height: 50%;
 }
 
@@ -306,6 +319,7 @@ body{
     box-shadow: 0px 0px 6px 2px rgba(25, 118, 210, 1);
 }
 
+
 .tableholder{
     position: relative;
     display: block;
@@ -314,19 +328,23 @@ body{
 
 }
 
+
 .categories_span{
     text-align: left;
     margin-left: 15px;
     margin-right: 15px
 }
 
+
 .categories_span:hover{
     box-shadow: 0px 0px 5px 4px rgba(0,0,0,0.2);
 }
 
+
 .delpocket{
     top: 0;
 }
+
 
 .car_nav{
     z-index: 1;
@@ -427,4 +445,56 @@ body{
     display: inline-block;
     max-width: 5vmin;
     height: auto;
+}
+
+
+/* DETAIL STYLESHEETS */
+
+
+.chart_t_holder{
+    display: block;
+    position: relative;
+    margin: auto;
+    /*border: 1px solid red;*/
+    transition: .2s;
+}
+
+
+.chart_t_holder:hover{
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 2px;
+}
+
+
+.chart_db_holder{
+    display: inline-block;
+    max-width: 50%;
+    height: 100%;
+    padding:0;
+    margin: 0;
+    text-align: center;
+}
+
+
+.chart_transferdate{
+    font-size: 50%;
+    margin: 0;
+}
+
+
+.chart_typeholder{
+    background-color: rgba(97, 97, 97,1);
+    display: inline-block;
+    color: white;
+    border-radius: 2px;
+    padding-left: 2px;
+    margin: 0;
+    transition: .2s;
+    text-align: center;
+}
+
+
+.chart_typeholder:hover{
+    font-size: 105%;
+    box-shadow: 0px 0px 2px 2px rgba(97, 97, 97, 1);
 }
