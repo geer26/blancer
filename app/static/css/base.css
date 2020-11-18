@@ -12,6 +12,7 @@ body{
     margin: 0;
 }
 
+
 .menubar{
     width: 100;
     background-color: #2196f3;
@@ -22,11 +23,14 @@ body{
     margin-bottom: 10px;
 }
 
+
 .logo{
-    max-width: 15vw;
+    position: relative;
+    width: 20vmin;
     padding: 5px;
     display: inline-block;
 }
+
 
 .rotate180 {
     -webkit-transform: rotate(180deg);
@@ -36,6 +40,7 @@ body{
     transform: rotate(180deg);
 }
 
+
 .pocketname{
     background-color: #2196f3;
     margin-left: 7vw;
@@ -43,6 +48,7 @@ body{
     border-bottom-left-radius: 20px;
     /*box-shadow: -5px 0px 6px 4px rgba(0,0,0,0.5);*/
 }
+
 
 .pocketbalance{
     /*border: 1px solid red;*/
@@ -54,6 +60,7 @@ body{
     box-shadow: 0px 0px 5px 4px rgba(0, 0 ,0, .45);
     transition: 0.2s;
 }
+
 
 .pocketbalance h3{
     font-weight: 550;

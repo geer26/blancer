@@ -130,4 +130,5 @@ function show_bars(){
     chart.render();
 };
 
+
 charts.push(show_bars);
