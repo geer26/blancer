@@ -347,8 +347,6 @@ def newmessage(data):
     #user wants to add a category
     if data['event'] == 264 and current_user.is_authenticated:
 
-
-
         mess = {}
         mess['event'] = 164
         mess['htm'] = render_template('addcategory_modal.html')

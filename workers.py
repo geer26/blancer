@@ -192,7 +192,7 @@ def add_cat(data,u):
             if cat.name == str(data['cname']) and cat.type == t:
                 return False
 
-        newc = Category(_user=u, name=str(data['cname']), last_active=datetime.now(), type=data['type'])
+        newc = Category(_user=u, name=str(data['cname']), last_active=datetime.now(), type=t)
 
         db.session.add(newc)
         db.session.commit()
