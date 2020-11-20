@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <linearGradient gradientUnits="userSpaceOnUse" x1="243.458" y1="55.589" x2="243.458" y2="135.414" id="gradient-0" gradientTransform="matrix(0.03764, 0.999291, -3.642073, 0.137186, 509.19046, -237.666489)">
+      <stop offset="0" style="stop-color: rgb(22, 93, 147);"/>
+      <stop offset="1" style="stop-color: rgb(33, 150, 243);"/>
+    </linearGradient>
+    <filter id="inner-shadow-filter-0" x="-500%" y="-500%" width="1000%" height="1000%" bx:preset="inner-shadow 1 0 0 4 0.9 rgba(0,0,0,0.59)">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur stdDeviation="4"/>
+      <feComposite operator="out" in="SourceGraphic"/>
+      <feComponentTransfer result="choke">
+        <feFuncA type="linear" slope="1.8"/>
+      </feComponentTransfer>
+      <feFlood flood-color="rgba(0,0,0,0.59)" result="color"/>
+      <feComposite operator="in" in="color" in2="choke" result="shadow"/>
+      <feComposite operator="over" in="shadow" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <polygon style="stroke: rgb(0, 0, 0); fill: url(#gradient-0); paint-order: fill; stroke-width: 0px; filter: url(#inner-shadow-filter-0);" points="0.4129999876022339 -0.4819999933242798 353.593994140625 0 353.5350036621094 29.628000259399414 0 79.82499694824219"/>
+</svg>

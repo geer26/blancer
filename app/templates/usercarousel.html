@@ -43,13 +43,14 @@
             </div>
         </div>
 
-        <div class="pocketbalance row tooltipped" data-position="top" data-delay="50" data-tooltip="Actual balance" id="actual_b">
-            <h4 id="pbalance"  style="margin: 0;"
+        <div
             {% if pocket.balance>=0 %}
-            class = "green-text darken-2"
+                class="pb_pos row tooltipped"
             {% else %}
-             class = "red-text darken-2"
-            {% endif %} >
+                class="pb_neg row tooltipped"
+            {% endif %}
+             data-position="top" data-delay="50" data-tooltip="Actual balance" id="actual_b">
+            <h4 id="pbalance"  style="margin: 0;" class="white-text">
                 {{ "{:,}".format(pocket.balance) }}
             </h4>
         </div>
