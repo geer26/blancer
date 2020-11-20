@@ -21,7 +21,7 @@ body{
     position: sticky;
     top: 0;
     left: 0;
-    box-shadow: 0px 2px 6px 3px rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 6px 3px rgba(0,0,0,0.5);
     margin-bottom: 10px;
 }
 
@@ -159,40 +159,8 @@ body{
 }
 
 
-/*------------ OLD MODALS --------------------*/
-.modal_frame{
-    background-color: white;
-    display: block;
-    position: relative;
-    border: 1px solid red;
-    border-radius: 2px;
-    padding: 5px;
-    max-width: 50vw;
-    margin: 25vh auto;
-    box-shadow: 0px 0px 6px 2px rgba(255, 0, 0, 1);
-    /*animation-duration: .2s;
-    animation-name: slidein;
-    animation-timing-function: ease-out;*/
-}
-
-
-.message_frame{
-    background-color: white;
-    display: block;
-    position: relative;
-    border: 1px solid rgba(25, 118, 210, 1);
-    border-radius: 2px;
-    padding: 5px;
-    max-width: 50vw;
-    margin: 25vh auto;
-    box-shadow: 0px 0px 6px 2px rgba(25, 118, 210, 1);
-    /*animation-duration: .2s;
-    animation-name: slidein;
-    animation-timing-function: ease-out;*/
-}
-
-
 /*------------ NEW MODALS --------------------*/
+
 
 div.modalback{
     display: block; /* Hidden by default */

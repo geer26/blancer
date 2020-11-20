@@ -13,18 +13,19 @@
 
             <ul class="collapsible" data-collapsible="accordion" style="border-radius: 2px;">
                 {% for category in categories %}
-                <li id="row_{{category.id}}">
+                <li id="row_{{category.id}}" style="background: rgba(0,0,0,.1);">
 
-                    <div class="collapsible-header">
+                    <div class="collapsible-header" style="background: rgba(0,0,0,.2);">
                         <span id="cat_{{category.id}}" class="valign-wrapper">
                         <a class="btn-floating btn-small waves-effect waves-light teal" id="{{category.id}}_edit" onclick="edit_cat({{category.id}})"
-                   style="margin: 5px;">
-                    <i class="small material-icons">create</i>
-                </a>
+                            style="margin: 5px;">
+                            <i class="small material-icons">create</i>
+                        </a>
+
                         <a class="btn-floating btn-small waves-effect waves-light red" id="{{category.id}}_del" onclick="del_cat({{category.id}})"
-                   style="margin: 5px;">
-                    <i class="small material-icons">delete</i>
-                </a>
+                            style="margin: 5px;">
+                            <i class="small material-icons">delete</i>
+                        </a>
                         {{category.name}}
                         {% if category.type == 1 %}
                         <i class="small material-icons green-text">publish</i>
