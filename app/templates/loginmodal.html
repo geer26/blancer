@@ -1,0 +1,40 @@
+<div id="loginmodal" class="modalback" style="display: none;">
+
+    <div class="posm_frame" id="login_frame">
+
+        <img class="close_btn" draggable="false" src="/static/img/icons/close.png" id="close_modal" onclick="hideitem('login_frame', 'loginmodal')">
+
+        <h4>login</h4>
+
+        <form method="post" id="loginform" novalidate>
+            {{ loginform.hidden_tag() }}
+            <ul class="no-bullets">
+
+                <li class="list">
+                    {{loginform.username( id="login_username", class="inputb", placeholder="Username")}}
+                </li>
+
+                <li class="list">
+                    {{loginform.password( id="login_password", class="inputb", placeholder="Password")}}
+                </li>
+
+                <li class="list">
+                    <label>
+                        {{ loginform.remember_me(id="input_remember", type="checkbox") }}
+                        <span style="color: rgba(255,255,255,.5);">remember me!</span>
+                    </label>
+                </li>
+
+            </ul>
+
+        </form>
+
+        <button class="posbutton" id="loginbutton" onclick="loginattempt()">
+            login
+        </button>
+
+        <p>forgot password!</p>
+
+    </div>
+
+</div>

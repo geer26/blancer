@@ -25,9 +25,6 @@ $(document).ready(function(){
     $('.tooltipped').tooltip({delay: 50});
 
 
-    $('input#signup_username, input#signup_email').characterCounter({});
-
-
     var car = $('.carousel.carousel-slider').carousel({
     fullWidth: true,
     //indicators: true,
@@ -41,6 +38,7 @@ $(document).ready(function(){
 
 
     $('.modal').modal({});
+
 
     animateCSS('#logo', inanim);
 

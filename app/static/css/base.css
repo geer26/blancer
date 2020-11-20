@@ -159,26 +159,7 @@ body{
 }
 
 
-/* ERROR MESSAGE STYLE */
-.modalback{
-    display: block; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 9999; /* Sit on top */
-    left: 0;
-    top: 0;
-    text-align: center;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: red; /* Fallback color */
-    background-color: rgba(0, 0, 0, .3); /* Black w/ opacity */
-    /*background-color: rgba(0, 0, 0, .4);*/
-    /*animation-duration: .2s;
-    animation-name: fadein;
-    animation-timing-function: ease-out;*/
-}
-
-
+/*------------ OLD MODALS --------------------*/
 .modal_frame{
     background-color: white;
     display: block;
@@ -209,6 +190,239 @@ body{
     animation-name: slidein;
     animation-timing-function: ease-out;*/
 }
+
+
+/*------------ NEW MODALS --------------------*/
+
+div.modalback{
+    display: block; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 9999; /* Sit on top */
+    left: 0;
+    top: 0;
+    text-align: center;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: red; /* Fallback color */
+    background-color: rgba(0, 0, 0, .3); /* Black w/ opacity */
+    }
+
+
+div.posm_frame{
+    background-color: white;
+    background-image: linear-gradient(to bottom, #2196f3, #49e7df);
+    margin: auto;
+    display: inline-block;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    /*border: 1px solid rgba(0, 0, 0, 1);*/
+    border-radius: 2px;
+    padding: 5px;
+    /*max-width: 90vw;*/
+    width: fit-content;
+    height: fit-content;
+    box-shadow: 0px 0px 7px 5px rgba(0, 0, 0, .5);
+}
+
+
+div.negm_frame{
+    background-color: white;
+    background-image: linear-gradient(to bottom, #ccf5ff, #ffcccc);
+    margin: auto;
+    display: inline-block;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    /*border: 1px solid rgba(0, 0, 0, 1);*/
+    border-radius: 2px;
+    padding: 5px;
+    /*max-width: 90vw;*/
+    width: fit-content;
+    height: fit-content;
+    box-shadow: 0px 0px 7px 5px rgba(252, 0, 0, .5);
+}
+
+
+ul li.list{
+    margin: 5px;
+    text-align: center;
+}
+
+
+ul.no-bullets{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+input.inputb {
+        	background: rgba(0,0,0,.2);
+        	color: white;
+        	border: none;
+        	border-radius: 2px;
+        	padding: 5px;
+        	transition: .2s;
+        	cursor: pointer;
+        	text-align: center;
+        }
+
+
+input.inputb:hover{
+        	background: rgba(0,0,0,.3);
+        	box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
+        }
+
+
+input.inputb:focus{
+        	background: rgba(0,0,0,.3);
+        	border: none;
+        	box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
+        }
+
+
+input.inputb::placeholder{
+    color: rgba(255,255,255,.5);
+    }
+
+
+button.posbutton{
+        	border: none;
+        	border-radius: 2px;
+        	background-color: rgba(29, 181, 79, .7);
+        	box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.75);
+        	color: white;
+        	text-transform: uppercase;
+        	padding: 5px;
+        	transition: .2s;
+        }
+
+
+button.posbutton:hover{
+        	background-color: rgba(29, 181, 79, .9);
+        	box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
+        }
+
+
+button.negbutton{
+        	border: none;
+        	border-radius: 2px;
+        	background-color: rgba(232, 58, 78, .7);
+        	box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.75);
+        	color: white;
+        	text-transform: uppercase;
+        	padding: 5px;
+        	transition: .2s;
+        }
+
+
+button.negbutton:hover{
+        	background-color: rgba(232, 58, 78, .9);
+        	box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
+        }
+
+
+button.neutralbutton{
+        	border: none;
+        	border-radius: 2px;
+        	background-color: rgba(141, 185, 204, .7);
+        	box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.75);
+        	color: white;
+        	text-transform: uppercase;
+        	padding: 5px;
+        	transition: .2s;
+        }
+
+
+button.neutralbutton:hover{
+        	background-color: rgba(141, 185, 204, .9);
+        	box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
+        }
+
+
+a.customlink{
+        	cursor: pointer;
+        	transition: .2s;
+        }
+
+
+a.customlink:hover{
+    font-size: 110%;
+    }
+
+
+/* The container */
+.cm_container{
+ 			display: inline-block;
+  			position: relative;
+  			padding-left: 35px;
+  			cursor: pointer;
+  			-webkit-user-select: none;
+  			-moz-user-select: none;
+  			-ms-user-select: none;
+  			user-select: none;
+		}
+
+
+/* Hide the browser's default checkbox */
+.cm_container input{
+        	position: absolute;
+        	opacity: 0;
+        	cursor: pointer;
+        	height: 0;
+        	width: 0;
+		}
+
+
+/* Create a custom checkbox */
+.checkmark{
+        	position: absolute;
+        	top: 0;
+        	left: 0;
+        	height: 20px;
+        	width: 20px;
+        	background-color: white;
+        	border-radius: 2px;
+		}
+
+/* On mouse-over, add a grey background color */
+.cm_container:hover input ~ .checkmark{
+    background-color: #ccc;
+    }
+
+
+/* When the checkbox is checked, add a blue background */
+.cm_container input:checked ~ .checkmark{
+    background-color: #2196F3;
+    }
+
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after{
+			content: "";
+			position: absolute;
+			display: none;
+		}
+
+
+/* Show the checkmark when checked */
+.cm_container input:checked ~ .checkmark:after{
+    display: block;
+    }
+
+
+/* Style the checkmark/indicator */
+.cm_container .checkmark:after{
+        	left: 8px;
+        	top: 4px;
+        	width: 5px;
+        	height: 10px;
+        	border: solid white;
+        	border-width: 0 3px 3px 0;
+        	-webkit-transform: rotate(45deg);
+        	-ms-transform: rotate(45deg);
+        	transform: rotate(45deg);
+        }
 
 
 .viking{

@@ -154,7 +154,6 @@ def newmessage(data):
 
     sid = request.sid
 
-
     #incoming request for error message with message - DONE
     if data['event'] == 291:
         mess = {}
