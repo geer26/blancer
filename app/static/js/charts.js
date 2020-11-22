@@ -122,12 +122,12 @@ function show_bars(){
 
         xaxis: {
             labels: {
-                /*formatter: (value) => {
+                formatter: (value) => {
                     var d = new Date(value);
                     var opts = {year: 'numeric', month: 'short', day: 'numeric'};
 
                     return d.toLocaleString('en-US',opts) // The formatter function overrides format property
-                },*/
+                },
             }
 
         }

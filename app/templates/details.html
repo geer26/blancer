@@ -1,0 +1,47 @@
+<div id="details_modal" class="modalback">
+
+    <div class="posm_frame" id="details_frame" style="width: 90%; height: 90%;">
+
+        <p id="hidden_id" style="display: none;"
+           {% if p %}
+           pid="{{p.id}}"
+           {% endif %}
+           >
+        </p>
+
+        <img class="close_btn" draggable="false" src="/static/img/icons/close.png" id="close_modal"
+             onclick="removeitem('details_frame', 'details_modal')">
+
+        <h6 class="label_s noselect">{{pocket.name}} !!! EXPERIMENTAL !!!</h6>
+        <p class="detail_s noselect">({{pocket.description}})</p>
+
+        <div id="rangeselector" style="border: 1px solid red; width: 90%; min-height: 10px; display: inline-block;"
+        onclick="updslider(this)">
+        </div>
+        
+        <div id="dateinputs" style="border: 1px solid green; width: 90%; min-height: 10px; display: inline-block; padding: 0;">
+
+            <span style="border: 1px solid blue; max-width: 49%; min-height: 10px; display: inline-block;">
+                <p>Start date: </p>
+                <input type="date" id="sd">
+            </span>
+
+            <span style="border: 1px solid blue; max-width: 49%; min-height: 10px; display: inline-block;">
+                <p>End date: </p>
+                <input type="date" id="ed">
+            </span>
+
+            <!--<script>
+                $( function() {
+                    $( "#sd" ).datepicker();
+                    $( "#ed" ).datepicker();
+                } );
+            </script>-->
+
+        </div>
+
+        <script>createslider( {{minmax|tojson}} )</script>
+
+    </div>
+
+</div>

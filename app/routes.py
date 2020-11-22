@@ -166,9 +166,9 @@ def newmessage(data):
     #TODO finish!
     #request for details view
     if data['event'] == 292 and current_user.is_authenticated:
+
         pid = int(data['pid'])
         pocket = Pocket.query.get(pid)
-        #charts = get_charts(pid)
         user = current_user
         categories = Category.query.filter_by(_user=user).all()
         transfers = Transfer.query.filter_by(_pocket=pocket).order_by(Transfer.timestamp).all()
@@ -176,6 +176,27 @@ def newmessage(data):
         mess = {}
         mess['event'] = 192
         mess['htm'] = render_template('detail_selector.html', p=pid, pocket=pocket, user=user, categories=categories, transfers=transfers)
+        socket.emit('newmessage', mess, room=sid)
+        return True
+
+
+    #Experimental details
+    #request foe details view
+    if data['event'] == 293 and current_user.is_authenticated:
+
+        #print(data)
+        pocket = Pocket.query.get( int(data['pid']) )
+        pid = int(data['pid'])
+        transfers = Transfer.query.filter_by(pocket=pid).order_by(Transfer.timestamp).all()
+
+        minmax = {}
+        minmax['min'] = transfers[0].timestamp.timestamp()*1000
+        minmax['max'] = datetime.now().timestamp()*1000
+
+
+        mess = {}
+        mess['event'] = 193
+        mess['htm'] = render_template('details.html', p=pid, pocket=pocket, user=current_user, minmax=minmax)
         socket.emit('newmessage', mess, room=sid)
         return True
 
@@ -250,6 +271,7 @@ def newmessage(data):
             mess['htm'] = render_template('errormessage.html', message=message)
             socket.emit('newmessage', mess, room=sid)
             return True
+
 
     #User wants to reset password
     if data['event'] == 288 and current_user.is_authenticated:

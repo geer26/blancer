@@ -19,16 +19,24 @@
 
         <div class="fixed-action-btn delpocket">
 
+            <!-- details test -->
+            <a class="btn-floating btn purple tooltipped" data-position="bottom" data-delay="30" data-tooltip="Experimental"
+            onclick="show_details2({{pocket.id}})">
+                <i class="large material-icons">analytics</i>
+            </a>
+
             <!-- details -->
             <a class="btn-floating btn amber tooltipped" data-position="bottom" data-delay="30" data-tooltip="Details"
             onclick="show_detail({{pocket.id}})">
                 <i class="large material-icons">assessment</i>
             </a>
+
             <!--edit -->
             <a class="btn-floating btn teal tooltipped" data-position="bottom" data-delay="50" data-tooltip="Edit pocket"
             onclick="edit_pocket('{{pocket.id}}')">
                 <i class="large material-icons">create</i>
             </a>
+
             <!-- delete -->
             <a class="btn-floating btn red tooltipped" onclick="delpocket({{pocket.id}})" data-position="left" data-delay="50" data-tooltip="Delete pocket">
                 <i class="large material-icons">delete</i>
