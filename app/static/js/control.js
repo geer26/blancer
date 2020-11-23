@@ -112,6 +112,13 @@ socket.on('newmessage', function(data){
             break;
 
 
+        //here are some new charts, insert them!
+        case 194:{
+            console.log('insert charts!');
+            };
+            break;
+
+
         //here is an usercarousel as whole - DONE!
         case 181:{
 
@@ -487,7 +494,6 @@ function refresh_query(id){
     var mintime = new Date($('#sd').val()).getTime();
     var maxtime = new Date($('#ed').val()).getTime();
     var data = {event: 294, pid: id, mintime: mintime, maxtime: maxtime};
-    //console.log(data);
     send_message('newmessage', data);
 };
 
