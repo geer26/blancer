@@ -80,3 +80,19 @@ function updslider(){
     document.getElementById("sd").max = document.getElementById("ed").value;
     document.getElementById("ed").min = document.getElementById("sd").value;
 };
+
+
+function setslider_from(){
+    //set slider left side value
+    slider.noUiSlider.set([timestamp($('#sd').val()), null]);
+    //set enddate date input min value
+    document.getElementById("ed").min = document.getElementById("sd").value;
+};
+
+
+function setslider_to(){
+    //set slider right side value
+    slider.noUiSlider.set([null, timestamp($('#ed').val())]);
+    //set startdate date input max value
+    document.getElementById("sd").max = document.getElementById("ed").value;
+};
