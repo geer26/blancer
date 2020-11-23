@@ -1,3 +1,5 @@
+var currentchart = 0;
+
 
 function timestamp(str) {
     return new Date(str).getTime();
@@ -95,4 +97,14 @@ function setslider_to(){
     slider.noUiSlider.set([null, timestamp($('#ed').val())]);
     //set startdate date input max value
     document.getElementById("sd").max = document.getElementById("ed").value;
+};
+
+
+function next_chart(){
+    console.log('NEXT CHART!');
+};
+
+
+function prev_chart(){
+    console.log('PREV CHART!');
 };

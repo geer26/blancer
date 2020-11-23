@@ -1,5 +1,6 @@
 import re
 
+import pygal
 from sqlalchemy import desc
 
 from app import app,socket,db
@@ -288,6 +289,7 @@ def get_ntransfers(u,num=None):
 
 #TODO finish this!
 def drawcharts(data):
+
     fromdate = datetime.fromtimestamp( int(data['mintime']/1000) )
     todate = datetime.fromtimestamp( int(data['maxtime']/1000) )
 
@@ -301,8 +303,55 @@ def drawcharts(data):
         if td >= transfer.timestamp >= fd:
             transfers.append(transfer)
 
-    print('ALL TRANSFERS: ', len(tf))
-    print('FILTERED TRANSFERS: ', len(transfers))
+    charts = []
 
-    charts = {}
+    charts.append(draw_exp_pie(transfers))
+    charts.append(draw_inc_pie(transfers))
+
     return charts
+
+
+def draw_exp_pie(data):
+
+    names = []
+    amounts = []
+
+    for transfer in data:
+        if transfer.amount > 0:
+            continue
+        else:
+            if str(transfer._category.name) not in names:
+                names.append(str(transfer._category.name))
+                amounts.append(transfer.amount)
+            else:
+                amounts[names.index( str(transfer._category.name) )] += transfer.amount
+
+    pie_chart = pygal.Pie(inner_radius=.75, width=800, height=400, margin=10, human_readable = True)
+    pie_chart.title = 'All expenses'
+    for name in names:
+        pie_chart.add(name, abs(amounts[names.index(name)]))
+
+    return pie_chart.render_data_uri()
+
+
+def draw_inc_pie(data):
+
+    names = []
+    amounts = []
+
+    for transfer in data:
+        if transfer.amount < 0:
+            continue
+        else:
+            if str(transfer._category.name) not in names:
+                names.append(str(transfer._category.name))
+                amounts.append(transfer.amount)
+            else:
+                amounts[names.index( str(transfer._category.name) )] += transfer.amount
+
+    pie_chart = pygal.Pie(inner_radius=.75, width=800, height=400, margin=10)
+    pie_chart.title = 'All incomes'
+    for name in names:
+        pie_chart.add(name, abs(amounts[names.index(name)]))
+
+    return pie_chart.render_data_uri()

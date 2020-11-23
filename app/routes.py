@@ -205,20 +205,21 @@ def newmessage(data):
         temp['mintime'] = minmax['min']
         temp['maxtime'] = minmax['max']
 
-        charts = drawcharts( temp)
-
+        charts = drawcharts(temp)
+        #print(charts)
 
         mess = {}
         mess['event'] = 193
-        mess['htm'] = render_template('details.html', p=pid, pocket=pocket, user=current_user, minmax=minmax)
+        mess['htm'] = render_template('details.html', p=pid, pocket=pocket, user=current_user, minmax=minmax, charts=charts)
         socket.emit('newmessage', mess, room=sid)
         return True
 
 
     #refresh details daterange
     if data['event'] == 294 and current_user.is_authenticated:
-        print(data)
+        #print(data)
         charts = drawcharts(data)
+        #print(charts)
         return True
 
     #incoming request for refresh the usercarousel
