@@ -7,8 +7,8 @@ from sqlalchemy import desc
 from app import app, socket, db
 from app.forms import LoginForm, SignupForm
 from app.models import User, Pocket, Transfer, Category
-from workers import verifiy_signup, hassu, deluser, getid, addpocket, delpocket, delcategory, add_cat, add_transfer, \
-    get_ptransfers, get_ntransfers, validate_loginattempt, resetpassword, get_charts
+from workers import verifiy_signup, hassu, deluser, addpocket, delpocket, delcategory, add_cat, add_transfer, \
+    get_ptransfers, get_ntransfers, validate_loginattempt, resetpassword, drawcharts
 
 
 @app.template_filter('date_to_millis')
@@ -189,9 +189,23 @@ def newmessage(data):
         pid = int(data['pid'])
         transfers = Transfer.query.filter_by(pocket=pid).order_by(Transfer.timestamp).all()
 
+        if len(transfers) < 1:
+            mess = {}
+            mess['event'] = 191
+            mess['htm'] = render_template('errormessage.html', message='No tansfers in this pocket!')
+            socket.emit('newmessage', mess, room=sid)
+            return True
+
         minmax = {}
         minmax['min'] = transfers[0].timestamp.timestamp()*1000
         minmax['max'] = datetime.now().timestamp()*1000
+
+        temp = {}
+        temp['pid'] = pid
+        temp['mintime'] = minmax['min']
+        temp['maxtime'] = minmax['max']
+
+        charts = drawcharts( temp)
 
 
         mess = {}

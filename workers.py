@@ -286,7 +286,7 @@ def get_ntransfers(u,num=None):
     return transfers
 
 
-# - TODO finish!
+'''# - TODO finish!
 def get_charts(pid):
     charts = []
 
@@ -302,4 +302,22 @@ def get_charts(pid):
     island = {id: 'island', 'src': 'https://image.shutterstock.com/image-photo/bright-spring-view-cameo-island-260nw-1048185397.jpg', 'title': 'ISLAND'}
     charts.append(island)
 
+    return charts'''
+
+
+#TODO finish this!
+def drawcharts(data):
+    fromdate = datetime.fromtimestamp( int(data['mintime']/1000) )
+    todate = datetime.fromtimestamp( int(data['maxtime']/1000) )
+    fd = date(fromdate.year, fromdate.month, fromdate.day)
+    td = date(todate.year, todate.month, todate.day+1)
+
+    print(str(fromdate) + ' <------> ' + str(fd))
+    print(str(todate) + ' <------> ' + str(td))
+
+    '''print(data)
+    print(datetime.fromtimestamp( int(data['mintime']/1000) ))
+    print(datetime.fromtimestamp( int(data['maxtime']/1000) ))'''
+
+    charts = {}
     return charts

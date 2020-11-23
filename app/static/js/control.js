@@ -502,7 +502,6 @@ function show_signupmodal(){
 
 
 function show_help(){
-    //console.log('SHOW HELP MODAL!');
     var data = {event: 289};
     send_message('newmessage', data);
 };
