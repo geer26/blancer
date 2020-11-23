@@ -6,7 +6,7 @@
 
         <p id="hidden_id" style="display: none;"
            {% if p %}
-           pid="{{p.id}}"
+           pid={{pocket.id}}
            {% endif %}
            >
         </p>
@@ -31,6 +31,8 @@
                 <p style="margin: 0;">End date: </p>
                 <input type="date" id="ed" oninput="setslider_to()" style="margin: 0;">
             </span>
+
+            <button id="refresh" class="posbutton" onclick="refresh_query({{pocket.id}})">Refresh query</button>
 
         </div>
 

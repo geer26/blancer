@@ -43,6 +43,7 @@
 #       191 - simple error modal with string
 #       192 - send details modal
 #       193 - send detail modal 2 !!! Experimental !!!
+#       194 - sending refreshed charts for detail modal 2
 
 #   17X - admin operation confirmation
 #       172 - admin operation success
@@ -88,6 +89,7 @@
 #      291 - request for error modal with message string
 #      292 - request for detail modal with pocket id
 #      293 - request for detail modal 2 !!! Experimental !!!
+#      294 - refresh dates for detail modal 2
 
 #   27X - Admin operations
 #      271 - delete user with given username

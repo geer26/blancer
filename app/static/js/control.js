@@ -483,6 +483,15 @@ function show_details2(pid){
 };
 
 
+function refresh_query(id){
+    var mintime = new Date($('#sd').val()).getTime();
+    var maxtime = new Date($('#ed').val()).getTime();
+    var data = {event: 294, pid: id, mintime: mintime, maxtime: maxtime};
+    //console.log(data);
+    send_message('newmessage', data);
+};
+
+
 function refresh_carousel(){
     var data = {event: 281, cs: current_slide};
     send_message('newmessage', data);

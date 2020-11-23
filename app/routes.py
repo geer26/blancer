@@ -198,7 +198,7 @@ def newmessage(data):
 
         minmax = {}
         minmax['min'] = transfers[0].timestamp.timestamp()*1000
-        minmax['max'] = datetime.now().timestamp()*1000
+        minmax['max'] = transfers[-1].timestamp.timestamp()*1000
 
         temp = {}
         temp['pid'] = pid
@@ -214,6 +214,12 @@ def newmessage(data):
         socket.emit('newmessage', mess, room=sid)
         return True
 
+
+    #refresh details daterange
+    if data['event'] == 294 and current_user.is_authenticated:
+        print(data)
+        charts = drawcharts(data)
+        return True
 
     #incoming request for refresh the usercarousel
     if data['event'] == 281 and current_user.is_authenticated:
