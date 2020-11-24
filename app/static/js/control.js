@@ -96,14 +96,6 @@ socket.on('newmessage', function(data){
             break;
 
 
-        //here are the details, show it to user!
-        case 192:{
-            $('#pagecontent').append(data['htm']);
-            animateCSS('#details_frame', inanim);
-            };
-            break;
-
-
         //here is an experimental detail view, show it
         case 193:{
             $('#pagecontent').append(data['htm']);

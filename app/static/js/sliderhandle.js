@@ -1,4 +1,10 @@
-var currentchart = 0;
+var currentchart = 1;
+
+
+function pagechart(){
+    //console.log( $('#'+ currentchart.toString()) );
+    $('#'+currentchart.toString()).show();
+}
 
 
 function timestamp(str) {
@@ -6,7 +12,7 @@ function timestamp(str) {
 }
 
 
-function createslider(minmax){
+function createslider(minmax) {
 
     var mintime = minmax['min'];
     var maxtime = minmax['max'];
@@ -101,10 +107,14 @@ function setslider_to(){
 
 
 function next_chart(){
-    console.log('NEXT CHART!');
+    $('#'+currentchart.toString()).hide();
+    (currentchart > charts.length-1) ? currentchart = 1 : currentchart ++;
+    pagechart();
 };
 
 
 function prev_chart(){
-    console.log('PREV CHART!');
+    $('#'+currentchart.toString()).hide();
+    (currentchart < 2) ? currentchart = charts.length : currentchart --;
+    pagechart();
 };

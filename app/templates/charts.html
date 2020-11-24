@@ -10,6 +10,12 @@ onclick="next_chart()">
                 <i class="material-icons small navicon">skip_next</i>
             </div>
 
-{% for chart in charts%}
-<embed  type="image/svg+xml" src= "{{ chart|safe }}" style="height: 100%; max-width: 100%; margin: auto;"/>
+{% for chart in charts %}
+<embed id={{loop.index}} type="image/svg+xml" src= "{{ chart|safe }}" style="height: 100%; max-width: 100%; margin: auto; display: none;"/>
 {% endfor %}
+
+
+<script>
+    var charts = {{charts|safe}};
+    pagechart();
+</script>

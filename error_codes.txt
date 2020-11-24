@@ -41,7 +41,7 @@
 
 #   19X - send error modal and detail operations
 #       191 - simple error modal with string
-#       192 - send details modal
+#       192 - send details modal ---> freed
 #       193 - send detail modal 2 !!! Experimental !!!
 #       194 - sending refreshed charts for detail modal 2
 
@@ -87,7 +87,7 @@
 
 #   29X - request for error modal and detail view
 #      291 - request for error modal with message string
-#      292 - request for detail modal with pocket id
+#      292 - request for detail modal with pocket id  ---> freed
 #      293 - request for detail modal 2 !!! Experimental !!!
 #      294 - refresh dates for detail modal 2
 

@@ -163,23 +163,6 @@ def newmessage(data):
         return True
 
 
-    #TODO finish!
-    #request for details view
-    if data['event'] == 292 and current_user.is_authenticated:
-
-        pid = int(data['pid'])
-        pocket = Pocket.query.get(pid)
-        user = current_user
-        categories = Category.query.filter_by(_user=user).all()
-        transfers = Transfer.query.filter_by(_pocket=pocket).order_by(Transfer.timestamp).all()
-
-        mess = {}
-        mess['event'] = 192
-        mess['htm'] = render_template('detail_selector.html', p=pid, pocket=pocket, user=user, categories=categories, transfers=transfers)
-        socket.emit('newmessage', mess, room=sid)
-        return True
-
-
     #Experimental details
     #request foe details view
     if data['event'] == 293 and current_user.is_authenticated:

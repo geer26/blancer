@@ -19,14 +19,12 @@
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link href="/static/css/base.css" type="text/css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="/static/css/animate.css">
-        <link rel="stylesheet" type="text/css" href="/static/css/apexcharts.css">
         <link rel="stylesheet" type="text/css" href="/static/css/nouislider.min.css">
 
         <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap" rel="stylesheet">
 
         <script src="/static/js/query-3.5.1.min.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <script type="text/javascript" src="/static/js/apexcharts.min.js"></script>
         <script type="text/javascript" src="/static/js/nouislider.min.js"></script>
         <script src="/static/js/materialize.min.js"></script>
         <script src="/static/js/socket.io.js"></script>
@@ -51,7 +49,6 @@
                 {%include 'adminindex.html' %}
                 <script src="/static/js/admincontrol.js" id="admincontrol_js"></script>
             {% elif current_user.is_authenticated and not current_user.is_superuser %}
-                <!--<script src="/static/js/charts.js"></script>-->
                 <script src="/static/js/sliderhandle.js"></script>
                 {% include 'userindex.html' %}
             {% else %}
