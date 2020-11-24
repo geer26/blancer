@@ -9,52 +9,34 @@
 
             <ul>
 
-              <li>
-                <div class="input-field center-align" >
-                  <i class="material-icons prefix">account_circle</i>
-                  <input id="signup_username" type="text" class="validate" data-length="12">
-                  <label for="signup_username">username</label>
-                </div>
+              <li class="list">
+                <input id="signup_username" type="text" class="inputb" placeholder="Username"/>
               </li>
 
-              <li>
-                <div class="input-field center-align">
-                  <i class="material-icons prefix">email</i>
-                  <input id="signup_email" type="text" class="validate" data-length="120">
-                  <label for="signup_email">email</label>
-                </div>
+              <li class="list">
+                <input id="signup_email" type="email" class="inputb" placeholder="Email"/>
               </li>
 
-              <li>
-                <div class="input-field center-align">
-                  <i class="material-icons prefix">pending</i>
-                  <input id="signup_password" type="password" class="validate">
-                  <label for="signup_password">password</label>
-                </div>
+              <li class="list">
+                <input id="signup_password" type="password" class="inputb" placeholder="Password"/>
               </li>
 
-              <li>
-                <div class="input-field center-align">
-                  <i class="material-icons prefix">pending</i>
-                  <input id="signup_password2" type="password" class="validate">
-                  <label for="signup_password2">password again</label>
-                </div>
+              <li class="list">
+                <input id="signup_password2" type="password" class="inputb" placeholder="Password again"/>
               </li>
 
-              <li>
-                <p class="center-align">
-                  <label>
-                    <input type="checkbox" id="signup_agree"/>
-                    <span>I've read and agreed to the <a href="#">TERMS</a>!</span>
-                  </label>
-                </p>
+              <li class="list">
+                <label>
+                  <input id="signup_agree" type="checkbox" />
+                  <span style="color: rgba(255,255,255,.8); margin-left: 10px; margin-right: 10px;">I've read and agreed to the <a href="#">TERMS</a>!</span>
+                </label>
               </li>
 
             </ul>
 
-      <a class="waves-effect waves-light btn btn-small" style="border-radius: 2px;" id="signupbutton2" onclick="signupattempt()">
-          signup
-      </a>
+      <button class="posbutton" id="signupbutton2" onclick="signupattempt(">
+        signup
+      </button>
 
     </div>
 
