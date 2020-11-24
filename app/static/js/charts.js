@@ -1,3 +1,4 @@
+//TODO delete this
 
 var d = [];
 var pos_data = [];
@@ -41,7 +42,7 @@ function fix_point(amount, date, detail, category){
 };
 
 
-function next_chart(){
+function next_chart1(){
     //console.log('NEXT');
     if (index == charts.length - 1){
         index = 0;
@@ -52,7 +53,7 @@ function next_chart(){
 };
 
 
-function prev_chart(){
+function prev_chart1(){
     //console.log('PREV');
     if (index == 0){
         index = charts.length - 1;
