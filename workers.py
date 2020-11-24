@@ -326,7 +326,7 @@ def draw_exp_pie(data):
             else:
                 amounts[names.index( str(transfer._category.name) )] += transfer.amount
 
-    pie_chart = pygal.Pie(inner_radius=.75, width=800, height=400, margin=10, human_readable = True)
+    pie_chart = pygal.Pie(inner_radius=.75, width=800, height=400, margin=10, human_readable=True)
     pie_chart.title = 'All expenses'
     for name in names:
         pie_chart.add(name, abs(amounts[names.index(name)]))
