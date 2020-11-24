@@ -9,3 +9,7 @@ border-bottom-left-radius: 5px;" class="valign-wrapper car_nav"
 onclick="next_chart()">
                 <i class="material-icons small navicon">skip_next</i>
             </div>
+
+{% for chart in charts%}
+<embed  type="image/svg+xml" src= "{{ chart|safe }}" style="height: 100%; max-width: 100%; margin: auto;"/>
+{% endfor %}

@@ -114,7 +114,8 @@ socket.on('newmessage', function(data){
 
         //here are some new charts, insert them!
         case 194:{
-            console.log('insert charts!');
+            $('#charts').empty();
+            $('#charts').append(data['htm']);
             };
             break;
 

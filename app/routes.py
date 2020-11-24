@@ -217,9 +217,12 @@ def newmessage(data):
 
     #refresh details daterange
     if data['event'] == 294 and current_user.is_authenticated:
-        #print(data)
+
         charts = drawcharts(data)
-        #print(charts)
+        mess = {}
+        mess['event'] = 194
+        mess['htm'] = render_template('charts.html', charts=charts)
+        socket.emit('newmessage', mess, room=sid)
         return True
 
     #incoming request for refresh the usercarousel

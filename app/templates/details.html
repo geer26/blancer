@@ -38,11 +38,7 @@
 
         <div id="charts" style=" display:inline-block; height: 50%; position:relative; border: 2px solid red; overflow: auto;">
 
-            {% include 'chart_pager.html' %}
-
-            {% for chart in charts%}
-            <embed  type="image/svg+xml" src= "{{ chart|safe }}" style="height: 95%; max-width: 100%; margin: auto;"/>
-            {% endfor %}
+            {% include 'charts.html' %}
 
         </div>
 
