@@ -298,7 +298,7 @@ def drawcharts(data):
 
     pocket = Pocket.query.get(int(data['pid']))
     transfers = []
-    tf = Transfer.query.filter_by(_pocket=pocket).all()
+    tf = Transfer.query.filter_by(_pocket=pocket).order_by(Transfer.timestamp).all()
     for transfer in tf:
         if td >= transfer.timestamp >= fd:
             transfers.append(transfer)
@@ -307,10 +307,12 @@ def drawcharts(data):
 
     charts.append(draw_exp_pie(transfers))
     charts.append(draw_inc_pie(transfers))
+    charts.append(draw_multiline(transfers))
 
     return charts
 
 
+#- DONE
 def draw_exp_pie(data):
 
     names = []
@@ -326,7 +328,7 @@ def draw_exp_pie(data):
             else:
                 amounts[names.index( str(transfer._category.name) )] += transfer.amount
 
-    pie_chart = pygal.Pie(inner_radius=.75, width=800, height=400, margin=10, human_readable=True)
+    pie_chart = pygal.Pie(inner_radius=.5, width=800, height=400, margin=10, human_readable=True)
     pie_chart.title = 'All expenses'
     for name in names:
         pie_chart.add(name, abs(amounts[names.index(name)]))
@@ -334,6 +336,7 @@ def draw_exp_pie(data):
     return pie_chart.render_data_uri()
 
 
+#- DONE
 def draw_inc_pie(data):
 
     names = []
@@ -349,9 +352,53 @@ def draw_inc_pie(data):
             else:
                 amounts[names.index( str(transfer._category.name) )] += transfer.amount
 
-    pie_chart = pygal.Pie(inner_radius=.75, width=800, height=400, margin=10)
+    pie_chart = pygal.Pie(inner_radius=.5, width=800, height=400, margin=10)
     pie_chart.title = 'All incomes'
     for name in names:
         pie_chart.add(name, abs(amounts[names.index(name)]))
 
     return pie_chart.render_data_uri()
+
+
+def xvalue_formatter(dt):
+    return dt.strftime('%d, %b %Y at %I:%M:%S %p')
+
+
+def draw_multiline(data):
+
+    postransfers = []
+    negtransfers =[]
+
+    for transfer in data:
+
+        time = datetime(
+            int(transfer.timestamp.strftime('%Y')),
+            int(transfer.timestamp.strftime('%m')),
+            int(transfer.timestamp.strftime('%d')),
+            int(transfer.timestamp.strftime('%I')),
+            int(transfer.timestamp.strftime('%M')),
+            int(transfer.timestamp.strftime('%S')),
+        )
+
+        if transfer.amount > 0:
+            postransfers.append( (time,transfer.amount) )
+        else:
+            negtransfers.append( (time, transfer.amount) )
+
+    r = False
+
+    multiline = pygal.DateTimeLine(
+        x_label_rotation=35,
+        truncate_label=-1,
+        x_value_formatter=lambda dt: dt.strftime('%d, %b %Y at %I:%M:%S %p'),
+        #x_value_formatter=xvalue_formatter(dt),
+        width=800,
+        height=400,
+        margin=10
+    )
+
+    multiline.add("Incomes", postransfers)
+
+    multiline.add('Expenses', negtransfers)
+
+    return multiline.render_data_uri()
