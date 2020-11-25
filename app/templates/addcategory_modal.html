@@ -18,23 +18,19 @@
         <h6>add category</h6>
         {% endif %}
 
-        <ul>
+        <ul class="no-bullets">
 
-        <li>
-          <div class="input-field center-align">
-            <i class="material-icons prefix">description</i>
-            <input id="category_name" type="text" class="validate" data-length="40"
-                   {% if c %}
+            <li class="list">
+                <input id="category_name" type="text" class="inputb" placeholder="Category name"
+                {% if c %}
                    value="{{c.name}}" autofocus
-                   {% else %}
+                {% else %}
                    value = ""
-                   {%endif%}
-            >
-            <label for="category_name">name</label>
-          </div>
-        </li>
+                {%endif%}
+                />
+            </li>
 
-        <li>
+        <li class="no-bullets">
             <div class="switch">
                 <label>
                 <i class="small material-icons rotate180 red-text">
@@ -61,13 +57,13 @@
         </li>
 
         <li class="center-align" style="margin-top: 3vh;">
-          <a class="waves-effect waves-light btn btn-small green darken-2" style="border-radius: 2px;" id="add_category">
-            {% if c %}
-            modify
-            {% else %}
-            add category
-            {% endif %}
-          </a>
+            <button class="posbutton" id="add_category" onclick="signupattempt(">
+                {% if c %}
+                modify
+                {% else %}
+                add category
+                {% endif %}
+            </button>
         </li>
 
         </ul>
