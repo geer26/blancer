@@ -48,24 +48,6 @@ $(document).ready(function(){
   });
 
 
-$('#signupbutton').click(function(){
-    if ( $('#signup_username').val() && $('#signup_email').val() && $('#signup_password').val() && $('#signup_password2').val() && $('#signup_agree').prop('checked') ){
-        var data = {
-        event: 211,
-        username: $('#signup_username').val(),
-        email: $('#signup_email').val(),
-        password1: $('#signup_password').val(),
-        password2: $('#signup_password2').val(),
-        agreed: $('#signup_agree').prop('checked')
-        };
-        send_message('newmessage', data);
-    } else{
-        var data ={event: 291, message:'Fill all the inputs!'};
-        send_message('newmessage', data);
-    }
-});
-
-
 //event dispatcher
 socket.on('newmessage', function(data){
     switch (data['event']){

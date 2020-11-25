@@ -6,7 +6,7 @@
 
         <p id="p_id" style="display:none;">{{p_id}}</p>
 
-        <a class="waves-effect waves-light btn btn-small green darken-2" style="border-radius: 2px;" id="cancelbutton"
+        <!--<a class="waves-effect waves-light btn btn-small green darken-2" style="border-radius: 2px;" id="cancelbutton"
         onclick="removeitem('delp_confirm', 'delpocket_confirm')">
             <i class="material-icons left">check_circle</i>
             keep
@@ -16,7 +16,21 @@
         onclick="removeitem('delp_confirm', 'delpocket_confirm')">
             <i class="material-icons left">delete</i>
             delete
-        </a>
+        </a>-->
+
+        <button class="posbutton" id="cancelbutton" onclick="removeitem('delp_confirm', 'delpocket_confirm')">
+            <div class="valign-wrapper">
+                <i class="material-icons left">done_outline</i>
+                keep
+            </div>
+        </button>
+
+        <button class="negbutton" id="delbutton" onclick="removeitem('delp_confirm', 'delpocket_confirm')">
+            <div class="valign-wrapper">
+            <i class="material-icons left">delete</i>
+            delete
+            </div>
+        </button>
 
     </div>
 
