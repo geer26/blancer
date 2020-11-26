@@ -20,69 +20,25 @@
 
             <!-- Pocket selector -->
             <li class="list">
-                <label for="pocket_selector">Pocket</label>
-                <select id="pocket_selector">
+                <div class="input-field flow-text" id="pocket_s">
+                    <label for="pocket_selector">pocket:</label>
+                    <select id="pocket_selector" class="left-align">
                     {% for pocket in pockets %}
-                    <option value={{pocket.id}}
-                        {% if pocket.id == ap %}
-                        selected
-                        {% endif %}
-                    >
-                    {{pocket.name}}
-                    </option>
-                    {% endfor %}
-                </select>
-            </li>
-
-            <!-- submit button -->
-            <li class="list">
-                <button class="posbutton" id="add_transfer" onclick="transfer(
-             $('#pocket_selector').val(), $('#category_selector').val(), $('#transfer_amount').val(), $('#transfer_detail').val() )"
-                >
-                    {% if type > 0 %}
-
-                    <div class="valign-wrapper">
-                        <i class="small material-icons left">publish</i>
-                        add transfer
-                    </div>
-
-                    {% else %}
-
-                    <div class="valign-wrapper">
-                        <i class="small material-icons left rotate180 red-text">publish</i>
-                        add transfer
-                    </div>
-
-                    {% endif %}
-
-                </button>
-            </li>
-
-        </ul>
-
-        <ul>
-
-        <!-- Pocket selector -->
-        <!--<li>
-            <div class="input-field flow-text" id="pocket_s">
-                <label for="pocket_selector">pocket:</label>
-                <select id="pocket_selector" class="left-align">
-                    {% for pocket in pockets %}
-                    <option value={{pocket.id}}
+                        <option value={{pocket.id}}
                     {% if pocket.id == ap %}
-                    selected
+                        selected
                     {% endif %}>
-                    {{pocket.name}}
-                    </option>
+                        {{pocket.name}}
+                        </option>
                     {% endfor %}
-                </select>
-            </div>
-        </li>-->
+                    </select>
+                </div>
+            </li>
 
-        <!-- Category selector -->
-        <li>
+            <!-- Category selector -->
+            <li class="list">
             <div class="input-field flow-text" id="category_s">
-                <label for="category_selector">category:</label>
+                <!--<label for="category_selector">category:</label>-->
                 <select id="category_selector" class="left-align">
                     {% for category in categories %}
                     <option value={{category.id}}>
@@ -94,48 +50,43 @@
             </div>
         </li>
 
-        <!-- value input -->
-        <li>
-            <div class="input-field">
+            <!-- value input -->
+            <li class="list">
+                <input id="transfer_amount" type="text" class="validate inputb" placeholder="value">
+            </li>
 
-                <input id="transfer_amount" type="text" class="validate">
-                <label for="transfer_amount">
+            <!-- detail input -->
+            <li class="list">
+                <input id="transfer_detail" type="text" class="validate inputb" placeholder="details">
+            </li>
+
+            <!-- submit button -->
+            <li class="list">
+                <button class="posbutton" id="add_transfer" onclick="transfer(
+             $('#pocket_selector').val(), $('#category_selector').val(), $('#transfer_amount').val(), $('#transfer_detail').val() )"
+                >
                     {% if type > 0 %}
-                    <i class="small material-icons left green-text darken-2">publish</i>
+
+                    <div class="valign-wrapper">
+                        <i class="small material-icons left">publish</i>
+                        add income
+                    </div>
+
                     {% else %}
-                    <i class="small material-icons left rotate180 red-text">publish</i>
+
+                    <div class="valign-wrapper">
+                        <i class="small material-icons left rotate180 red-text">publish</i>
+                        add expense
+                    </div>
+
                     {% endif %}
-                    value
-                </label>
-            </div>
-        </li>
 
-        <!-- detail input -->
-        <li>
-            <div class="input-field">
-                <input id="transfer_detail" type="text" class="validate">
-                <label for="transfer_detail">
-                    detail
-                </label>
-            </div>
-        </li>
-
-        <!-- submit button -->
-        <!--<li class="center-align">
-          <a class="waves-effect waves-light btn btn-small green darken-2" style="border-radius: 2px;" id="add_transfer"
-             onclick="transfer(
-             $('#pocket_selector').val(), $('#category_selector').val(), $('#transfer_amount').val(), $('#transfer_detail').val()
-             )">
-              {% if type > 0 %}
-              <i class="small material-icons left green-text darken-2">publish</i>
-              {% else %}
-              <i class="small material-icons left rotate180 red-text">publish</i>
-              {% endif %}
-              add transfer
-          </a>
-        </li>-->
+                </button>
+            </li>
 
         </ul>
+
+
 
     </div>
 

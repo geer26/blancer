@@ -1,4 +1,6 @@
 import re
+import string
+from random import SystemRandom
 
 import pygal
 from sqlalchemy import desc
@@ -53,6 +55,11 @@ def validate_loginattempt(data):
     if not user.check_password(str(data['password'])):
         return False
     return True
+
+
+#TODO - implement
+def generate_rnd(N):
+    return ''.join(SystemRandom().choice(string.ascii_uppercase + string.digits + string.ascii_lowercase) for _ in range(N))
 
 
 # - DONE
