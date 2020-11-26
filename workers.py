@@ -235,7 +235,7 @@ def add_transfer(data,u):
 
     pocket = Pocket.query.get(int(data['pocketid']))
     category = Category.query.get(int(data['categoryid']))
-    category.last_active = datetime.now(datetime.timezone.utc)
+    category.last_active = datetime.now()
     amount = category.type*int(data['amount'])
     detail = str(data['detail'])
 
