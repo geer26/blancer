@@ -7,37 +7,25 @@
 
         <h6>edit pocket</h6>
 
-        <ul>
+        <p id="hiddenid" style="display: none;" id_data="{{pocket.id}}"></p>
 
-            <p id="hiddenid" style="display: none;" id_data="{{pocket.id}}"></p>
+        <ul class="no-bullets">
 
-        <li>
-          <div class="input-field center-align">
-            <i class="material-icons prefix">border_color</i>
-            <input id="editp_name" type="text" class="validate" data-length="40" value="{{pocket.name}}">
-            <label for="editp_name">name</label>
-          </div>
-        </li>
+            <li class="list">
+                <input id="editp_name" type="text" class="inputb" placeholder="Pocket name" value="{{pocket.name}}" />
+            </li>
 
-        <li>
-          <div class="input-field center-align">
-            <i class="material-icons prefix">article</i>
-            <input id="editp_desc" type="text" class="validate" data-length="120" value="{{pocket.description}}"
-            {% if pocket.description %}
-                   autofocus
-            {% endif %}>
-            <label for="editp_desc">description</label>
-          </div>
-        </li>
+            <li class="list">
+                <input id="editp_desc" type="text" class="inputb" placeholder="Pocket description" value="{{pocket.description}}"/>
+            </li>
 
-        <li class="center-align">
-          <a class="waves-effect waves-light btn btn-small green darken-2" style="border-radius: 2px;" id="edit_pocket"
-          onclick="send_edited_pocket()">
-            submit
-          </a>
-        </li>
+            <li class="list">
+                <button class="posbutton" id="edit_pocket" onclick="send_edited_pocket()">
+                    submit
+                </button>
+            </li>
 
-      </ul>
+        </ul>
 
     </div>
 
