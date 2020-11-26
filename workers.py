@@ -5,7 +5,7 @@ from random import SystemRandom
 import pygal
 from sqlalchemy import desc
 
-from app import app,socket,db
+from app import db
 from app.models import User, Pocket, Transfer, Category
 from datetime import datetime, date
 
@@ -235,7 +235,7 @@ def add_transfer(data,u):
 
     pocket = Pocket.query.get(int(data['pocketid']))
     category = Category.query.get(int(data['categoryid']))
-    category.last_active = datetime.now()
+    category.last_active = datetime.now(datetime.timezone.utc)
     amount = category.type*int(data['amount'])
     detail = str(data['detail'])
 
@@ -367,14 +367,23 @@ def draw_inc_pie(data):
     return pie_chart.render_data_uri()
 
 
-def xvalue_formatter(dt):
-    return dt.strftime('%d, %b %Y at %I:%M:%S %p')
-
-
 def draw_multiline(data):
 
     postransfers = []
     negtransfers =[]
+
+    tdelta = (data[-1].timestamp-data[0].timestamp)
+
+    if tdelta.days <= 0:
+        formatter = lambda dt: dt.strftime('%d, %b, %I:%M')
+    elif 7 >= tdelta.days > 1:
+        formatter = lambda dt: dt.strftime('%d, %b, %I')
+    elif 30 >= tdelta.days > 7:
+        formatter = lambda dt: dt.strftime('%d, %b %Y')
+    else:
+        formatter = lambda dt: dt.strftime('%d, %b %Y')
+
+
 
     for transfer in data:
 
@@ -397,8 +406,7 @@ def draw_multiline(data):
     multiline = pygal.DateTimeLine(
         x_label_rotation=35,
         truncate_label=-1,
-        x_value_formatter=lambda dt: dt.strftime('%d, %b %Y at %I:%M:%S %p'),
-        #x_value_formatter=xvalue_formatter(dt),
+        x_value_formatter= formatter,
         width=800,
         height=400,
         margin=10
