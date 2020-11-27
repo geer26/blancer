@@ -13,6 +13,8 @@ class Config:
     TEMPLATES_FOLDER = 'templates'
 
 
+
+
 class ProdConfig(Config):
     """Production config."""
     FLASK_ENV = 'production'

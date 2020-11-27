@@ -7,6 +7,8 @@ from flask_socketio import SocketIO
 
 app = Flask(__name__)
 app.config.from_object(DevConfig)
+#app.config.from_object(ProdConfig)
+#change at deployment!
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
