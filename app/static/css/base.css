@@ -622,6 +622,13 @@ a.customlink:hover{
 }
 
 
+.footer_container > div > img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+
 /* DETAIL STYLESHEETS */
 
 
