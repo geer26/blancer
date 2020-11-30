@@ -4,6 +4,7 @@ from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_socketio import SocketIO
+from flask_mail import Mail
 
 app = Flask(__name__)
 app.config.from_object(DevConfig)
@@ -17,6 +18,7 @@ socket = SocketIO(app)
 #socket.init_app(app, cors_allowed_origins="*")
 #enable at deployment!
 
+mail = Mail(app)
 
 login = LoginManager(app)
 

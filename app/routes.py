@@ -493,12 +493,19 @@ def newmessage(data):
         return True
 
 
+    #user wants to reset password - answer: 127
+    if data['event'] == 227:
+        pass
+        return True
+
+
     #user want to read the terms
     if data['event'] ==228:
         mess = {}
         mess['event'] = 128
         mess['htm'] = render_template('termsmodal.html')
         socket.emit('newmessage', mess, room=sid)
+        return True
 
 
     #delete username

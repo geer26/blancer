@@ -8,6 +8,7 @@
 #   12X - send login status
 #       121 - login ok - send loginform
 #       122 - logged in
+#       127 - reset pw and send email
 #       128 - sending terms modal
 #       129 - login invalid
 
@@ -57,6 +58,7 @@
 #   22X - login
 #       221 - send login request
 #       223 - sending loginform
+#       227 - ask for PW reset
 #       228 - request for terms modal
 
 #   23X - logout

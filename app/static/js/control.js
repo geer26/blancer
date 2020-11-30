@@ -573,6 +573,13 @@ function signupattempt(){
 };
 
 
+function request_newPW(){
+    console.log('ASK FOR PW RESET!');
+    var data = {event: 227};
+    send_message('newmessage', data);
+};
+
+
 function uc_next(){
     $('#usercarousel').carousel('next');
 };
