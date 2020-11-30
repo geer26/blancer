@@ -35,12 +35,37 @@ body{
 }
 
 
+.totop_btn{
+    display: none;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, .3);
+    transition: .2s;
+
+    position: fixed; /* Fixed/sticky position */
+    bottom: 20px; /* Place the button at the bottom of the page */
+    right: 30px; /* Place the button 30px from the right */
+}
+
+.totop_bt:hover{
+    box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
+}
+
+
 .rotate180 {
     -webkit-transform: rotate(180deg);
     -moz-transform: rotate(180deg);
     -o-transform: rotate(180deg);
     -ms-transform: rotate(180deg);
     transform: rotate(180deg);
+}
+
+
+.rotate_ccw_90 {
+    -webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    transform: rotate(270deg);
 }
 
 
@@ -251,7 +276,7 @@ input.inputb:focus{
 
 
 input.inputb::placeholder{
-    color: rgba(255,255,255,.5);
+    color: rgba(0,0,0,.5);
     }
 
 
