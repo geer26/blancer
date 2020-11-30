@@ -73,6 +73,17 @@ socket.on('newmessage', function(data){
             }
             break;
 
+
+        //here is the terms-modal
+        case 128:{
+            $('#signupmodal').hide();
+            $('#pagecontent').append(data['htm']);
+            animateCSS('#terms_frame', inanim);
+            }
+            //console.log(data['htm']);
+            break;
+
+
         //here is an error message, show it to user! - DONE
         case 191:{
             $('#pagecontent').append(data['htm']);
@@ -485,6 +496,13 @@ function refresh_carousel(){
 function show_loginmodal(){
     $("#loginmodal").show();
     animateCSS( "#login_frame" , inanim);
+};
+
+
+function show_terms(){
+    //console.log('TERMS HERE!');
+    var data = {event: 228};
+    send_message('newmessage', data);
 };
 
 

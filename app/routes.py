@@ -493,6 +493,14 @@ def newmessage(data):
         return True
 
 
+    #user want to read the terms
+    if data['event'] ==228:
+        mess = {}
+        mess['event'] = 128
+        mess['htm'] = render_template('termsmodal.html')
+        socket.emit('newmessage', mess, room=sid)
+
+
     #delete username
     #admin wants to del an user - DONE
     if data['event'] == 271:
