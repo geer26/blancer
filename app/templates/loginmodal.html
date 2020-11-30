@@ -17,6 +17,9 @@
 
                 <li class="list">
                     {{loginform.password( id="login_password", class="inputb", placeholder="Password")}}
+                    <div style="font-size: 80%; ">
+                        <p style="margin: 2px;"><a onclick="request_newPW()" style="cursor: pointer; color: white;">Forgot password?</a></p>
+                    </div>
                 </li>
 
                 <li class="list">
@@ -30,12 +33,9 @@
 
         </form>
 
-        <button class="posbutton" id="loginbutton" onclick="loginattempt()">
+        <button class="posbutton" id="loginbutton" onclick="loginattempt()" style="margin-bottom: 15px;">
             login
         </button>
-
-        <p>Forgot password?</p>
-        <p><a onclick="request_newPW()" style="cursor: pointer;">>>Click HERE!<<</a></p>
 
     </div>
 

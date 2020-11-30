@@ -437,18 +437,18 @@ a.customlink:hover{
 
 .close_btn{
     position: absolute;
-    max-width: 3vmax;
+    max-width: 2vmax;
     /*bottom: 90%;*/
-    top: -1.25vmax;
-    right: -1.25vmax;
+    top: -1vmax;
+    right: -1vmax;
     transition: 0.3s;
 }
 
 
 .close_btn:hover{
-    max-width: 4vmax;
-    top: -1.5vmax;
-    right: -1.5vmax;
+    max-width: 3vmax;
+    top: -1.25vmax;
+    right: -1.25vmax;
 }
 
 
