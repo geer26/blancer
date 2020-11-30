@@ -113,11 +113,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
     //Get the button:
     mybutton = document.getElementById("totop");
 
-    // When the user scrolls down  100px from the top of the document, show the button
+    // When the user scrolls down  200px from the top of the document, show the button
     window.onscroll = function() {scrollFunction()};
 
     function scrollFunction() {
-        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
             mybutton.style.display = "block";
         } else {
             mybutton.style.display = "none";
