@@ -574,7 +574,7 @@ function signupattempt(){
 
 
 function request_newPW(){
-    console.log('ASK FOR PW RESET!');
+    //console.log('ASK FOR PW RESET!');
     var data = {event: 227};
     send_message('newmessage', data);
 };

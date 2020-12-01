@@ -20,6 +20,8 @@ socket = SocketIO(app)
 
 mail = Mail(app)
 
+migrate = Migrate(app, db, render_as_batch=True)
+
 login = LoginManager(app)
 
 from app import routes,models

@@ -27,12 +27,10 @@ def index():
 
     if request.method == 'POST' and not current_user.is_authenticated:
 
-
         if loginform.validate_on_submit():
             user = User.query.filter_by(username=loginform.username.data).first()
 
             if not user or not user.check_password(loginform.password.data):
-                #error: if user do not exist, skips and redirets to index! No error message!
                 mess = {}
                 mess['event'] = 191
                 mess['htm'] = render_template('errormessage.html', message='Incorrect password or username')
@@ -40,6 +38,10 @@ def index():
 
             elif user and user.check_password(loginform.password.data):
                 login_user(user, remember=loginform.remember_me.data)
+                if user.pw_reset_token and user.pwrt_valid:
+                    user.pw_reset_token = ''
+                    user.pwrt_valid = ''
+                    db.session.commit()
                 user.last_activity = datetime.now()
                 db.session.commit()
                 return redirect('/')
@@ -495,7 +497,7 @@ def newmessage(data):
 
     #user wants to reset password - answer: 127
     if data['event'] == 227:
-        pass
+        print('PWRESET!')
         return True
 
 
