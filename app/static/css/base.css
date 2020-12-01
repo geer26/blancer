@@ -1,5 +1,10 @@
 
 /* mains */
+html {
+  scroll-behavior: smooth;
+}
+
+
 body{
     background-color: #ffffff;
     background-image: linear-gradient(to right, #2196f3, #49e7df);
