@@ -1,4 +1,4 @@
-from datetime import date, datetime, time
+from datetime import date, datetime, timedelta
 
 from flask import render_template, redirect, request
 from flask_login import current_user, login_user, logout_user, login_required
@@ -8,7 +8,7 @@ from app import app, socket, db
 from app.forms import LoginForm, SignupForm
 from app.models import User, Pocket, Transfer, Category
 from workers import verifiy_signup, hassu, deluser, addpocket, delpocket, delcategory, add_cat, add_transfer, \
-    get_ptransfers, get_ntransfers, validate_loginattempt, resetpassword, drawcharts
+    get_ptransfers, get_ntransfers, validate_loginattempt, resetpassword, drawcharts, generate_vercode, generate_rnd
 
 
 @app.template_filter('date_to_millis')
@@ -38,10 +38,12 @@ def index():
 
             elif user and user.check_password(loginform.password.data):
                 login_user(user, remember=loginform.remember_me.data)
-                if user.pw_reset_token and user.pwrt_valid:
+
+                if user.pw_reset_token or user.pwrt_valid or user.pwrt_vcode != 0:
                     user.pw_reset_token = ''
-                    user.pwrt_valid = ''
-                    db.session.commit()
+                    user.pwrt_valid = None
+                    user.pwrt_vcode = 0
+
                 user.last_activity = datetime.now()
                 db.session.commit()
                 return redirect('/')
@@ -97,6 +99,20 @@ def addsu(suname, password):
         db.session.add(user)
         db.session.commit()
     return redirect('/')
+
+
+#reset password with token
+@app.route('/resetpassword/<token>')
+def resetpassword(token):
+    user = User.query.filter_by(pw_reset_token=token).first()
+    if not user:
+        #no such an user
+        print('NO USER')
+        pass
+    else:
+        #TODO - reset!
+        print('USER EXISTS!')
+        pass
 
 
 #delete all users - DONE
@@ -496,9 +512,33 @@ def newmessage(data):
 
 
     #user wants to reset password - answer: 127
-    if data['event'] == 227:
-        print('PWRESET!')
+    if data['event'] == 227 and not current_user.is_authenticated:
+
+        #reset here and send an email!
+
+        mess = {}
+        mess['event'] = 127
+        mess['htm'] = render_template('resetpw_modal.html', ver_code=generate_vercode(6))
+        socket.emit('newmessage', mess, room=sid)
         return True
+
+
+    #validate resetpassword form, and if ok, send mail
+    if data['event'] == 2271 and not current_user.is_authenticated:
+
+        u = User.query.filter_by(email=str(data['reset_mail'])).first()
+        if not u:
+            #NO USER
+            return True
+        else:
+            #There is an user!
+            u.pw_reset_token = generate_rnd(32)
+            print(u.pw_reset_token)
+            u.pwrt_valid = datetime.now() + timedelta(hours=6)
+            u.pwrt_vcode = int(data['reset_code'])
+            db.session.commit()
+            #TODO - send mail!
+            return True
 
 
     #user want to read the terms

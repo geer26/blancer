@@ -74,13 +74,22 @@ socket.on('newmessage', function(data){
             break;
 
 
+        //resetpassword modal incoming!
+        case 127:{
+            //console.log(data['htm']);
+            $('#loginmodal').hide();
+            $('#pagecontent').append(data['htm']);
+            animateCSS('#reset_frame', inanim);
+            }
+            break;
+
+
         //here is the terms-modal
         case 128:{
             $('#signupmodal').hide();
             $('#pagecontent').append(data['htm']);
             animateCSS('#terms_frame', inanim);
             }
-            //console.log(data['htm']);
             break;
 
 
@@ -350,6 +359,12 @@ socket.on('newmessage', function(data){
 });
 
 
+function validateEmail(email) {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
+
 function text_tolocale(e,num){
     e.innerText = tolocale(num);
 };
@@ -577,6 +592,24 @@ function request_newPW(){
     //console.log('ASK FOR PW RESET!');
     var data = {event: 227};
     send_message('newmessage', data);
+};
+
+
+function try_pwreset(){
+    if (!$('#reset_mail').val()){
+        req_for_error('Please provide the email address You registered!');
+    }
+
+    else if (! validateEmail( $('#reset_mail').val() )){
+        req_for_error('Invalid email address!');
+         $('#reset_mail').val('');
+    }
+
+    else{
+        var data = {event: 2271, reset_code: $('#reset_code').val(), reset_mail: $('#reset_mail').val() };
+        send_message('newmessage', data);
+        removeitem('reset_frame', 'resetpw_modal')
+    }
 };
 
 

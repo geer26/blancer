@@ -62,6 +62,10 @@ def generate_rnd(N):
     return ''.join(SystemRandom().choice(string.ascii_uppercase + string.digits + string.ascii_lowercase) for _ in range(N))
 
 
+def generate_vercode(N):
+    return ''.join(SystemRandom().choice(string.digits) for _ in range(N))
+
+
 # - DONE
 def resetpassword(data, user):
     if not user.check_password(str(data['o_pw'])):

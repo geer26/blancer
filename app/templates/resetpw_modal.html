@@ -1,0 +1,51 @@
+<div id="resetpw_modal" class="modalback">
+
+    <div class="posm_frame" id="reset_frame" style="max-height: 80vh; max-width: 90vw;">
+
+        <img class="close_btn" draggable="false" src="/static/img/icons/close.png" id="close_modal"
+             onclick="removeitem('reset_frame', 'resetpw_modal'); $('#loginmodal').show();">
+
+        <h4>reset password</h4>
+
+        <div class="flow-text" style="position: relative; overflow-y: scroll; box-shadow: inset 0px 0px 47px -16px rgba(0,0,0,0.83);
+        max width: 80%;background-color: #fff; font-size: 70%; margin: 20px; padding: 5px; border-radius: 5px; max-height: 50vh;">
+
+            <p style="margin:5px;"><i class="small material-icons red-text left">report_problem</i>
+                Caution! after you sent the data required, you will have 6 hour to check your mail!
+                <br>
+                After 6 hours all changes will be discarded, and you will have to restart the process! The email you get will have the instructions to follow!
+            </p>
+
+            <p style="margin:5px;">
+                For the sake of Your data privacy, the correctness of your email address won't be displayed for you!
+                <br>
+                Check TWICE before you click RESET!
+            </p>
+
+            <p style="margin:5px;">
+                Do not forget to choose a strong password! You are forced to follow the rule:
+                <br>
+                Passord must have UPPER and lowercase chars, numbers, and must be at least 8 chars length!
+                <br>
+                Ensure about your password is not accessible by anybody!
+            </p>
+
+            <p style="margin:5px;">
+                Please
+                <span><a style="font-weight: bold; font-size: 150%; margin:5px;">NOTE</a></span>
+            this verification code:
+            </p>
+            <p style="font-weight: bold; font-size: 150%;">{{ver_code}}</p>
+            <input id="reset_code" type="text" value="{{ver_code}}" style="display: none;"/>
+
+        </div>
+
+        <input id="reset_mail" type="email" class="inputb" placeholder="Email address" style="max-width: 80%;" validate/>
+
+        <button class="posbutton" id="loginbutton" onclick="try_pwreset()" style="margin-bottom: 15px;">
+            reset
+        </button>
+
+    </div>
+
+</div>

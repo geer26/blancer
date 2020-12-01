@@ -59,6 +59,7 @@
 #       221 - send login request
 #       223 - sending loginform
 #       227 - ask for PW reset
+#       2271 - send PW reset mail and validation code
 #       228 - request for terms modal
 
 #   23X - logout
