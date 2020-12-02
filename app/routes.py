@@ -8,7 +8,8 @@ from app import app, socket, db
 from app.forms import LoginForm, SignupForm
 from app.models import User, Pocket, Transfer, Category
 from workers import verifiy_signup, hassu, deluser, addpocket, delpocket, delcategory, add_cat, add_transfer, \
-    get_ptransfers, get_ntransfers, validate_loginattempt, resetpassword, drawcharts, generate_vercode, generate_rnd
+    get_ptransfers, get_ntransfers, validate_loginattempt, resetpassword, drawcharts, generate_vercode, generate_rnd, \
+    sendmail
 
 
 @app.template_filter('date_to_millis')
@@ -102,17 +103,20 @@ def addsu(suname, password):
 
 
 #reset password with token
-@app.route('/resetpassword/<token>')
+@app.route('/rstpwd/<token>')
 def resetpassword(token):
     user = User.query.filter_by(pw_reset_token=token).first()
     if not user:
         #no such an user
         print('NO USER')
-        pass
+        return redirect('/')
     else:
         #TODO - reset!
         print('USER EXISTS!')
+        # expired?
         pass
+
+    return redirect('/')
 
 
 #delete all users - DONE
@@ -134,7 +138,7 @@ def del_users():  #swipe database!
         return redirect('/')
 
 
-#delete all pockets - DONE
+#delete all pockets - DONEShemale One
 @app.route('/del_pockets')
 @login_required
 def del_pockets():  #swipe database!
@@ -533,11 +537,13 @@ def newmessage(data):
         else:
             #There is an user!
             u.pw_reset_token = generate_rnd(32)
-            print(u.pw_reset_token)
+            #print(u.pw_reset_token)
             u.pwrt_valid = datetime.now() + timedelta(hours=6)
             u.pwrt_vcode = int(data['reset_code'])
             db.session.commit()
             #TODO - send mail!
+            #print(request.url_root)
+            sendmail(str(u.pw_reset_token), str(u.email), request.url_root)
             return True
 
 

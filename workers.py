@@ -9,6 +9,9 @@ from app import db
 from app.models import User, Pocket, Transfer, Category
 from datetime import datetime, date
 
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+
 
 # - DONE
 def validate_email(email):
@@ -64,6 +67,32 @@ def generate_rnd(N):
 
 def generate_vercode(N):
     return ''.join(SystemRandom().choice(string.digits) for _ in range(N))
+
+
+#sendin mail to user
+def sendmail(token, mail, url):
+
+    APIKEY = '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'
+    #link = 'https://geer26.tk/rstpwd/' + token
+    link = url + '/rstpwd/' + token
+
+    message = Mail(
+        from_email= 'blancer.mailing@gmail.com',
+        to_emails= mail,
+        subject= 'Blancer password reset',
+        html_content= '<strong>You reset your password, click <a href="' + link + '">HERE</a> !</strong>'
+    )
+
+    try:
+        sg = SendGridAPIClient(APIKEY)
+        response = sg.send(message)
+        #print('sent')
+
+    except Exception as e:
+        #print(e.message)
+        return False
+
+    return True
 
 
 # - DONE
