@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<html>
+
+    <head>
+
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+      <style>
+
+		body{
+        	background-image: linear-gradient(to right, #2196f3, #49e7df);
+        }
+
+        .noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+		</style>
+
+        <link href="https://fonts.googleapis.com/css2
+                    family=Space+Grotesk&display=swap" rel="stylesheet">
+
+
+    </head>
+
+    <body>
+
+        <div id="mainpage" class="noselect">
+
+            <div id="pagecontent" class="noselect">
+
+              <h1>Password reset</h1>
+              <p>HELLO {{username}} !</p>
+              <p>Somebody initiated password reset at your <a href="{{mainpage}}">Blancer</a>
+                account!</p>
+              <p>If it wasn't you, do not worry, you can just skip this email, nothing was changed, and the reset token will be expired within 30 minutes. </p>
+              <p>If the reset was intentionally by you, click <a href="{{link}}">HERE</a> , and follow the instructions!</p>
+              <p>Hopefully you noted the 6-digit validation code as advised, you will need it! If not, restart the process, you will get a new token.</p>
+
+              <p>Sincerely: <br>
+               <a href="{{mainpage}}">Blancer</a> team</p>
+
+            </div>
+
+        </div>
+
+    </body>
+
+</html>

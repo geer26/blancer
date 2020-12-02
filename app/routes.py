@@ -543,7 +543,7 @@ def newmessage(data):
             db.session.commit()
             #TODO - send mail!
             #print(request.url_root)
-            sendmail(str(u.pw_reset_token), str(u.email), request.url_root)
+            sendmail(str(u.pw_reset_token), str(u.email), request.url_root, str(u.username))
             return True
 
 

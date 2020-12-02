@@ -3,6 +3,7 @@ import string
 from random import SystemRandom
 
 import pygal
+from flask import render_template
 from sqlalchemy import desc
 
 from app import db
@@ -69,12 +70,14 @@ def generate_vercode(N):
     return ''.join(SystemRandom().choice(string.digits) for _ in range(N))
 
 
-#sendin mail to user
-def sendmail(token, mail, url):
+#sending mail to user
+def sendmail(token, mail, url, uname):
 
+    #put this into config file
     APIKEY = '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'
-    #link = 'https://geer26.tk/rstpwd/' + token
     link = url + '/rstpwd/' + token
+
+    htm = render_template('resetmail.html', mainpage= url, link= link, username=uname)
 
     message = Mail(
         from_email= 'blancer.mailing@gmail.com',
