@@ -12,6 +12,7 @@ class Config:
     SESSION_COOKIE_NAME = environ.get('SESSION_COOKIE_NAME') or '!Blancer2020!'
     STATIC_FOLDER = 'static'
     TEMPLATES_FOLDER = 'templates'
+    SENDGRID_API_KEY = environ.get('SENDGRID_API_KEY') or 'APIKEY'
 
 
 

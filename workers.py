@@ -71,10 +71,10 @@ def generate_vercode(N):
 
 
 #sending mail to user
-def sendmail(token, mail, url, uname):
+def sendmail(apikey, token, mail, url, uname):
 
     #put this into config file
-    APIKEY = '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'
+    APIKEY = apikey
     link = url + '/rstpwd/' + token
 
     htm = render_template('resetmail.html', mainpage= url, link= link, username=uname)
