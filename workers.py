@@ -83,17 +83,19 @@ def sendmail(apikey, token, mail, url, uname):
         from_email= 'blancer.mailing@gmail.com',
         to_emails= mail,
         subject= 'Blancer password reset',
-        html_content= '<strong>You reset your password, click <a href="' + link + '">HERE</a> !</strong>'
+        html_content= htm
     )
 
-    try:
+    print(APIKEY)
+
+    '''try:
         sg = SendGridAPIClient(APIKEY)
         response = sg.send(message)
         #print('sent')
 
     except Exception as e:
         #print(e.message)
-        return False
+        return False'''
 
     return True
 
