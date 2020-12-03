@@ -114,9 +114,9 @@ def resetpassword(token):
 
     else:
         #TODO - reset!
-        # expired?
 
         if datetime.now() > user.pwrt_valid:
+            #TODO - delete token!
             return render_template('resetexpired_modal.html', title='token expired', mainpage=request.url_root)
         else:
             return render_template('resetok_modal.html', title='Reset password', token=token)
@@ -141,7 +141,7 @@ def del_users():  #swipe database!
         return redirect('/')
 
 
-#delete all pockets - DONEShemale One
+#delete all pockets - DONE
 @app.route('/del_pockets')
 @login_required
 def del_pockets():  #swipe database!
