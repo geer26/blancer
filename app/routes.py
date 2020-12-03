@@ -117,7 +117,7 @@ def resetpassword(token):
         # expired?
 
         if datetime.now() > user.pwrt_valid:
-            return redirect('/')
+            return render_template('resetexpired_modal.html', title='token expired', mainpage=request.url_root)
         else:
             return render_template('resetok_modal.html', title='Reset password', token=token)
 
