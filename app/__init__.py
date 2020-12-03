@@ -11,7 +11,7 @@ app.config.from_object(DevConfig)
 #app.config.from_object(ProdConfig)
 #change at deployment!
 
-#print(app.config['SENDGRID_API_KEY'])
+print(app.config['SENDGRID_API_KEY'])
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)

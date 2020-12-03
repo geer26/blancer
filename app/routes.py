@@ -553,8 +553,10 @@ def newmessage(data):
         print(data)
         user = User.query.filter_by(pw_reset_token=data['token']).first()
         if not user:
+            print('No user')
             pass
         else:
+            print('user')
             pass
 
         mess = {}
