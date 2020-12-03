@@ -17,7 +17,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 socket = SocketIO(app)
-#socket.init_app(app, cors_allowed_origins="*")
+socket.init_app(app, cors_allowed_origins="*")
 #enable at deployment!
 
 #mail = Mail(app)
