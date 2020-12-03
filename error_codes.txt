@@ -60,6 +60,7 @@
 #       223 - sending loginform
 #       227 - ask for PW reset
 #       2271 - send PW reset mail and validation code
+#       2272 - send new password creditentials
 #       228 - request for terms modal
 
 #   23X - logout

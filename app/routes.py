@@ -536,18 +536,32 @@ def newmessage(data):
         u = User.query.filter_by(email=str(data['reset_mail'])).first()
         if not u:
             #NO USER
+            print('No user!')
             return True
         else:
-            #There is an user!
             u.pw_reset_token = generate_rnd(32)
-            #print(u.pw_reset_token)
             u.pwrt_valid = datetime.now() + timedelta(minutes=30)
             u.pwrt_vcode = int(data['reset_code'])
             db.session.commit()
-            #TODO - send mail!
-            #print(request.url_root)
             sendmail(app.config['SENDGRID_API_KEY'], str(u.pw_reset_token), str(u.email), request.url_root, str(u.username))
+            print('Mail sent!')
             return True
+
+
+    #somebody sent a password reset creditentials
+    if data['event'] == 2272 and not current_user.is_authenticated:
+        print(data)
+        user = User.query.filter_by(pw_reset_token=data['token']).first()
+        if not user:
+            pass
+        else:
+            pass
+
+        mess = {}
+        mess['event'] = 1272
+        mess['location'] = request.url_root
+        socket.emit('newmessage', mess, room=sid)
+        return True
 
 
     #user want to read the terms
