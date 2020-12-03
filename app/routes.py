@@ -106,17 +106,20 @@ def addsu(suname, password):
 @app.route('/rstpwd/<token>')
 def resetpassword(token):
     user = User.query.filter_by(pw_reset_token=token).first()
+
     if not user:
         #no such an user
         print('NO USER')
         return redirect('/')
+
     else:
         #TODO - reset!
-        print('USER EXISTS!')
         # expired?
-        pass
 
-    return redirect('/')
+        if datetime.now() > user.pwrt_valid:
+            return redirect('/')
+        else:
+            return render_template('resetok_modal.html', title='Reset password', token=token)
 
 
 #delete all users - DONE
@@ -229,6 +232,7 @@ def newmessage(data):
         mess['htm'] = render_template('charts.html', charts=charts)
         socket.emit('newmessage', mess, room=sid)
         return True
+
 
     #incoming request for refresh the usercarousel
     if data['event'] == 281 and current_user.is_authenticated:
@@ -538,7 +542,7 @@ def newmessage(data):
             #There is an user!
             u.pw_reset_token = generate_rnd(32)
             #print(u.pw_reset_token)
-            u.pwrt_valid = datetime.now() + timedelta(hours=6)
+            u.pwrt_valid = datetime.now() + timedelta(minutes=30)
             u.pwrt_vcode = int(data['reset_code'])
             db.session.commit()
             #TODO - send mail!
