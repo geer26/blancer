@@ -7,7 +7,7 @@ function send_message(e_name,message){
 socket.on('newmessage', function(data){
     switch (data['event']){
 
-        //signed up, user created!
+        //password reseted ok, redirect to mainpage!
         case 111:{
             $('#signup_username').val('');
             $('#signup_email').val('');
@@ -22,5 +22,11 @@ socket.on('newmessage', function(data){
             }
             break;
 
+        //TODO - implement something!
+
     }
 });
+
+function resetpw(){
+    console.log('RESET PASSWORD!');
+};

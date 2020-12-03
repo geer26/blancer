@@ -117,6 +117,10 @@ def resetpassword(token):
 
         if datetime.now() > user.pwrt_valid:
             #TODO - delete token!
+            user.pw_reset_token = ''
+            user.pwrt_valid = None
+            user.pwrt_vcode = 0
+            db.session.commit()
             return render_template('resetexpired_modal.html', title='token expired', mainpage=request.url_root)
         else:
             return render_template('resetok_modal.html', title='Reset password', token=token)
