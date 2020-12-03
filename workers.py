@@ -86,16 +86,16 @@ def sendmail(apikey, token, mail, url, uname):
         html_content= htm
     )
 
-    print(APIKEY)
+    #print(APIKEY)
 
-    '''try:
+    try:
         sg = SendGridAPIClient(APIKEY)
         response = sg.send(message)
         #print('sent')
 
     except Exception as e:
         #print(e.message)
-        return False'''
+        return False
 
     return True
 
