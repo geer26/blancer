@@ -9,8 +9,13 @@
 
       <style>
 
-		body{
+		.frame{
         	background-image: linear-gradient(to right, #2196f3, #49e7df);
+        	max-width: 50vw;
+        	border-radius: 5px;
+        	padding: 20px;
+        	box-shadow: 0px 0px 7px 5px rgba(0, 0, 0, .5);
+        	color: black;
         }
 
         .noselect {
@@ -33,9 +38,7 @@
 
     <body>
 
-        <div id="mainpage" class="noselect">
-
-            <div id="pagecontent" class="noselect">
+        <div id="mainpage" class="noselect frame">
 
               <h1>Password reset</h1>
               <p>HELLO {{username}} !</p>
@@ -47,8 +50,6 @@
 
               <p>Sincerely: <br>
                <a href="{{mainpage}}">Blancer</a> team</p>
-
-            </div>
 
         </div>
 

@@ -11,7 +11,7 @@ app.config.from_object(DevConfig)
 #app.config.from_object(ProdConfig)
 #change at deployment!
 
-print(app.config['SENDGRID_API_KEY'])
+#print(app.config['SENDGRID_API_KEY'])
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -19,8 +19,6 @@ migrate = Migrate(app, db)
 socket = SocketIO(app)
 socket.init_app(app, cors_allowed_origins="*")
 #enable at deployment!
-
-#mail = Mail(app)
 
 migrate = Migrate(app, db, render_as_batch=True)
 
