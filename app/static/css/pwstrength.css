@@ -10,22 +10,23 @@
 .none{
     border: 1px solid rgb(186, 74, 22);
     color: black;
+    background-image: linear-gradient(to right, rgba(186, 74, 22,1) 15%, 20%, rgba(0,0,0,0) 25%);
 }
 
 .weak{
-    border: 1px solid rgb(186, 74, 22);
+    /*border: 1px solid rgb(186, 74, 22);*/
     color: black;
-    background-image: linear-gradient(to right, rgba(186, 74, 22,1) 28%, 33%, rgba(0,0,0,0) 38%);
+    background-image: linear-gradient(to right, rgba(186, 74, 22,1) 40%, 45%, rgba(168, 162, 50,1) 50%);
 }
 
 .better{
-    border: 1px solid rgb(168, 162, 50);
+    /*border: 1px solid rgb(168, 162, 50);*/
     color: black;
-    background-image: linear-gradient(to right, rgba(168, 162, 50,1) 61%, 66%, rgba(0,0,0,0) 71%);
+    background-image: linear-gradient(to right, rgba(168, 162, 50,1) 65%, 70%, rgba(76, 158, 17,1) 75%);
 }
 
 .strong{
-    border: 1px solid rgb(76, 158, 17);
+    /*border: 1px solid rgb(76, 158, 17);*/
     color: white;
     background-image: linear-gradient(to right, rgba(76, 158, 17,1) 90%, 95%, rgba(0,0,0,0) 100%);
 }

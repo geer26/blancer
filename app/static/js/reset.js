@@ -10,6 +10,11 @@ var m_strLowerCase = "abcdefghijklmnopqrstuvwxyz";
 var m_strNumber = "0123456789";
 var m_strCharacters = "!@#$%^&*?_~"
 
+var reg_strlo = /[a-z]+/i;
+var reg_strhi = /[A-Z]+/i;
+var reg_num = /[0-9]+/;
+var reg_strspec = /[!@#$%^&*?_~]+/i;
+
 
 function send_message(e_name,message){
     socket.emit(e_name,message);
@@ -62,6 +67,7 @@ function resetpw(){
     }
 
     //TODO check password complexity
+
     if (pw_ok){
         var token = $('#token').val();
         var username = $('#reset_username').val();
@@ -85,28 +91,74 @@ function resetpw(){
 
 
 function checkpwd(){
+
     pwd = $('#reset_password').val();
-    console.log(pwd);
-    if (pwd_strength > 100){pwd_strength=100};
 
-    if(0 >= pwd_strength >= 25){
-    //none
-    return;
+    document.getElementById('pwdstatus').classList.remove("none");
+    document.getElementById('pwdstatus').classList.remove("weak");
+    document.getElementById('pwdstatus').classList.remove("better");
+    document.getElementById('pwdstatus').classList.remove("strong");
+
+    pwd_strength = 1;
+
+    if (pwd.length >= 8){pwd_strength += 32;}
+
+
+
+    if (pwd_strength > 100){pwd_strength=99;}
+
+    console.log(pwd_strength);
+
+    if(25 >= pwd_strength && pwd_strength >= 0){
+    console.log('very weak');
+    //very weak
+    //remove all class
+    //$('#pwdstatus').removeClass();
+    //add weak class
+    document.getElementById('pwdstatus').classList.add("none");
+    //add inner text"
+    document.getElementById('pwdstatus').innerText ="Very weak!";
+
+    var pw_ok = false;
     }
 
-    if(26 >= pwd_strength >= 50){
+    if(50 >= pwd_strength && pwd_strength >= 26){
+    console.log('weak');
     //weak
-    return;
+    //remove all class
+    //$('#pwdstatus').removeClass();
+    //add weak class
+    document.getElementById('pwdstatus').classList.add("weak");
+    //add inner text"
+    document.getElementById('pwdstatus').innerText ="Weak!";
+
+    var pw_ok = false;
     }
 
-    if(51 >= pwd_strength >= 75){
+    if(75 >= pwd_strength && pwd_strength >= 51){
+    console.log('better');
     //better
-    return;
+    //remove all class
+    //$('#pwdstatus').removeClass();
+    //add weak class
+    $('#pwdstatus').addClass('better');
+    //add inner text"
+    document.getElementById('pwdstatus').innerText ="Strong enough!";
+
+    var pw_ok = true;
     }
 
-    if(76 >= pwd_strength >= 100){
+    if(100 >= pwd_strength && pwd_strength >= 76){
+    console.log('strong');
     //strong
-    return;
+    //remove all class
+    //$('#pwdstatus').removeClass();
+    //add weak class
+    $('#pwdstatus').addClass('strong');
+    //add inner text"
+    document.getElementById('pwdstatus').innerText ="Very strong!";
+
+    var pw_ok = true;
     }
 
-}
+};
