@@ -61,7 +61,6 @@ def validate_loginattempt(data):
     return True
 
 
-#TODO - implement
 def generate_rnd(N):
     return ''.join(SystemRandom().choice(string.ascii_uppercase + string.digits + string.ascii_lowercase) for _ in range(N))
 
@@ -86,15 +85,11 @@ def sendmail(apikey, token, mail, url, uname):
         html_content= htm
     )
 
-    #print(APIKEY)
-
     try:
         sg = SendGridAPIClient(APIKEY)
         response = sg.send(message)
-        #print('sent')
 
     except Exception as e:
-        #print(e.message)
         return False
 
     return True

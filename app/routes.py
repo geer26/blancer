@@ -542,29 +542,23 @@ def newmessage(data):
             return True
         else:
             u.pw_reset_token = generate_rnd(32)
-            #u.pwrt_valid = datetime.now() + timedelta(minutes=30)
             u.pwrt_valid = datetime.now() + timedelta(minutes=30)
             u.pwrt_vcode = int(data['reset_code'])
             u.pwrt_try = 5
             db.session.commit()
             sendmail(app.config['SENDGRID_API_KEY'], str(u.pw_reset_token), str(u.email), request.url_root, str(u.username))
-            print('Mail sent!')
             return True
 
 
     #somebody sent a password reset creditentials
     if data['event'] == 2272 and not current_user.is_authenticated:
 
-        print(data)
         user = User.query.filter_by(pw_reset_token=data['token']).first()
 
         if not user:
-            print('No user')
             return False
 
         else:
-            print('user')
-            print(user.pwrt_vcode)
 
             if user.pwrt_try <= 0:
                 #ran out of tries, reset tries and redirect to mainpage
@@ -584,7 +578,7 @@ def newmessage(data):
             if user.pwrt_vcode != int(data['code']):
                 user.pwrt_try -= 1
                 db.session.commit()
-                #send error
+
                 mess = {}
                 mess['event'] = 191
                 mess['htm'] = render_template('errormessage.html', message='Wrong authentication code! You have {} tries left!'.format(user.pwrt_try))
@@ -634,7 +628,6 @@ def newmessage(data):
 
     #admin wants to restore category
     if data['event'] ==272 and current_user.is_superuser:
-        #print(data)
         c = Category.query.get(int(data['cid']))
         if c.hidden:
             c.hidden = False
