@@ -540,7 +540,8 @@ def newmessage(data):
             return True
         else:
             u.pw_reset_token = generate_rnd(32)
-            u.pwrt_valid = datetime.now() + timedelta(minutes=30)
+            #u.pwrt_valid = datetime.now() + timedelta(minutes=30)
+            u.pwrt_valid = datetime.now() + timedelta(hours=8)
             u.pwrt_vcode = int(data['reset_code'])
             db.session.commit()
             sendmail(app.config['SENDGRID_API_KEY'], str(u.pw_reset_token), str(u.email), request.url_root, str(u.username))
@@ -550,19 +551,21 @@ def newmessage(data):
 
     #somebody sent a password reset creditentials
     if data['event'] == 2272 and not current_user.is_authenticated:
+
         print(data)
         user = User.query.filter_by(pw_reset_token=data['token']).first()
+
         if not user:
             print('No user')
-            pass
+            return False
+
         else:
             print('user')
-            pass
+            mess = {}
+            mess['event'] = 1272
+            mess['location'] = request.url_root
+            socket.emit('newmessage', mess, room=sid)
 
-        mess = {}
-        mess['event'] = 1272
-        mess['location'] = request.url_root
-        socket.emit('newmessage', mess, room=sid)
         return True
 
 

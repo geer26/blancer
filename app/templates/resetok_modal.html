@@ -2,6 +2,8 @@
 
 {%block pagecontent%}
 
+<link rel="stylesheet" type="text/css" href="/static/css/pwstrength.css">
+
 <div id="resetokmodal" class="modalback">
 
     <div class="posm_frame" id="resetok_frame">
@@ -19,7 +21,13 @@
               </li>
 
               <li class="list">
-                <input id="reset_password" type="password" class="inputb" placeholder="password"/>
+                <input id="reset_password" type="password" class="inputb" placeholder="password" onkeyup="checkpwd()"/>
+              </li>
+
+              <li>
+                <div id="pwdstatus" class="statusbar none">
+                  None!
+                </div>
               </li>
 
               <li class="list">

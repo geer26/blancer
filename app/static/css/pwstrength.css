@@ -1,0 +1,31 @@
+.statusbar{
+    padding: 0;
+    text-align: center;
+    font-size: 70%;
+    font-weight: bold;
+    color: white;
+    border-radius: 2px;
+}
+
+.none{
+    border: 1px solid rgb(186, 74, 22);
+    color: black;
+}
+
+.weak{
+    border: 1px solid rgb(186, 74, 22);
+    color: black;
+    background-image: linear-gradient(to right, rgba(186, 74, 22,1) 28%, 33%, rgba(0,0,0,0) 38%);
+}
+
+.better{
+    border: 1px solid rgb(168, 162, 50);
+    color: black;
+    background-image: linear-gradient(to right, rgba(168, 162, 50,1) 61%, 66%, rgba(0,0,0,0) 71%);
+}
+
+.strong{
+    border: 1px solid rgb(76, 158, 17);
+    color: white;
+    background-image: linear-gradient(to right, rgba(76, 158, 17,1) 90%, 95%, rgba(0,0,0,0) 100%);
+}
