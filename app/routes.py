@@ -44,6 +44,7 @@ def index():
                     user.pw_reset_token = ''
                     user.pwrt_valid = None
                     user.pwrt_vcode = 0
+                    user.pwrt_try = 0
 
                 user.last_activity = datetime.now()
                 db.session.commit()
@@ -111,10 +112,11 @@ def resetpassword(token):
         return redirect('/')
 
     else:
-        if datetime.now() > user.pwrt_valid:
+        if datetime.now() > user.pwrt_valid or user.pwrt_try <= 0:
             user.pw_reset_token = ''
             user.pwrt_valid = None
             user.pwrt_vcode = 0
+            user.pwrt_try = 0
             db.session.commit()
             return render_template('resetexpired_modal.html', title='Token expired', mainpage=request.url_root)
         else:
@@ -543,6 +545,7 @@ def newmessage(data):
             #u.pwrt_valid = datetime.now() + timedelta(minutes=30)
             u.pwrt_valid = datetime.now() + timedelta(hours=8)
             u.pwrt_vcode = int(data['reset_code'])
+            u.pwrt_try = 5
             db.session.commit()
             sendmail(app.config['SENDGRID_API_KEY'], str(u.pw_reset_token), str(u.email), request.url_root, str(u.username))
             print('Mail sent!')
@@ -561,6 +564,37 @@ def newmessage(data):
 
         else:
             print('user')
+
+            if user.pwrt_try <= 0:
+                #ran out of tries, reset tries and redirect to mainpage
+
+                user.pw_reset_token = ''
+                user.pwrt_valid = None
+                user.pwrt_vcode = 0
+                user.pwrt_try = 0
+                db.session.commit()
+
+                mess = {}
+                mess['event'] = 1272
+                mess['location'] = request.url_root
+                socket.emit('newmessage', mess, room=sid)
+                return True
+
+            if user.pwrt_vcode != data['code']:
+                user.pwrt_try -= 1
+                db.session.commit()
+                #send error
+                mess = {}
+                mess['event'] = 191
+                mess['htm'] = render_template('errormessage.html', message='Wrong authentication code! You have {} tries left!'.format(user.pwrt_try))
+                socket.emit('newmessage', mess, room=sid)
+                return True
+
+            #everything seems to be OK, change password!
+
+            user.set_password(data['p1'])
+            db.session.commit()
+
             mess = {}
             mess['event'] = 1272
             mess['location'] = request.url_root

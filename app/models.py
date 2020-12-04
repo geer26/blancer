@@ -19,6 +19,7 @@ class User(UserMixin,db.Model):
     pw_reset_token = db.Column(db.String(32))
     pwrt_valid = db.Column(db.DateTime)
     pwrt_vcode = db.Column(db.Integer, default=0)
+    pwrt_try = db.Column(db.Integer, default=0)
     username = db.Column(db.String(12), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(256))
