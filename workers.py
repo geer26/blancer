@@ -70,7 +70,7 @@ def generate_vercode(N):
 
 
 #sending mail to user
-def sendmail(apikey, token, mail, url, uname):
+def sendmail(apikey, token, mail, url, uname):   
 
     #put this into environment variable
     APIKEY = apikey
