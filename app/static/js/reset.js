@@ -109,31 +109,31 @@ function checkpwd(){
     if (pwd_strength > 100){pwd_strength=99;}
 
     if(25 >= pwd_strength && pwd_strength >= 0){
-    document.getElementById('pwdstatus').classList.add("none");
-    document.getElementById('pwdstatus').innerText ="Very weak!";
-
-    var pw_ok = false;
+        document.getElementById('pwdstatus').classList.add("statusbar");
+        document.getElementById('pwdstatus').classList.add("none");
+        document.getElementById('pwdstatus').innerHTML = 'Very weak!<span class="tooltiptext">8, numeric, lower and uppercase characters</span>';
+        pw_ok = false;
     }
 
     if(50 >= pwd_strength && pwd_strength >= 26){
-    document.getElementById('pwdstatus').classList.add("weak");
-    document.getElementById('pwdstatus').innerText ="Weak!";
-
-    var pw_ok = false;
+        document.getElementById('pwdstatus').classList.add("statusbar");
+        document.getElementById('pwdstatus').classList.add("weak");
+        document.getElementById('pwdstatus').innerHTML = 'Weak!<span class="tooltiptext">8, numeric, lower and uppercase characters</span>';
+        pw_ok = false;
     }
 
     if(75 >= pwd_strength && pwd_strength >= 51){
-    $('#pwdstatus').addClass('better');
-    document.getElementById('pwdstatus').innerText ="Strong enough!";
-
-    var pw_ok = true;
+        document.getElementById('pwdstatus').classList.add("statusbar");
+        document.getElementById('pwdstatus').classList.add("better");
+        document.getElementById('pwdstatus').innerHTML = 'Strong enough!!<span class="tooltiptext">8, numeric, lower and uppercase characters</span>';
+        pw_ok = true;
     }
 
     if(100 >= pwd_strength && pwd_strength >= 76){
-    $('#pwdstatus').addClass('strong');
-    document.getElementById('pwdstatus').innerText ="Very strong!";
-
-    var pw_ok = true;
+        document.getElementById('pwdstatus').classList.add("statusbar");
+        document.getElementById('pwdstatus').classList.add("strong");
+        document.getElementById('pwdstatus').innerHTML = 'Very strong!<span class="tooltiptext">8, numeric, lower and uppercase characters</span>'
+        pw_ok = true;
     }
 
 };
