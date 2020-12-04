@@ -543,7 +543,7 @@ def newmessage(data):
         else:
             u.pw_reset_token = generate_rnd(32)
             #u.pwrt_valid = datetime.now() + timedelta(minutes=30)
-            u.pwrt_valid = datetime.now() + timedelta(hours=8)
+            u.pwrt_valid = datetime.now() + timedelta(minutes=30)
             u.pwrt_vcode = int(data['reset_code'])
             u.pwrt_try = 5
             db.session.commit()
@@ -564,6 +564,7 @@ def newmessage(data):
 
         else:
             print('user')
+            print(user.pwrt_vcode)
 
             if user.pwrt_try <= 0:
                 #ran out of tries, reset tries and redirect to mainpage
@@ -580,7 +581,7 @@ def newmessage(data):
                 socket.emit('newmessage', mess, room=sid)
                 return True
 
-            if user.pwrt_vcode != data['code']:
+            if user.pwrt_vcode != int(data['code']):
                 user.pwrt_try -= 1
                 db.session.commit()
                 #send error
