@@ -72,6 +72,8 @@ stopasgroup=true
 killasgroup=true
 '''
 
+sudo supervisorctl reload
+
 
 8. Config nginx
 cd ~/blancer
