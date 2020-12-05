@@ -550,7 +550,6 @@ function reset_p(){
     }
     var data = {event: 287, o_pw: p_o, n_pw1: p1, n_pw2: p2};
     send_message('newmessage', data);
-    console.log('RESET PASSWORD');
 };
 
 

@@ -8,8 +8,8 @@ from app import app, socket, db
 from app.forms import LoginForm, SignupForm
 from app.models import User, Pocket, Transfer, Category
 from workers import verifiy_signup, hassu, deluser, addpocket, delpocket, delcategory, add_cat, add_transfer, \
-    get_ptransfers, get_ntransfers, validate_loginattempt, resetpassword, drawcharts, generate_vercode, generate_rnd, \
-    sendmail
+    get_ptransfers, get_ntransfers, validate_loginattempt, drawcharts, generate_vercode, generate_rnd, \
+    sendmail, rpwd
 
 
 @app.template_filter('date_to_millis')
@@ -260,7 +260,7 @@ def newmessage(data):
     #user sends resetpassword data, check
     if data['event'] == 287 and current_user.is_authenticated:
 
-        rp=resetpassword(data,current_user)
+        rp=rpwd(data,current_user)
 
         if rp == 0:
             #OK, inform the user! 187 event

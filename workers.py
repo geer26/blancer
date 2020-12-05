@@ -96,7 +96,7 @@ def sendmail(apikey, token, mail, url, uname):
 
 
 # - DONE
-def resetpassword(data, user):
+def rpwd(data, user):
     if not user.check_password(str(data['o_pw'])):
         return 1
     if str(data['n_pw1']) != str(data['n_pw2']):
