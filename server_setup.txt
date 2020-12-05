@@ -1,4 +1,119 @@
 SERVER SETUP:
 https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-18-04
+https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xvii-deployment-on-linux
+
+
+1. Create user
+adduser --gecos "" geer
+usermod -aG sudo geer
+su geer
+
+
+2. install nano
+sudo vim.tiny /etc/resolv.conf
+sudo apt-get update
+sudo apt-get install nano
+??? sudo apt-get install byobu
+
+
+3. discard rootlogin
+sudo nano /etc/ssh/sshd_config
+# PermitRootLogin no
+sudo service ssh restart
+
+
+4. install firewall
+sudo apt-get install -y ufw
+sudo ufw allow ssh
+sudo ufw allow http
+sudo ufw allow 443/tcp
+sudo ufw --force enable
+sudo ufw status
+
+
+5. Install base depenencies
+sudo apt-get -y update
+sudo apt-get -y install python3 python3-venv python3-dev build-essential libssl-dev libffi-dev python3-setuptools
+sudo apt-get -y install postfix supervisor nginx git
+
+
+6. install blancer
+cd ~
+git clone https://github.com/geer26/blancer
+cd blancer
+python3 -m venv venv
+source venv/bin/activate
+pip install eventlet
+nano .env
+'''
+SECRET_KEY=454rl435dsfinj2354hj2b323nk435kr
+SENDGRID_API_KEY=<key>
+LC_ALL=C.UTF-8
+LANG=C.UTF-8
+
+'''
+echo "export FLASK_APP=blancer.py" >> ~/.profile
+echo "export SENDGRID_API_KEY=<key>" >> ~/.profile
+flask --help
+
+
+7. Config gunicorn and supervisor
+
+
+
+8. Config nginx
+cd ~/blancer
+mkdir certs
+openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
+  -keyout certs/key.pem -out certs/cert.pem
+sudo /etc/init.d/nginx start
+sudo rm /etc/nginx/sites-enabled/default
+sudo touch /etc/nginx/sites-available/blancer
+sudo ln -s /etc/nginx/sites-available/blancer /etc/nginx/sites-enabled/blancer
+sudo nano /etc/nginx/sites-enabled/blancer
+
+'''
+server {
+    # listen on port 80 (http)
+    listen 80;
+    server_name _;
+    location / {
+        # redirect any requests to the same URL but on https
+        return 301 https://$host$request_uri;
+    }
+}
+server {
+    # listen on port 443 (https)
+    listen 443 ssl;
+    server_name _;
+
+    # location of the self-signed SSL certificate
+    ssl_certificate /home/geer/blancer/certs/cert.pem;
+    ssl_certificate_key /home/geer/blancer/certs/key.pem;
+
+    # write access and error logs to /var/log
+    access_log /var/log/blancer_access.log;
+    error_log /var/log/blancer_error.log;
+
+    location / {
+        # forward application requests to the gunicorn server
+        proxy_pass http://localhost:5000;
+        proxy_redirect off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    location /static {
+        # handle static files directly, without forwarding to the application
+        alias /home/geer/blancer/app/static;
+        expires 30d;
+    }
+}
+'''
+
+sudo service nginx reload
+
+
 
 	
