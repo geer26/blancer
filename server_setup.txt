@@ -45,20 +45,32 @@ python3 -m venv venv
 source venv/bin/activate
 pip install eventlet
 nano .env
+
 '''
 SECRET_KEY=454rl435dsfinj2354hj2b323nk435kr
 SENDGRID_API_KEY=<key>
 LC_ALL=C.UTF-8
 LANG=C.UTF-8
-
 '''
+
 echo "export FLASK_APP=blancer.py" >> ~/.profile
 echo "export SENDGRID_API_KEY=<key>" >> ~/.profile
 flask --help
 
 
 7. Config gunicorn and supervisor
+sudo nano /etc/supervisor/conf.d/blancer.conf
 
+'''
+[program:blancer]
+command=/home/geer/blancer/venv/bin/gunicorn -b localhost:5000 --worker-class eventlet -w 1 blancer:app
+directory=/home/geer/blancer
+user=geer
+autostart=true
+autorestart=true
+stopasgroup=true
+killasgroup=true
+'''
 
 
 8. Config nginx
