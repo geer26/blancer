@@ -54,7 +54,7 @@ LANG=C.UTF-8
 '''
 
 echo "export FLASK_APP=blancer.py" >> ~/.profile
-echo "export SENDGRID_API_KEY=<key>" >> ~/.profile
+?echo "export SENDGRID_API_KEY=<api key>" >> ~/.profile
 flask --help
 
 
@@ -63,6 +63,11 @@ sudo nano /etc/supervisor/conf.d/blancer.conf
 
 '''
 [program:blancer]
+?environment=
+?SENDGRID_API_KEY=<api key>,
+?LC_ALL=C.UTF-8,
+?LANG=C.UTF-8
+
 command=/home/geer/blancer/venv/bin/gunicorn -b localhost:5000 --worker-class eventlet -w 1 blancer:app
 directory=/home/geer/blancer
 user=geer
