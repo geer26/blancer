@@ -3,25 +3,32 @@ https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications
 https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xvii-deployment-on-linux
 
 
+<-------------------------------------------------------------------------->
 1. Create user
 adduser --gecos "" geer
 usermod -aG sudo geer
 su geer
+<-------------------------------------------------------------------------->
 
 
+<-------------------------------------------------------------------------->
 2. install nano
 sudo vim.tiny /etc/resolv.conf
 sudo apt-get update
 sudo apt-get install nano
 ??? sudo apt-get install byobu
+<-------------------------------------------------------------------------->
 
 
+<-------------------------------------------------------------------------->
 3. discard rootlogin
 sudo nano /etc/ssh/sshd_config
 # PermitRootLogin no
 sudo service ssh restart
+<-------------------------------------------------------------------------->
 
 
+<-------------------------------------------------------------------------->
 4. install firewall
 sudo apt-get install -y ufw
 sudo ufw allow ssh
@@ -29,14 +36,18 @@ sudo ufw allow http
 sudo ufw allow 443/tcp
 sudo ufw --force enable
 sudo ufw status
+<-------------------------------------------------------------------------->
 
 
-5. Install base depenencies
+<-------------------------------------------------------------------------->
+5. Install base dependencies
 sudo apt-get -y update
-sudo apt-get -y install python3 python3-venv python3-dev build-essential libssl-dev libffi-dev python3-setuptools
-sudo apt-get -y install postfix supervisor nginx git
+sudo apt-get -y install python3 python3-venv python3-dev build-essential libssl-dev libffi-dev python3-setuptools nginx git
+#sudo apt-get -y install postfix supervisor nginx git
+<-------------------------------------------------------------------------->
 
 
+<-------------------------------------------------------------------------->
 6. install blancer
 cd ~
 git clone https://github.com/geer26/blancer
@@ -54,43 +65,45 @@ LANG=C.UTF-8
 '''
 
 echo "export FLASK_APP=blancer.py" >> ~/.profile
-?echo "export SENDGRID_API_KEY=<api key>" >> ~/.profile
 flask --help
+flask db init
+flask db migrate
+flask db upgarde
+deactivate
+<-------------------------------------------------------------------------->
 
 
-7. Config gunicorn and supervisor
-sudo nano /etc/supervisor/conf.d/blancer.conf
-
+<-------------------------------------------------------------------------->
+7. Config systemd
+sudo nano /etc/systemd/system/blancer.service
 '''
-[program:blancer]
-?environment=
-?SENDGRID_API_KEY=<api key>,
-?LC_ALL=C.UTF-8,
-?LANG=C.UTF-8
+[Unit]
+Description=Gunicorn instance to serve blancer
+After=network.target
 
-command=/home/geer/blancer/venv/bin/gunicorn -b localhost:5000 --worker-class eventlet -w 1 blancer:app
-directory=/home/geer/blancer
-user=geer
-autostart=true
-autorestart=true
-stopasgroup=true
-killasgroup=true
+[Service]
+User=geer
+Group=www-data
+WorkingDirectory=/home/geer/blancer
+Environment="PATH=/home/geer/blancer/venv/bin"
+ExecStart=/home/geer/blancer/venv/bin/gunicorn -b localhost:5000 --worker-class eventlet -w 1 --bind unix:blancer.sock -m 007 blancer:app
+
+[Install]
+WantedBy=multi-user.target
 '''
+sudo systemctl start blancer
+sudo systemctl enable blancer
+sudo systemctl status blancer
+<-------------------------------------------------------------------------->
 
-sudo supervisorctl reload
 
-
+<-------------------------------------------------------------------------->
 8. Config nginx
-cd ~/blancer
 mkdir certs
 openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
   -keyout certs/key.pem -out certs/cert.pem
 sudo /etc/init.d/nginx start
-sudo rm /etc/nginx/sites-enabled/default
-sudo touch /etc/nginx/sites-available/blancer
-sudo ln -s /etc/nginx/sites-available/blancer /etc/nginx/sites-enabled/blancer
-sudo nano /etc/nginx/sites-enabled/blancer
-
+sudo nano /etc/nginx/sites-available/blancer
 '''
 server {
     # listen on port 80 (http)
@@ -130,8 +143,14 @@ server {
     }
 }
 '''
+sudo ln -s /etc/nginx/sites-available/blancer /etc/nginx/sites-enabled
+sudo rm -r /etc/nginx/sites-available/default
+sudo rm -r /etc/nginx/sites-enabled/default
+sudo nginx -t
+sudo systemctl restart nginx
+sudo ufw allow 'Nginx Full'
+<-------------------------------------------------------------------------->
 
-sudo service nginx reload
 
 
 
