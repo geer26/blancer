@@ -15,14 +15,15 @@ class Config:
     SENDGRID_API_KEY = environ.get('SENDGRID_API_KEY') or 'APIKEY'
 
 
-
-
 class ProdConfig(Config):
     """Production config."""
     FLASK_ENV = 'production'
     DEBUG = False
     TESTING = False
-    DATABASE_URI = environ.get('PROD_DATABASE_URI')
+    DATABASE_URI = environ.get('POSTGRES_URI')
+    POSTGRES_USER = environ.get("POSTGRES_USER")
+    POSTGRES_PW = environ.get("POSTGRES_PW")
+    POSTGRES_DB = environ.get("POSTGRES_DB")
 
 
 class DevConfig(Config):
