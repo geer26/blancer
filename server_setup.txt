@@ -29,6 +29,18 @@ sudo service ssh restart
 
 
 <-------------------------------------------------------------------------->
+3,5. Solve resolv.conf issue
+sudo apt install resolvconf
+sudo nano /etc/resolvconf/resolv.conf.d/head
+'''
+nameserver 8.8.4.4
+nameserver 8.8.8.8
+'''
+sudo service resolvconf restart
+<-------------------------------------------------------------------------->
+
+
+<-------------------------------------------------------------------------->
 4. install firewall
 sudo apt-get install -y ufw
 sudo ufw allow ssh
@@ -74,7 +86,7 @@ deactivate
 
 
 <-------------------------------------------------------------------------->
-7. Config systemd
+7. Config systemctl
 sudo nano /etc/systemd/system/blancer.service
 '''
 [Unit]
