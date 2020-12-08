@@ -9,6 +9,8 @@ app = Flask(__name__)
 app.config.from_object(SQLite)
 #app.config.from_object(PostgreSQL)
 
+
+
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 

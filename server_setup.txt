@@ -95,7 +95,7 @@ LANG=C.UTF-8
 POSTGRES_URI=postgresql://postgres:<password>@localhost:5432/blancer
 '''
 
-echo "export FLASK_APP=blancer.py" >> ~/.profile
+echo "export FLASK_APP=blancer/blancer.py" >> ~/.profile
 flask --help
 flask db init
 flask db migrate
