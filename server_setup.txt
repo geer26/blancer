@@ -122,17 +122,18 @@ ExecStart=/home/geer/blancer/venv/bin/gunicorn -b localhost:5000 --worker-class 
 [Install]
 WantedBy=multi-user.target
 '''
-sudo systemctl start blancer
+
 sudo systemctl enable blancer
+sudo systemctl start blancer
 sudo systemctl status blancer
 <-------------------------------------------------------------------------->
 
 
 <-------------------------------------------------------------------------->
 8. Config nginx
-mkdir certs
+mkdir ~/blancer/certs
 openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
-  -keyout certs/key.pem -out certs/cert.pem
+  -keyout ~/blancer/certs/key.pem -out ~/blancer/certs/cert.pem
 sudo /etc/init.d/nginx start
 sudo nano /etc/nginx/sites-available/blancer
 '''
