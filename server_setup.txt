@@ -194,8 +194,8 @@ sudo ln -s /etc/nginx/sites-available/blancer /etc/nginx/sites-enabled
 sudo rm -r /etc/nginx/sites-available/default
 sudo rm -r /etc/nginx/sites-enabled/default
 sudo nginx -t
-sudo systemctl restart nginx
 sudo ufw allow 'Nginx Full'
+sudo systemctl restart nginx
 <-------------------------------------------------------------------------->
 
 
