@@ -15,6 +15,8 @@ def load_user(id):
 
 class User(UserMixin,db.Model):
 
+    #new
+    __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     pw_reset_token = db.Column(db.String(32))
     pwrt_valid = db.Column(db.DateTime)
@@ -43,6 +45,9 @@ class User(UserMixin,db.Model):
 
 
 class Pocket(db.Model):
+
+    #new
+    __tablename__ = 'pockets'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40))
     description = db.Column(db.String(120), default='')
@@ -56,6 +61,9 @@ class Pocket(db.Model):
 
 
 class Transfer(db.Model):
+
+    #new
+    __tablename__ = 'transfers'
     id = db.Column(db.Integer, primary_key=True)
     amount = db.Column(db.Integer, default=0)
     detail = db.Column(db.String(40))
@@ -68,6 +76,9 @@ class Transfer(db.Model):
 
 
 class Category(db.Model):
+
+    #new
+    __tablename__ = 'categories'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40))
     type = db.Column(db.Integer, default=1)

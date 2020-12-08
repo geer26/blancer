@@ -20,10 +20,8 @@ class ProdConfig(Config):
     FLASK_ENV = 'production'
     DEBUG = False
     TESTING = False
-    DATABASE_URI = environ.get('POSTGRES_URI')
-    POSTGRES_USER = environ.get("POSTGRES_USER")
-    POSTGRES_PW = environ.get("POSTGRES_PW")
-    POSTGRES_DB = environ.get("POSTGRES_DB")
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_DATABASE_URI = environ.get('POSTGRES_URI')
 
 
 class DevConfig(Config):
@@ -32,6 +30,6 @@ class DevConfig(Config):
     DEBUG = True
     TESTING = True
     DATABASE_URI = environ.get('DEV_DATABASE_URI')
-    SQLALCHEMY_DATABASE_URI = environ.get('DATABASE_URL') or \
+    SQLALCHEMY_DATABASE_URI = environ.get('SQLITE_URI') or \
                               'sqlite:///' + path.join(basedir, 'data.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False

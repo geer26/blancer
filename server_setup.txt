@@ -66,12 +66,13 @@ sudo apt-get install postgresql postgresql-contrib
 sudo su - postgres
 sudo nano /etc/postgresql/10/main/pg_hba.conf
 psql
-CREATE ROLE login_role WITH login;
-CREATE ROLE access_role;
-CREATE DATABASE blancer WITH OWNER access_role;
+\password postgres
+<password>
+CREATE DATABASE blancer WITH OWNER postgres;
 \c blancer
 REVOKE ALL ON SCHEMA public FROM public;
 GRANT ALL ON SCHEMA public TO access_role;
+\q
 <-------------------------------------------------------------------------->
 
 
@@ -82,7 +83,7 @@ git clone https://github.com/geer26/blancer
 cd blancer
 python3 -m venv venv
 source venv/bin/activate
-pip install eventlet
+pip install eventlet psycopg2
 nano .env
 
 '''
@@ -90,6 +91,7 @@ SECRET_KEY=454rl435dsfinj2354hj2b323nk435kr
 SENDGRID_API_KEY=<key>
 LC_ALL=C.UTF-8
 LANG=C.UTF-8
+POSTGRES_URI=postgresql://postgres:<password>@localhost:5432/blancer
 '''
 
 echo "export FLASK_APP=blancer.py" >> ~/.profile
