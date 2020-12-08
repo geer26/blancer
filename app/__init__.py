@@ -1,15 +1,13 @@
 from flask import Flask
-from config import Config, DevConfig, ProdConfig
+from config import Config, SQLite, PostgreSQL
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_socketio import SocketIO
-#from flask_mail import Mail
 
 app = Flask(__name__)
-app.config.from_object(DevConfig)
-#app.config.from_object(ProdConfig)
-#change at deployment!
+app.config.from_object(SQLite)
+#app.config.from_object(PostgreSQL)
 
 print(app.config['SENDGRID_API_KEY'])
 
@@ -18,7 +16,6 @@ migrate = Migrate(app, db)
 
 socket = SocketIO(app)
 socket.init_app(app, cors_allowed_origins="*")
-#enable at deployment!
 
 migrate = Migrate(app, db, render_as_batch=True)
 

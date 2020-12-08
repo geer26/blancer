@@ -83,6 +83,7 @@ git clone https://github.com/geer26/blancer
 cd blancer
 python3 -m venv venv
 source venv/bin/activate
+pip install -r requirements.txt
 pip install eventlet psycopg2
 nano .env
 
