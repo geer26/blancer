@@ -1,4 +1,4 @@
-<div id="addtransfer_modal" class="modalback ">
+<div id="addtransfer_modal" class="modalback" onkeypress="submitmodal(event)">
 
     <div class="posm_frame flow-tex" id="addt_frame">
 
@@ -37,18 +37,16 @@
 
             <!-- Category selector -->
             <li class="list">
-            <div class="input-field flow-text" id="category_s">
-                <!--<label for="category_selector">category:</label>-->
-                <select id="category_selector" class="left-align">
+            <div id="category_s">
+                <select class="browser-default inputb" id="category_selector">
                     {% for category in categories %}
                     <option value={{category.id}}>
                         <p class="left-align">{{category.name}}</p>
-
                     </option>
                     {% endfor %}
                 </select>
             </div>
-        </li>
+            </li>
 
             <!-- value input -->
             <li class="list">
@@ -93,6 +91,14 @@
                 $('#pocket_s select').formSelect();
                 $('#category_s select').formSelect();
             });
+
+            function submitmodal(e){
+                if(e.keyCode == 13){
+                    transfer(
+                    $('#pocket_selector').val(), $('#category_selector').val(), $('#transfer_amount').val(), $('#transfer_detail').val()
+                    )
+                }
+            };
     </script>
 
 </div>

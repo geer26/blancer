@@ -1,6 +1,6 @@
 <div id="loginmodal" class="modalback" style="display: none;">
 
-    <div class="posm_frame" id="login_frame">
+    <div class="posm_frame" id="login_frame" onkeypress="submitmodal(event)">
 
         <img class="close_btn" draggable="false" src="/static/img/icons/close.png" id="close_modal" onclick="hideitem('login_frame', 'loginmodal')">
 
@@ -38,5 +38,13 @@
         </button>
 
     </div>
+
+    <script>
+            function submitmodal(e){
+                if(e.keyCode == 13){
+                    loginattempt();
+                }
+            };
+    </script>
 
 </div>
