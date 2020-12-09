@@ -49,6 +49,9 @@
 
 #   17X - admin operation confirmation
 #       172 - admin operation success
+
+#   171X - helop operations
+#       1711 - send help content
 <------------------------------------------------------------>
 
 #2XX - client-side events
@@ -102,6 +105,9 @@
 #      272 - revert user category on passed id
 #      273 - admin wants to hide category by passed id
 #      274 - admin wants to del a category by passed id
+
+#   271X - Help operations
+#       2711 . request for help page
 <------------------------------------------------------------>
 
 #   4XX - Dev operations

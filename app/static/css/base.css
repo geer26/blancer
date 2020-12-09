@@ -516,6 +516,18 @@ a.customlink:hover{
 }
 
 
+.hframe{
+    position: relative;
+    overflow-y: scroll;
+    box-shadow: inset 0px 0px 47px -16px rgba(0,0,0,0.83);
+    max width: 80%;
+    background-color: #fff;
+    font-size: 90%;
+    margin: 20px; padding: 20px;
+    border-radius: 2px; max-height: 50vh;
+}
+
+
 .tableholder{
     position: relative;
     display: block;

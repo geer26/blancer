@@ -355,6 +355,14 @@ socket.on('newmessage', function(data){
         case 172:
             location.reload();
             break;
+
+
+        //incoming help content
+        case 1711:{
+                $('#helpcontainer').empty();
+                $('#helpcontainer').append(data['htm']);
+            }
+            break;
     }
 });
 
@@ -515,7 +523,6 @@ function show_loginmodal(){
 
 
 function show_terms(){
-    //console.log('TERMS HERE!');
     var data = {event: 228};
     send_message('newmessage', data);
 };
@@ -543,7 +550,6 @@ function reset_p(){
     var p_o = $('#c_password').val();
     var p1 = $('#n_password1').val();
     var p2 = $('#n_password2').val();
-    //send to 287
     if((!p_o||p_o=='')||(!p1||p1=='')||(!p2||p2=='')){
         req_for_error('All inputs must be set!');
         return;
@@ -587,8 +593,13 @@ function signupattempt(){
 };
 
 
+function help_request(content){
+    var data = {event: 2711, helpcontent: content};
+    send_message('newmessage', data);
+};
+
+
 function request_newPW(){
-    //console.log('ASK FOR PW RESET!');
     var data = {event: 227};
     send_message('newmessage', data);
 };
