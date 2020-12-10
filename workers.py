@@ -330,8 +330,8 @@ def get_ntransfers(u,num=None):
 #TODO finish this!
 def drawcharts(data):
 
-    fromdate = datetime.fromtimestamp( int(data['mintime']/1000) )
-    todate = datetime.fromtimestamp( int(data['maxtime']/1000) )
+    fromdate = datetime.fromtimestamp( int(int(data['mintime'])/1000) )
+    todate = datetime.fromtimestamp( int(int(data['maxtime'])/1000) )
 
     fd = datetime(fromdate.year, fromdate.month, fromdate.day)
     td = datetime(todate.year, todate.month, todate.day+1)
