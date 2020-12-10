@@ -663,7 +663,7 @@ def newmessage(data):
 
     #request for help content
     if data['event'] == 2711 and current_user.is_authenticated:
-        content='help_'+str(data['helpcontent'])+'.html'
+        content='help/help_'+str(data['helpcontent'])+'.html'
         mess = {}
         mess['event'] = 1711
         mess['htm'] = render_template(content)
