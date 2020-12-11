@@ -3,6 +3,7 @@ import string
 from random import SystemRandom
 
 import pygal
+from pygal.style import Style
 from flask import render_template
 from sqlalchemy import desc
 
@@ -381,7 +382,7 @@ def draw_exp_pie(data):
             else:
                 amounts[names.index( str(transfer._category.name) )] += transfer.amount
 
-    pie_chart = pygal.Pie(inner_radius=.5, width=800, height=400, margin=10, human_readable=True)
+    pie_chart = pygal.Pie(inner_radius=.5, width=800, height=400, margin=10, human_readable=True, background='white')
     pie_chart.title = 'All expenses'
     for name in names:
         pie_chart.add(name, abs(amounts[names.index(name)]))
@@ -405,7 +406,7 @@ def draw_inc_pie(data):
             else:
                 amounts[names.index( str(transfer._category.name) )] += transfer.amount
 
-    pie_chart = pygal.Pie(inner_radius=.5, width=800, height=400, margin=10)
+    pie_chart = pygal.Pie(inner_radius=.5, width=800, height=400, margin=10, background='white')
     pie_chart.title = 'All incomes'
     for name in names:
         pie_chart.add(name, abs(amounts[names.index(name)]))
@@ -414,6 +415,18 @@ def draw_inc_pie(data):
 
 
 def draw_multiline(data, balance):
+
+    custom_style = Style(
+        background='white',
+        plot_background='white',
+        foreground='#000000',
+        foreground_strong='#000000',
+        foreground_subtle='#000000',
+        opacity='.6',
+        opacity_hover='.9',
+        transition='400ms ease-in',
+        colors=('#119634', '#cf4a21', '#2a99de')
+    )
 
     postransfers = []
     negtransfers =[]
@@ -464,6 +477,7 @@ def draw_multiline(data, balance):
     r = False
 
     multiline = pygal.DateTimeLine(
+        stroke_style={'width': 3},
         x_label_rotation=35,
         interpolate='hermite',
         interpolation_parameters={'type': 'kochanek_bartels', 'b': -1, 'c': 1, 't': 1},
@@ -471,7 +485,8 @@ def draw_multiline(data, balance):
         x_value_formatter= formatter,
         width=800,
         height=400,
-        margin=10
+        margin=0,
+        style=custom_style
     )
 
     multiline.add('Incomes', postransfers)

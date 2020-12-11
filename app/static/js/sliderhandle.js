@@ -47,7 +47,7 @@ function createslider(minmax) {
         }
     };
 
-    noUiSlider.create(slider, options);
+    //noUiSlider.create(slider, options);
 
     var fromdate = {
         year: new Date( parseInt(slider.noUiSlider.get()[0]) ).getFullYear(),
