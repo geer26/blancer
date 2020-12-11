@@ -193,7 +193,7 @@ def newmessage(data):
     #request foe details view
     if data['event'] == 293 and current_user.is_authenticated:
 
-        #print(data)
+        print(data)
         pocket = Pocket.query.get( int(data['pid']) )
         pid = int(data['pid'])
         transfers = Transfer.query.filter_by(pocket=pid).order_by(Transfer.timestamp).all()
@@ -215,7 +215,6 @@ def newmessage(data):
         temp['maxtime'] = minmax['max']
 
         charts = drawcharts(temp)
-        #print(charts)
 
         mess = {}
         mess['event'] = 193

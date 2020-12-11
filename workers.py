@@ -275,9 +275,9 @@ def add_transfer(data,u):
 
     pocket.balance += amount
 
-    transfer = Transfer(amount=amount, _category=category, _pocket=pocket, detail=detail, timestamp=datetime.utcnow())
-
     actual = Abalance(_pocket=pocket, balance=int(pocket.balance), timestamp=datetime.utcnow())
+
+    transfer = Transfer(amount=amount, _category=category, _pocket=pocket, detail=detail, timestamp=datetime.utcnow())
 
     db.session.add(transfer)
     db.session.add(actual)
@@ -347,8 +347,10 @@ def drawcharts(data):
     pocket = Pocket.query.get(int(data['pid']))
     transfers = []
     actual_balance = []
+
     tf = Transfer.query.filter_by(_pocket=pocket).order_by(Transfer.timestamp).all()
     ab = Abalance.query.filter_by(_pocket=pocket).order_by(Abalance.timestamp).all()
+
     for transfer in tf:
         if td >= transfer.timestamp >= fd:
             transfers.append(transfer)
