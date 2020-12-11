@@ -218,7 +218,7 @@ def newmessage(data):
 
         mess = {}
         mess['event'] = 193
-        mess['htm'] = render_template('details.html', p=pid, pocket=pocket, user=current_user, minmax=minmax, charts=charts)
+        mess['htm'] = render_template('details2.html', p=pid, pocket=pocket, user=current_user, minmax=minmax, charts=charts)
         socket.emit('newmessage', mess, room=sid)
         return True
 

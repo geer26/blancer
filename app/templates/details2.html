@@ -1,0 +1,15 @@
+<div id="details_modal" class="modalback">
+
+    <div class="posm_frame" id="details_frame" style="max-width: 90vw; max-height: 90vh;">
+        <p id="hidden_id" style="display: none;"
+           {% if p %}
+           pid={{pocket.id}}
+           {% endif %}
+           >
+        </p>
+
+        <img class="close_btn" draggable="false" src="/static/img/icons/close.png" id="close_modal"
+             onclick="removeitem('details_frame', 'details_modal')">
+    </div>
+
+</div>
