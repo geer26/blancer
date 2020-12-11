@@ -7,7 +7,7 @@ from flask import render_template
 from sqlalchemy import desc
 
 from app import db
-from app.models import User, Pocket, Transfer, Category
+from app.models import User, Pocket, Transfer, Category, Abalance
 from datetime import datetime, date
 
 from sendgrid import SendGridAPIClient
@@ -182,7 +182,7 @@ def getid(username):
 def addpocket(data,u):
     p=Pocket(_user=u )
 
-    p.last_change = datetime.now()
+    p.last_change = datetime.utcnow()
 
     p.name = str(data['p_name'])
 
@@ -233,7 +233,7 @@ def add_cat(data,u):
             if cat.name == str(data['cname']) and cat.type == t:
                 return False
 
-        newc = Category(_user=u, name=str(data['cname']), last_active=datetime.now(), type=t)
+        newc = Category(_user=u, name=str(data['cname']), last_active=datetime.utcnow(), type=t)
 
         db.session.add(newc)
         db.session.commit()
@@ -269,15 +269,22 @@ def add_transfer(data,u):
     pocket = Pocket.query.get(int(data['pocketid']))
     category = Category.query.get(int(data['categoryid']))
     category.last_active = datetime.now()
-    amount = category.type*int(data['amount'])
+    amount = category.type*abs(int(data['amount']))
     detail = str(data['detail'])
 
     pocket.balance += amount
 
-    transfer = Transfer(amount=amount, _category=category, _pocket=pocket, detail=detail)
+    transfer = Transfer(amount=amount, _category=category, _pocket=pocket, detail=detail, timestamp=datetime.utcnow())
+
+    actual = Abalance(_pocket=pocket, balance=int(pocket.balance), timestamp=datetime.utcnow())
 
     db.session.add(transfer)
+    db.session.add(actual)
     db.session.commit()
+
+    abalances = Abalance.query.filter_by(_pocket=pocket).all()
+    for a in abalances:
+        print(a)
 
     return True
 
@@ -338,16 +345,22 @@ def drawcharts(data):
 
     pocket = Pocket.query.get(int(data['pid']))
     transfers = []
+    actual_balance = []
     tf = Transfer.query.filter_by(_pocket=pocket).order_by(Transfer.timestamp).all()
+    ab = Abalance.query.filter_by(_pocket=pocket).order_by(Abalance.timestamp).all()
     for transfer in tf:
         if td >= transfer.timestamp >= fd:
             transfers.append(transfer)
+
+    for balance in ab:
+        if td >= balance.timestamp >= fd:
+            actual_balance.append(balance)
 
     charts = []
 
     charts.append(draw_exp_pie(transfers))
     charts.append(draw_inc_pie(transfers))
-    charts.append(draw_multiline(transfers))
+    charts.append(draw_multiline(transfers, actual_balance))
 
     return charts
 
@@ -400,10 +413,11 @@ def draw_inc_pie(data):
     return pie_chart.render_data_uri()
 
 
-def draw_multiline(data):
+def draw_multiline(data, balance):
 
     postransfers = []
     negtransfers =[]
+    balances = []
 
     tdelta = (data[-1].timestamp-data[0].timestamp)
 
@@ -416,6 +430,19 @@ def draw_multiline(data):
     else:
         formatter = lambda dt: dt.strftime('%d, %b %Y')
 
+
+    for a_balance in balance:
+
+        time = datetime(
+            int(a_balance.timestamp.strftime('%Y')),
+            int(a_balance.timestamp.strftime('%m')),
+            int(a_balance.timestamp.strftime('%d')),
+            int(a_balance.timestamp.strftime('%I')),
+            int(a_balance.timestamp.strftime('%M')),
+            int(a_balance.timestamp.strftime('%S')),
+        )
+
+        balances.append((time, a_balance.balance))
 
 
     for transfer in data:
@@ -438,6 +465,8 @@ def draw_multiline(data):
 
     multiline = pygal.DateTimeLine(
         x_label_rotation=35,
+        interpolate='hermite',
+        interpolation_parameters={'type': 'kochanek_bartels', 'b': -1, 'c': 1, 't': 1},
         truncate_label=-1,
         x_value_formatter= formatter,
         width=800,
@@ -445,8 +474,10 @@ def draw_multiline(data):
         margin=10
     )
 
-    multiline.add("Incomes", postransfers)
+    multiline.add('Incomes', postransfers)
 
     multiline.add('Expenses', negtransfers)
+
+    multiline.add('Balance', balances)
 
     return multiline.render_data_uri()

@@ -15,7 +15,6 @@ def load_user(id):
 
 class User(UserMixin,db.Model):
 
-    #new
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     pw_reset_token = db.Column(db.String(32))
@@ -46,15 +45,16 @@ class User(UserMixin,db.Model):
 
 class Pocket(db.Model):
 
-    #new
     __tablename__ = 'pocket'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40))
     description = db.Column(db.String(120), default='')
     balance = db.Column(db.Integer, default=0)
-    last_change = db.Column(db.DateTime, index=True, default=datetime.now)
+    last_change = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     transfers = db.relationship('Transfer', backref = '_pocket', cascade = 'all,delete')
+    #new
+    abalances = db.relationship('Abalance', backref = '_pocket', cascade = 'all,delete')
 
     def __repr__(self):
         return str(self.id)+'_'+str(self.name)
@@ -62,12 +62,11 @@ class Pocket(db.Model):
 
 class Transfer(db.Model):
 
-    #new
     __tablename__ = 'transfer'
     id = db.Column(db.Integer, primary_key=True)
     amount = db.Column(db.Integer, default=0)
     detail = db.Column(db.String(40))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.now)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow())
     pocket = db.Column(db.Integer, db.ForeignKey('pocket.id'))
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
 
@@ -77,7 +76,6 @@ class Transfer(db.Model):
 
 class Category(db.Model):
 
-    #new
     __tablename__ = 'category'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40))
@@ -85,8 +83,19 @@ class Category(db.Model):
     hidden = db.Column(db.Boolean, default=False)
     last_active = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    # THINK OF CASCADING!!!
     transfer = db.relationship('Transfer', backref='_category')
 
     def __repr__(self):
         return self.name
+
+
+#new
+class Abalance(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+    pocket = db.Column(db.Integer, db.ForeignKey('pocket.id'))
+    balance = db.Column(db.Integer, default=0)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow())
+
+    def __repr__(self):
+        return str(self.timestamp) + ' : ' + str(self.balance)

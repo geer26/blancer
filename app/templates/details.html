@@ -14,22 +14,24 @@
         <img class="close_btn" draggable="false" src="/static/img/icons/close.png" id="close_modal"
              onclick="removeitem('details_frame', 'details_modal')">
 
-        <h6 class="label_s noselect">{{pocket.name}} !!! EXPERIMENTAL !!!</h6>
-        <p class="detail_s noselect">({{pocket.description}})</p>
+        <h6 class="label_s noselect">{{pocket.name}} details</h6>
+        <p class="detail_s noselect">{{pocket.description}}</p>
 
+        <!--
         <div id="rangeselector" style="width: 90%; max-height: 10px; display: inline-block; foreground-color: red;">
         </div>
+        -->
         
         <div id="dateinputs" style="border: 1px solid green; width: 90%; min-height: 10px; display: inline-block; padding: 0;">
 
             <span style="border: 1px solid blue; max-width: 49%; min-height: 10px; display: inline-block; padding: 0; float: left;">
-                <p style="margin: 0;">Start date: </p>
-                <input type="date" id="sd" oninput="setslider_from()" style="margin: 0;">
+                <label for="sd">Start date</label>
+                <input type="date" id="sd" style="margin: 0;">
             </span>
 
             <span style="border: 1px solid blue; max-width: 49%; min-height: 10px; display: inline-block; padding: 0; float: right;">
-                <p style="margin: 0;">End date: </p>
-                <input type="date" id="ed" oninput="setslider_to()" style="margin: 0;">
+                <label for="ed">End date</label>
+                <input type="date" id="ed" style="margin: 0;">
             </span>
 
             <button id="refresh" class="posbutton" onclick="refresh_query({{pocket.id}})">Refresh query</button>
