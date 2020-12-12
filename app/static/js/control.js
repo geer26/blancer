@@ -17,8 +17,8 @@ function send_message(e_name,message){
 
 
 $(document).ready(function(){
-    $('.fixed-action-btn').floatingActionButton({
 
+    $('.fixed-action-btn').floatingActionButton({
     });
 
 
@@ -103,6 +103,7 @@ socket.on('newmessage', function(data){
 
         //here is an experimental detail view, show it
         case 193:{
+            //console.log(data);
             $('#pagecontent').append(data['htm']);
             animateCSS('#details_frame', inanim);
             };

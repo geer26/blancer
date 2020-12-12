@@ -9,7 +9,7 @@ from app.forms import LoginForm, SignupForm
 from app.models import User, Pocket, Transfer, Category
 from workers import verifiy_signup, hassu, deluser, addpocket, delpocket, delcategory, add_cat, add_transfer, \
     get_ptransfers, get_ntransfers, validate_loginattempt, drawcharts, generate_vercode, generate_rnd, \
-    sendmail, rpwd
+    sendmail, rpwd, drawcharts2
 
 
 @app.template_filter('date_to_millis')
@@ -190,12 +190,11 @@ def newmessage(data):
 
 
     #Experimental details
-    #request foe details view
+    #request for details view
     if data['event'] == 293 and current_user.is_authenticated:
 
-        print(data)
-        pocket = Pocket.query.get( int(data['pid']) )
         pid = int(data['pid'])
+        pocket = Pocket.query.get(pid)
         transfers = Transfer.query.filter_by(pocket=pid).order_by(Transfer.timestamp).all()
 
         if len(transfers) < 1:
@@ -203,34 +202,36 @@ def newmessage(data):
             mess['event'] = 191
             mess['htm'] = render_template('errormessage.html', message='No tansfers in this pocket!')
             socket.emit('newmessage', mess, room=sid)
-            return True
+            return False
 
-        minmax = {}
-        minmax['min'] = transfers[0].timestamp.timestamp()*1000
-        minmax['max'] = transfers[-1].timestamp.timestamp()*1000
+        daterange = {}
+        daterange['min'] = transfers[0].timestamp.timestamp()*1000
+        daterange['max'] = transfers[-1].timestamp.timestamp()*1000
 
         temp = {}
         temp['pid'] = pid
-        temp['mintime'] = minmax['min']
-        temp['maxtime'] = minmax['max']
+        temp['min'] = transfers[0].timestamp.timestamp()
+        temp['max'] = transfers[-1].timestamp.timestamp()
 
-        charts = drawcharts(temp)
+        charts = drawcharts2(temp)
 
         mess = {}
         mess['event'] = 193
-        mess['htm'] = render_template('details2.html', p=pid, pocket=pocket, user=current_user, minmax=minmax, charts=charts)
+        mess['htm'] = render_template('details2.html', p=pid, pocket=pocket, user=current_user, daterange=daterange, charts=charts)
         socket.emit('newmessage', mess, room=sid)
+
         return True
 
 
     #refresh details daterange
     if data['event'] == 294 and current_user.is_authenticated:
 
+        '''print(data)
         charts = drawcharts(data)
         mess = {}
         mess['event'] = 194
         mess['htm'] = render_template('charts.html', charts=charts)
-        socket.emit('newmessage', mess, room=sid)
+        socket.emit('newmessage', mess, room=sid)'''
         return True
 
 

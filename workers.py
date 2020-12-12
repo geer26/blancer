@@ -368,6 +368,12 @@ def drawcharts(data):
     return charts
 
 
+def drawcharts2(data):
+    charts = []
+    print('In worker!')
+    return charts
+
+
 #- DONE
 def draw_exp_pie(data):
 
