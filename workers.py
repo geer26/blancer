@@ -370,7 +370,18 @@ def drawcharts(data):
 
 def drawcharts2(data):
     charts = []
-    print('In worker!')
+
+    fromdate = datetime(data['min'].year, data['min'].month, data['min'].day)
+    todate = datetime(data['max'].year, data['max'].month, data['max'].day + 1)
+
+    transfers = []
+    balances = []
+
+    for transfer in data['transfers']:
+        pass
+    for balance in data['balances']:
+        pass
+
     return charts
 
 

@@ -6,7 +6,7 @@ from sqlalchemy import desc
 
 from app import app, socket, db
 from app.forms import LoginForm, SignupForm
-from app.models import User, Pocket, Transfer, Category
+from app.models import User, Pocket, Transfer, Category, Abalance
 from workers import verifiy_signup, hassu, deluser, addpocket, delpocket, delcategory, add_cat, add_transfer, \
     get_ptransfers, get_ntransfers, validate_loginattempt, drawcharts, generate_vercode, generate_rnd, \
     sendmail, rpwd, drawcharts2
@@ -195,7 +195,9 @@ def newmessage(data):
 
         pid = int(data['pid'])
         pocket = Pocket.query.get(pid)
+
         transfers = Transfer.query.filter_by(pocket=pid).order_by(Transfer.timestamp).all()
+        balances = Abalance.query.filter_by(pocket=pid).order_by(Abalance.timestamp).all()
 
         if len(transfers) < 1:
             mess = {}
@@ -210,8 +212,10 @@ def newmessage(data):
 
         temp = {}
         temp['pid'] = pid
-        temp['min'] = transfers[0].timestamp.timestamp()
-        temp['max'] = transfers[-1].timestamp.timestamp()
+        temp['min'] = transfers[0].timestamp
+        temp['max'] = transfers[-1].timestamp
+        temp['transfers'] = transfers
+        temp['balances'] = balances
 
         charts = drawcharts2(temp)
 
