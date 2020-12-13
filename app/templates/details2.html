@@ -21,30 +21,21 @@
         <!-- dateinputs -->
         <div id="dateinputs" style="border: 1px solid green; max-width: 90%; min-height: 10px; display: inline-block; padding: 0;">
 
-            <input type="text" class="datepicker inputb" id="startdate" style="max-width:45%;">
-
-            <input type="text" class="datepicker inputb" id="enddate" style="max-width:45%;">
+            <input type="date" id="startdate" class="inputb" style="max-width:45%;">
+            <input type="date" id="enddate" class="inputb" style="max-width:45%;">
+            <script>
+                setdates({{daterange['min']}}, {{daterange['max']}})
+            </script>
 
         </div>
 
-        <div id="charts" style=" display:inline-block; width: 95%; position:relative; border: 2px solid red; overflow: auto;">
+        <!-- charts -->
+        <div id="charts" style=" display:inline-block; width: 95%; position:relative; border: 2px solid red;">
 
             {% include 'charts.html' %}
 
         </div>
 
     </div>
-
-    <script>
-        $('.datepicker').datepicker({
-            selectMonths: true, // Creates a dropdown to control month
-            yearRange: 5, // Creates a dropdown of 10 years to control year,
-            today: 'Ma',
-            close: 'Ok',
-            closeOnSelect: true, // Close upon selecting a date
-            autoClose: true
-            //onSelect: upd_date('time')
-        });
-    </script>
 
 </div>

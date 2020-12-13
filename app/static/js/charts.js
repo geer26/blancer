@@ -1,15 +1,23 @@
 var currentchart = 1;
 
 
-$('#startdate').datepicker({
-            selectMonths: true, // Creates a dropdown to control month
-            yearRange: 5, // Creates a dropdown of 10 years to control year,
-            today: 'Today',
-            close: 'Ok',
-            closeOnSelect: true, // Close upon selecting a date
-            autoClose: true,
-            onSelect: upd_date('time')
-        });
+$('#startdate').click(function(date){
+    upd_date();
+    }
+);
+
+
+function timestamp(str) {
+    return new Date(str).getFullYear() + '-' + new Date(str).getMonth() + '-' + new Date(str).getDate();
+}
+
+
+function setdates(min, max){
+    console.log(timestamp(min));
+    console.log(timestamp(max));
+    $('#startdate').min = timestamp(min);
+    $('#enddate').min = timestamp(max);
+}
 
 
 function pagechart(){
@@ -32,6 +40,7 @@ function prev_chart(){
 };
 
 
-function upd_date(date){
-    console.log(date);
+function upd_date(){
+    console.log('Startdate: ', $('#startdate').val());
+    console.log('End date: ', $('#enddate').val());
 };

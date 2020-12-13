@@ -424,7 +424,14 @@ def draw_inc_pie(data):
             else:
                 amounts[names.index( str(transfer._category.name) )] += transfer.amount
 
-    pie_chart = pygal.Pie(inner_radius=.5, width=800, height=400, margin=10, background='white')
+    pie_chart = pygal.Pie(
+        inner_radius=.5,
+        width=800,
+        height=400,
+        margin=10,
+        background='white',
+        plot_background='white',
+    )
     pie_chart.title = 'All incomes'
     for name in names:
         pie_chart.add(name, abs(amounts[names.index(name)]))
@@ -503,9 +510,11 @@ def draw_multiline(data, balance):
         x_value_formatter= formatter,
         width=800,
         height=400,
-        margin=0,
+        margin=10,
         style=custom_style
     )
+
+    multiline.title= "Money-flow"
 
     multiline.add('Incomes', postransfers)
 
