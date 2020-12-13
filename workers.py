@@ -374,15 +374,14 @@ def drawcharts2(data):
     fromdate = datetime(data['min'].year, data['min'].month, data['min'].day)
     todate = datetime(data['max'].year, data['max'].month, data['max'].day + 1)
 
-    transfers = []
-    balances = []
+    transfers = Transfer.query.filter(Transfer.timestamp >= fromdate).filter(Transfer.timestamp <= todate).order_by(Transfer.timestamp).all()
+    balances = Abalance.query.filter(Abalance.timestamp >= fromdate).filter(Transfer.timestamp <= todate).order_by(Abalance.timestamp).all()
 
-    for transfer in data['transfers']:
-        pass
-    for balance in data['balances']:
-        pass
+    charts.append(draw_exp_pie(transfers))
+    charts.append(draw_inc_pie(transfers))
+    charts.append(draw_multiline(transfers,balances))
 
-    return charts
+    return charts, transfers
 
 
 #- DONE
@@ -489,9 +488,9 @@ def draw_multiline(data, balance):
         )
 
         if transfer.amount > 0:
-            postransfers.append( (time,transfer.amount) )
+            postransfers.append( (time,transfer.amount, transfer._category.name, transfer.detail) )
         else:
-            negtransfers.append( (time, transfer.amount) )
+            negtransfers.append( (time,transfer.amount, transfer._category.name, transfer.detail) )
 
     r = False
 

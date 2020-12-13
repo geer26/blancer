@@ -197,7 +197,6 @@ def newmessage(data):
         pocket = Pocket.query.get(pid)
 
         transfers = Transfer.query.filter_by(pocket=pid).order_by(Transfer.timestamp).all()
-        balances = Abalance.query.filter_by(pocket=pid).order_by(Abalance.timestamp).all()
 
         if len(transfers) < 1:
             mess = {}
@@ -214,14 +213,18 @@ def newmessage(data):
         temp['pid'] = pid
         temp['min'] = transfers[0].timestamp
         temp['max'] = transfers[-1].timestamp
-        temp['transfers'] = transfers
-        temp['balances'] = balances
 
-        charts = drawcharts2(temp)
+        charts, transfers = drawcharts2(temp)
 
         mess = {}
         mess['event'] = 193
-        mess['htm'] = render_template('details2.html', p=pid, pocket=pocket, user=current_user, daterange=daterange, charts=charts)
+        mess['htm'] = render_template('details2.html',
+                                      p=pid,
+                                      pocket=pocket,
+                                      user=current_user,
+                                      daterange=daterange,
+                                      charts=charts,
+                                      transfers=transfers)
         socket.emit('newmessage', mess, room=sid)
 
         return True

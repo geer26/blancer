@@ -27,9 +27,13 @@
 
         </div>
 
+        <div id="charts" style=" display:inline-block; width: 95%; position:relative; border: 2px solid red; overflow: auto;">
+
+            {% include 'charts.html' %}
+
+        </div>
+
     </div>
-
-
 
     <script>
         $('.datepicker').datepicker({
@@ -38,8 +42,8 @@
             today: 'Ma',
             close: 'Ok',
             closeOnSelect: true, // Close upon selecting a date
-            autoClose: true,
-            onSelect: upd_date('time')
+            autoClose: true
+            //onSelect: upd_date('time')
         });
     </script>
 
