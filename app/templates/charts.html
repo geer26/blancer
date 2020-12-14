@@ -18,12 +18,12 @@ onclick="next_chart()">
 
 <button class="posbutton" style="width: 90%; margin-bottom: 10px;" id="switchbtn"></button>
 
-<div id="showtr" style="text-align: center;">
+<div id="showtr" style="">
 
     {% for transfer in transfers %}
-    <div class="valign-wrapper l_t_holder">
+    <div class="valign-wrapper l_t_holder" style="">
 
-        <div class="bal_date_holder flow-text">
+        <div class="bal_date_holder flow-text" style="float:left; margin-left: 1vw;">
             {% if transfer.amount >= 0%}
             <p class="postransfer">
             {% else %}
@@ -36,20 +36,20 @@ onclick="next_chart()">
             </p>
         </div>
 
-        <div class="name_desc_holder">
-                        <p style="font-weight: bold; margin: 0;" class="typeholder">
-                            {{transfer._category}}
-                        </p>
-                        {% if transfer.detail %}
-                        <p class="transferdate" style="margin: 0;">
-                            ({{transfer.detail}})
-                        </p>
-                        {% else %}
-                        <p class="transferdate" style="font-size: 50%; margin-right: 2px;">
-                            No details
-                        </p>
-                        {% endif %}
-                    </div>
+        <div class="name_desc_holder" style="">
+            <p style="margin: 0;" class="typeholder">
+                {{transfer._category}}
+            </p>
+            {% if transfer.detail %}
+            <p class="transferdate" style="margin: 0;">
+                ({{transfer.detail}})
+            </p>
+            {% else %}
+            <p class="transferdate" style="margin-right: 2px;">
+                No details
+            </p>
+            {% endif %}
+        </div>
 
     </div>
     {% endfor %}
@@ -70,4 +70,7 @@ onclick="next_chart()">
             show_display();
         }
     });
+    setdates({{daterange['min']}}, {{daterange['max']}});
+    $('#startdate').change(upd_date());
+    $('#enddate').change(upd_date());
 </script>

@@ -91,7 +91,10 @@
         $('#pocket_selector').formSelect();
         $('#category_selector').formSelect();
         function submit_transfer(e){
-            console.log('A key pressed!');
+            if(e.keyCode==13){
+                transfer(
+             $('#pocket_selector').val(), $('#category_selector').val(), $('#transfer_amount').val(), $('#transfer_detail').val() );
+            }
         };
     </script>
 
