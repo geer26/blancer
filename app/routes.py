@@ -8,7 +8,7 @@ from app import app, socket, db
 from app.forms import LoginForm, SignupForm
 from app.models import User, Pocket, Transfer, Category, Abalance
 from workers import verifiy_signup, hassu, deluser, addpocket, delpocket, delcategory, add_cat, add_transfer, \
-    get_ptransfers, get_ntransfers, validate_loginattempt, drawcharts, generate_vercode, generate_rnd, \
+    get_ptransfers, get_ntransfers, validate_loginattempt, generate_vercode, generate_rnd, \
     sendmail, rpwd, drawcharts2
 
 
@@ -196,7 +196,7 @@ def newmessage(data):
         pid = int(data['pid'])
         pocket = Pocket.query.get(pid)
 
-        transfers = Transfer.query.filter_by(pocket=pid).order_by(Transfer.timestamp).all()
+        transfers = Transfer.query.filter_by(_pocket=pocket).order_by(Transfer.timestamp).all()
 
         if len(transfers) < 1:
             mess = {}
@@ -214,7 +214,7 @@ def newmessage(data):
         temp['min'] = transfers[0].timestamp
         temp['max'] = transfers[-1].timestamp
 
-        charts, transfers = drawcharts2(temp)
+        charts = drawcharts2(temp)
 
         mess = {}
         mess['event'] = 193
@@ -233,6 +233,7 @@ def newmessage(data):
     #refresh details daterange
     if data['event'] == 294 and current_user.is_authenticated:
 
+        print(data)
         '''print(data)
         charts = drawcharts(data)
         mess = {}
@@ -356,7 +357,7 @@ def newmessage(data):
 
     #user sends transfer details
     if data['event'] == 252 and current_user.is_authenticated:
-        if add_transfer(data,current_user):
+        if add_transfer(data):
             mess = {}
             mess['event'] = 152
             socket.emit('newmessage', mess, room=sid)

@@ -1,29 +1,50 @@
 var currentchart = 1;
+var showed = 0
 
 
-$('#startdate').click(function(date){
-    upd_date();
+function fromtimestamp(str) {
+    return new Date(str).getFullYear() + '-' + (new Date(str).getMonth()+1) + '-' + new Date(str).getDate();
+};
+
+
+function show_display(){
+    if (showed==0){
+        $('#showch').show();
+        $('#showtr').hide();
+        $('#switchbtn').html('show transfers')
     }
-);
+    else{
+        $('#showch').hide();
+        $('#showtr').show();
+        $('#switchbtn').html('show charts')
+    }
+};
 
 
-function timestamp(str) {
-    return new Date(str).getFullYear() + '-' + new Date(str).getMonth() + '-' + new Date(str).getDate();
-}
+function toTimestamp(date){
+    return parseInt((new Date(date).getTime()).toFixed(0))
+};
 
 
 function setdates(min, max){
-    console.log(timestamp(min));
-    console.log(timestamp(max));
-    $('#startdate').min = timestamp(min);
-    $('#enddate').min = timestamp(max);
-}
+
+    var mindate = fromtimestamp(min);
+    var maxdate = fromtimestamp(max);
+
+    $('#startdate').val(mindate);
+    $('#enddate').val(maxdate);
+
+    $('#startdate').attr('min',mindate);
+    $('#enddate').attr('min',mindate);
+    $('#startdate').attr('max',maxdate);
+    $('#enddate').attr('max',maxdate);
+
+};
 
 
 function pagechart(){
-    //console.log( $('#'+ currentchart.toString()) );
     $('#'+currentchart.toString()).show();
-}
+};
 
 
 function next_chart(){

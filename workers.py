@@ -265,27 +265,33 @@ def add_cat(data,u):
 
 
 # - DONE
-def add_transfer(data,u):
+def add_transfer(data):
+
+    print(data)
 
     pocket = Pocket.query.get(int(data['pocketid']))
     category = Category.query.get(int(data['categoryid']))
-    category.last_active = datetime.now()
+    category.last_active = datetime.utcnow()
     amount = category.type*abs(int(data['amount']))
     detail = str(data['detail'])
 
     pocket.balance += amount
 
-    actual = Abalance(_pocket=pocket, balance=int(pocket.balance), timestamp=datetime.utcnow())
+    actual = Abalance()
+    actual._pocket = pocket
+    actual.balance = pocket.balance
+    actual.timestamp = datetime.utcnow()
 
-    transfer = Transfer(amount=amount, _category=category, _pocket=pocket, detail=detail, timestamp=datetime.utcnow())
+    transfer = Transfer()
+    transfer._pocket = pocket
+    transfer.amount = amount
+    transfer.timestamp = datetime.utcnow()
+    transfer._category = category
+    transfer.detail = detail
 
     db.session.add(transfer)
     db.session.add(actual)
     db.session.commit()
-
-    abalances = Abalance.query.filter_by(_pocket=pocket).all()
-    for a in abalances:
-        print(a)
 
     return True
 
@@ -335,53 +341,24 @@ def get_ntransfers(u,num=None):
     return transfers
 
 
-#TODO finish this!
-def drawcharts(data):
-
-    fromdate = datetime.fromtimestamp( int(int(data['mintime'])/1000) )
-    todate = datetime.fromtimestamp( int(int(data['maxtime'])/1000) )
-
-    fd = datetime(fromdate.year, fromdate.month, fromdate.day)
-    td = datetime(todate.year, todate.month, todate.day+1)
-
-    pocket = Pocket.query.get(int(data['pid']))
-    transfers = []
-    actual_balance = []
-
-    tf = Transfer.query.filter_by(_pocket=pocket).order_by(Transfer.timestamp).all()
-    ab = Abalance.query.filter_by(_pocket=pocket).order_by(Abalance.timestamp).all()
-
-    for transfer in tf:
-        if td >= transfer.timestamp >= fd:
-            transfers.append(transfer)
-
-    for balance in ab:
-        if td >= balance.timestamp >= fd:
-            actual_balance.append(balance)
-
-    charts = []
-
-    charts.append(draw_exp_pie(transfers))
-    charts.append(draw_inc_pie(transfers))
-    charts.append(draw_multiline(transfers, actual_balance))
-
-    return charts
-
 
 def drawcharts2(data):
     charts = []
 
+    pid = int(data['pid'])
+
     fromdate = datetime(data['min'].year, data['min'].month, data['min'].day)
     todate = datetime(data['max'].year, data['max'].month, data['max'].day + 1)
+    pocket=Pocket.query.get(pid)
 
-    transfers = Transfer.query.filter(Transfer.timestamp >= fromdate).filter(Transfer.timestamp <= todate).order_by(Transfer.timestamp).all()
-    balances = Abalance.query.filter(Abalance.timestamp >= fromdate).filter(Transfer.timestamp <= todate).order_by(Abalance.timestamp).all()
+    balances = Abalance.query.filter_by(_pocket=pocket).order_by(Abalance.timestamp).filter(Abalance.timestamp >= fromdate).filter(Abalance.timestamp <= todate).all()
+    transfers = Transfer.query.filter_by(_pocket=pocket).order_by(Transfer.timestamp).filter(Transfer.timestamp >= fromdate).filter(Transfer.timestamp <= todate).all()
 
     charts.append(draw_exp_pie(transfers))
     charts.append(draw_inc_pie(transfers))
     charts.append(draw_multiline(transfers,balances))
 
-    return charts, transfers
+    return charts
 
 
 #- DONE

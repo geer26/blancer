@@ -1,3 +1,4 @@
+<div id="showch">
 <div id="charts_prevslide" style="position: absolute; left: 0; top: 50%-height/2; border-top-right-radius: 5px;
 border-bottom-right-radius: 5px;" class="valign-wrapper car_nav"
 onclick="prev_chart()">
@@ -13,9 +14,31 @@ onclick="next_chart()">
 {% for chart in charts %}
 <embed id={{loop.index}} type="image/svg+xml" src= "{{ chart|safe }}" style="height: 100%; max-width: 100%; margin: auto; display: none;"/>
 {% endfor %}
+</div>
 
+<button class="posbutton" style="width: 90%; margin-bottom: 10px;" id="switchbtn"></button>
+
+<div id="showtr">
+    test
+    {% for transfer in transfers %}
+    {{transfer}}
+    <br>
+    {% endfor %}
+</div>
 
 <script>
     var charts = {{charts|safe}};
     pagechart();
+    show_display();
+    $('#switchbtn').click( function(){
+        console.log('Switch pressed');
+        if(showed == 0){
+            showed = 1;
+            show_display();
+        }
+        else{
+            showed = 0;
+            show_display();
+        }
+    });
 </script>
