@@ -52,7 +52,6 @@
                 {%include 'adminindex.html' %}
                 <script src="/static/js/admincontrol.js" id="admincontrol_js"></script>
             {% elif current_user.is_authenticated and not current_user.is_superuser %}
-                <!--<script src="/static/js/sliderhandle.js"></script>-->
                 <script src="/static/js/charts.js"></script>
                 {% include 'userindex.html' %}
             {% else %}

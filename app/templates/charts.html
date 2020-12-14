@@ -18,12 +18,42 @@ onclick="next_chart()">
 
 <button class="posbutton" style="width: 90%; margin-bottom: 10px;" id="switchbtn"></button>
 
-<div id="showtr">
-    test
+<div id="showtr" style="text-align: center;">
+
     {% for transfer in transfers %}
-    {{transfer}}
-    <br>
+    <div class="valign-wrapper l_t_holder">
+
+        <div class="bal_date_holder flow-text">
+            {% if transfer.amount >= 0%}
+            <p class="postransfer">
+            {% else %}
+            <p class="negtransfer">
+            {% endif %}
+            {{ "{:,}".format(transfer.amount) }}
+            </p>
+            <p class="transferdate" style="font-size: 50%; margin: 0;">
+                ({{transfer.timestamp.strftime('%d.%b.%Y,%H:%M')}})
+            </p>
+        </div>
+
+        <div class="name_desc_holder">
+                        <p style="font-weight: bold; margin: 0;" class="typeholder">
+                            {{transfer._category}}
+                        </p>
+                        {% if transfer.detail %}
+                        <p class="transferdate" style="margin: 0;">
+                            ({{transfer.detail}})
+                        </p>
+                        {% else %}
+                        <p class="transferdate" style="font-size: 50%; margin-right: 2px;">
+                            No details
+                        </p>
+                        {% endif %}
+                    </div>
+
+    </div>
     {% endfor %}
+
 </div>
 
 <script>
@@ -31,7 +61,6 @@ onclick="next_chart()">
     pagechart();
     show_display();
     $('#switchbtn').click( function(){
-        console.log('Switch pressed');
         if(showed == 0){
             showed = 1;
             show_display();
