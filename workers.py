@@ -267,7 +267,7 @@ def add_cat(data,u):
 # - DONE
 def add_transfer(data):
 
-    print(data)
+    #print(data)
 
     pocket = Pocket.query.get(int(data['pocketid']))
     category = Category.query.get(int(data['categoryid']))
@@ -339,7 +339,6 @@ def get_ntransfers(u,num=None):
 
     #print(transfers)
     return transfers
-
 
 
 def drawcharts2(data):
