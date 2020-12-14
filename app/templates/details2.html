@@ -19,10 +19,10 @@
         <p class="detail_s noselect">{{pocket.description}}</p>
 
         <!-- dateinputs -->
-        <div id="dateinputs" style="border: 1px solid green; width: 100%; min-height: 10px; display: inline-block; padding: 0;">
+        <div id="dateinputs" style="border: 1px solid green; width: 95%; min-height: 10px; display: inline-block; padding: 0;">
 
-            <input type="date" id="startdate" class="inputb" style="max-width:45%;  font-size: 80%;">
-            <input type="date" id="enddate" class="inputb" style="max-width:45%;  font-size: 80%;">
+            <input type="date" id="startdate" class="inputb" onselect="upd()" style="max-width:45%;">
+            <input type="date" id="enddate" class="inputb" onselect="upd()" style="max-width:45%;">
             <!--<script>
                 setdates({{daterange['min']}}, {{daterange['max']}})
             </script>-->

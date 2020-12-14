@@ -9,11 +9,13 @@ function fromtimestamp(str) {
 
 function show_display(){
     if (showed==0){
+        //slidedown();
         $('#showch').show();
         $('#showtr').hide();
         $('#switchbtn').html('show transfers')
     }
     else{
+        //slideup();
         $('#showch').hide();
         $('#showtr').show();
         $('#switchbtn').html('show charts')
@@ -42,6 +44,11 @@ function setdates(min, max){
 };
 
 
+function upd(){
+    console.log('Hello!');
+};
+
+
 function pagechart(){
     $('#'+currentchart.toString()).show();
 };
@@ -61,7 +68,29 @@ function prev_chart(){
 };
 
 
-function upd_date(){
+/*function upd_date(){
     console.log('Startdate: ', $('#startdate').val());
     console.log('End date: ', $('#enddate').val());
+};*/
+
+
+function slideup(){
+    var charts = document.querySelector('#showch');
+    var trs = document.querySelector('#showtr');
+    var animation = setInterval(frame, 100);
+    function frame() {
+        if (charts.style.height <= 0) {  //animation ended
+            //hide charts
+            //show transfers
+            $('#showch').hide();
+            $('#showtr').show();
+            $('#switchbtn').html('show charts')
+            clearInterval(animation);
+        } else {
+            charts.style.height--;
+        }
+    }
 };
+
+
+function slidedown(){};
