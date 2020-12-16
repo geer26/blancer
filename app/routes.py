@@ -1,4 +1,5 @@
 from datetime import date, datetime, timedelta
+import pytz
 
 from flask import render_template, redirect, request
 from flask_login import current_user, login_user, logout_user, login_required
@@ -232,14 +233,33 @@ def newmessage(data):
 
     #refresh details daterange
     if data['event'] == 294 and current_user.is_authenticated:
+        pid = int(data['pid'])
 
-        print(data)
-        '''print(data)
-        charts = drawcharts(data)
+        fromdate = datetime.fromtimestamp(int(data['mintime']/1000), tz=pytz.utc)
+        todate = datetime.fromtimestamp(int(data['maxtime']/1000), tz=pytz.utc)
+
+        #fd = datetime(fromdate.year, fromdate.month, fromdate.day)
+        #td = datetime(todate.year, todate.month, todate.day + 1)
+
+        pocket = Pocket.query.get(pid)
+        transfers = Transfer.query.filter_by(_pocket=pocket).order_by(Transfer.timestamp).filter(
+            Transfer.timestamp >= fromdate).filter(Transfer.timestamp <= todate).all()
+
+        daterange = {}
+        daterange['min'] = transfers[0].timestamp.timestamp() * 1000
+        daterange['max'] = transfers[-1].timestamp.timestamp() * 1000
+
+        temp = {}
+        temp['pid'] = pid
+        temp['min'] = fromdate
+        temp['max'] = todate
+
+        charts = drawcharts2(temp)
+
         mess = {}
         mess['event'] = 194
-        mess['htm'] = render_template('charts.html', charts=charts)
-        socket.emit('newmessage', mess, room=sid)'''
+        mess['htm'] = render_template('charts.html', charts=charts, transfers=transfers, daterange=daterange)
+        socket.emit('newmessage', mess, room=sid)
         return True
 
 

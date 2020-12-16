@@ -44,8 +44,15 @@ function setdates(min, max){
 };
 
 
-function upd(){
-    console.log('Hello!');
+function upd(pid){
+    var mintime = $('#startdate').val();
+    var maxtime = $('#enddate').val();
+    var mitime = toTimestamp(mintime);
+    var matime = toTimestamp(maxtime);
+    $('#startdate').attr('max',maxtime);
+    $('#enddate').attr('min', mintime);
+    var data ={event: 294, pid: parseInt(pid), mintime:mitime, maxtime:matime};
+    send_message('newmessage', data);
 };
 
 

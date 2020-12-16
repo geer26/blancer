@@ -19,9 +19,9 @@ onclick="next_chart()">
 <button class="posbutton" style="width: 90%; margin-bottom: 10px;" id="switchbtn"></button>
 
 <div id="showtr" style="">
-    <di id="filters">
+    <div id="filters">
         FILTERS HERE
-    </di>
+    </div>
 
     {% for transfer in transfers %}
     <div class="valign-wrapper l_t_holder" style=" max-width: 90%; ">
@@ -74,6 +74,6 @@ onclick="next_chart()">
         }
     });
     setdates({{daterange['min']}}, {{daterange['max']}});
-    $('#startdate').change(upd_date());
-    $('#enddate').change(upd_date());
+    //$('#startdate').change(upd_date());
+    //$('#enddate').change(upd_date());
 </script>
