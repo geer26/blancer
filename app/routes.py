@@ -233,21 +233,19 @@ def newmessage(data):
 
     #refresh details daterange
     if data['event'] == 294 and current_user.is_authenticated:
+
         pid = int(data['pid'])
 
         fromdate = datetime.fromtimestamp(int(data['mintime']/1000), tz=pytz.utc)
         todate = datetime.fromtimestamp(int(data['maxtime']/1000), tz=pytz.utc)
 
-        #fd = datetime(fromdate.year, fromdate.month, fromdate.day)
-        #td = datetime(todate.year, todate.month, todate.day + 1)
-
         pocket = Pocket.query.get(pid)
         transfers = Transfer.query.filter_by(_pocket=pocket).order_by(Transfer.timestamp).filter(
             Transfer.timestamp >= fromdate).filter(Transfer.timestamp <= todate).all()
 
-        daterange = {}
-        daterange['min'] = transfers[0].timestamp.timestamp() * 1000
-        daterange['max'] = transfers[-1].timestamp.timestamp() * 1000
+        newdate = {}
+        newdate['min'] = transfers[0].timestamp.timestamp() * 1000
+        newdate['max'] = transfers[-1].timestamp.timestamp() * 1000
 
         temp = {}
         temp['pid'] = pid
@@ -258,7 +256,7 @@ def newmessage(data):
 
         mess = {}
         mess['event'] = 194
-        mess['htm'] = render_template('charts.html', charts=charts, transfers=transfers, daterange=daterange)
+        mess['htm'] = render_template('charts.html', charts=charts, transfers=transfers, newdate=newdate)
         socket.emit('newmessage', mess, room=sid)
         return True
 

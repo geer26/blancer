@@ -44,6 +44,17 @@ function setdates(min, max){
 };
 
 
+function newdates(min, max){
+
+    var mindate = fromtimestamp(min);
+    var maxdate = fromtimestamp(max);
+
+    $('#startdate').val(mindate);
+    $('#enddate').val(maxdate);
+
+}
+
+
 function upd(pid){
     var mintime = $('#startdate').val();
     var maxtime = $('#enddate').val();

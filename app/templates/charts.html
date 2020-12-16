@@ -73,7 +73,11 @@ onclick="next_chart()">
             show_display();
         }
     });
+    {% if daterange %}
     setdates({{daterange['min']}}, {{daterange['max']}});
-    //$('#startdate').change(upd_date());
-    //$('#enddate').change(upd_date());
+    {% elif newdates %}
+    newdates({{newdate['min']}},{{newdate['max']}})
+    {% else %}
+    {% endif %}
+
 </script>
