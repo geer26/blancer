@@ -12,16 +12,13 @@ onclick="next_chart()">
             </div>
 
 {% for chart in charts %}
-<embed id={{loop.index}} type="image/svg+xml" src= "{{ chart|safe }}" style="max-height:75%; max-width: 90%; margin: auto; display: none;"/>
+<embed id={{loop.index}} type="image/svg+xml" src= "{{ chart|safe }}" style="max-height:75%; max-width: 80%; margin: auto; display: none;"/>
 {% endfor %}
 </div>
 
 <button class="posbutton" style="width: 90%; margin-bottom: 10px;" id="switchbtn"></button>
 
 <div id="showtr" style="">
-    <div id="filters">
-        FILTERS HERE
-    </div>
 
     {% for transfer in transfers %}
     <div class="valign-wrapper l_t_holder" style=" max-width: 90%; ">
