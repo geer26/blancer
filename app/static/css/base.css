@@ -196,7 +196,7 @@ body{
 div.modalback{
     display: block; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 9999; /* Sit on top */
+    z-index: 1000; /* Sit on top */
     left: 0;
     top: 0;
     text-align: center;

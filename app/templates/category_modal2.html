@@ -4,7 +4,8 @@
         <img class="close_btn" draggable="false" src="/static/img/icons/close.png" id="close_modal"
         onclick="removeitem('cat_frame', 'category_modal')">
 
-        <button class="posbutton" style="width: 100%; margin-top: 5vh;" onclick="add_cat()">
+        <button class="posbutton tooltipped" style="width: 100%; margin-top: 5vh;" onclick="add_cat()"
+        data-delay="50" data-tooltip="Add category">
             <p style="margin: auto; display: inline-block;">
                 <i class="material-icons tiny left">add_circle</i>
                 add category
@@ -18,16 +19,19 @@
                 <li id="row_{{category.id}}" style="background: rgba(0,0,0,.1);">
 
                     <div class="collapsible-header" style="background: rgba(0,0,0,.2);">
+
                         <span id="cat_{{category.id}}" class="valign-wrapper">
-                        <a class="btn-floating btn-small waves-effect waves-light teal" id="{{category.id}}_edit" onclick="edit_cat({{category.id}})"
-                            style="margin: 5px;">
-                            <i class="small material-icons">create</i>
+
+                        <a class="btn-floating btn-small waves-effect waves-light teal tooltipped"
+                            style="margin: 5px;" data-delay="50" data-tooltip="Edit category">
+                            <i class="small material-icons" onclick="edit_cat({{category.id}})">create</i>
                         </a>
 
-                        <a class="btn-floating btn-small waves-effect waves-light red" id="{{category.id}}_del" onclick="del_cat({{category.id}})"
-                            style="margin: 5px;">
-                            <i class="small material-icons">delete</i>
+                        <a class="btn-floating btn-small waves-effect waves-light red tooltipped"
+                            style="margin: 5px;" data-delay="50" data-tooltip="Delete category">
+                            <i class="small material-icons" onclick="del_cat({{category.id}})">delete</i>
                         </a>
+
                         {{category.name}}
                         {% if category.type == 1 %}
                         <i class="small material-icons green-text">publish</i>
@@ -35,6 +39,7 @@
                         <i class="small material-icons rotate180 red-text">publish</i>
                         {% endif %}
                         </span>
+
                     </div>
 
                     <div class="collapsible-body" style="padding: 2px;">
@@ -61,4 +66,5 @@
 
 <script>
     $('.collapsible').collapsible();
+    $('.tooltipped').tooltip();
 </script>
