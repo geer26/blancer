@@ -50,7 +50,7 @@
 #   17X - admin operation confirmation
 #       172 - admin operation success
 
-#   171X - helop operations
+#   171X - help operations
 #       1711 - send help content
 <------------------------------------------------------------>
 
@@ -107,7 +107,7 @@
 #      274 - admin wants to del a category by passed id
 
 #   271X - Help operations
-#       2711 . request for help page
+#       2711 - request for help page
 <------------------------------------------------------------>
 
 #   4XX - Dev operations
